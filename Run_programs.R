@@ -14,9 +14,8 @@
 
 
 
-
 ###### 3. Calculate predictability for each grid
-
+Calculate_predictability(sourceDir, destDir)
 
 
 ###### 4. Make some plots
