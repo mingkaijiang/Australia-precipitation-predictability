@@ -12,14 +12,9 @@
 #### source the set up stuffs
 source("prepare.R")
 
-#### Set up time frame
-s.yr <- 1990
-e.yr <- 1999
-
 #### Read in data
-for (i in c(s.yr : e.yr)) {
-    Read_from_HIE_storage(current.year == i)
-}
+#Read_from_HIE_storage(s.yr = 1993, e.yr=1993)
+
 
 
 ###### 2. Process the data into the right format

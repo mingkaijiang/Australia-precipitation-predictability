@@ -42,3 +42,4 @@ vignettes/*.pdf
 *.txt
 *.csv
 *.Z
+*.grid
