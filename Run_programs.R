@@ -21,7 +21,7 @@ source("prepare.R")
 
 ###### 2. Process the data into the right format
 Processing_data(sourceDir = "data", 
-                destDir = "processed_data/")
+                destDir = "processed_data")
     
 
 
