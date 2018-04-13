@@ -8,6 +8,10 @@
 ######  Author: Mingkai Jiang (m.jiang@westernsydney.edu.au)
 ###################################################################################
 
+###### clear wk space
+rm(list=ls(all=TRUE))
+
+
 ###### 1. Download the data 
 #### source the set up stuffs
 source("prepare.R")
@@ -15,9 +19,10 @@ source("prepare.R")
 #### Read in data
 #Read_from_HIE_storage(s.yr = 1993, e.yr=1993)
 
-
-
 ###### 2. Process the data into the right format
+Processing_data(sourceDir = "data", 
+                destDir = "processed_data/")
+    
 
 
 
