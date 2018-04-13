@@ -20,17 +20,22 @@ source("prepare.R")
 #Read_from_HIE_storage(s.yr = 1993, e.yr=1993)
 
 ###### 2. Process the data into the right format
+#### 2.1 Convert from single file for each day to single file for each year
 Processing_data(sourceDir = "data", 
                 destDir = "processed_data")
     
-
+#### 2.2 Convert from single file for each year to a single file that contains monthly prec information
 
 
 ###### 3. Calculate predictability for each grid
 Calculate_predictability(sourceDir, destDir)
 
 
-###### 4. Make some plots
+###### 4. Convert from 0.05 degree resolution to 0.5 degree resolution
+
+
+
+###### 5. Make some plots
 
 
 
