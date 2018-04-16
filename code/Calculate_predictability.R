@@ -15,19 +15,12 @@ Calculate_predictability <- function(sourceDir, destDir) {
         assign(paste0("DF", i), readRDS(filenames[i]))
     }
     
-    ### Create a big output file
-    # out <- matrix(ncol = 14, nrow = 691 * 886 * 20)
-    # out <- as.data.frame(out)
-    # colnames(out) <- c("Site_ID", "Year", "Jan", "Feb", "Mar", "Apr", "May",
-    #                    "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
-    # out$Year <- rep(c(1990:2009), by = 691*886)
-    
     ### Create temporary DF
-    tmpDF <- matrix(ncol = 13, nrow = 20)
+    tmpDF <- matrix(ncol = 13, nrow = 30)
     tmpDF <- as.data.frame(tmpDF)
     colnames(tmpDF) <- c("Year", "Jan", "Feb", "Mar", "Apr", "May",
                        "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
-    tmpDF$Year <- c(1990:2009)
+    tmpDF$Year <- c(1980:2009)
     ts <- tmpDF$Year
     
     ### Create a out df to store all data in one file
@@ -60,30 +53,42 @@ Calculate_predictability <- function(sourceDir, destDir) {
         for (j in 1:886) {
             
             ### Fill the temp DF, read for calculating predictability
-            tmpDF[tmpDF$Year == 1990, 2:13] <- DF1[i,j,]
-            tmpDF[tmpDF$Year == 1991, 2:13] <- DF2[i,j,]
-            tmpDF[tmpDF$Year == 1992, 2:13] <- DF3[i,j,]
-            tmpDF[tmpDF$Year == 1993, 2:13] <- DF4[i,j,]
-            tmpDF[tmpDF$Year == 1994, 2:13] <- DF5[i,j,]
-            tmpDF[tmpDF$Year == 1995, 2:13] <- DF6[i,j,]
-            tmpDF[tmpDF$Year == 1996, 2:13] <- DF7[i,j,]
-            tmpDF[tmpDF$Year == 1997, 2:13] <- DF8[i,j,]
-            tmpDF[tmpDF$Year == 1998, 2:13] <- DF9[i,j,]
-            tmpDF[tmpDF$Year == 1999, 2:13] <- DF10[i,j,]
-            tmpDF[tmpDF$Year == 2001, 2:13] <- DF11[i,j,]
-            tmpDF[tmpDF$Year == 2002, 2:13] <- DF12[i,j,]
-            tmpDF[tmpDF$Year == 2003, 2:13] <- DF13[i,j,]
-            tmpDF[tmpDF$Year == 2004, 2:13] <- DF14[i,j,]
-            tmpDF[tmpDF$Year == 2005, 2:13] <- DF15[i,j,]
-            tmpDF[tmpDF$Year == 2006, 2:13] <- DF16[i,j,]
-            tmpDF[tmpDF$Year == 2007, 2:13] <- DF17[i,j,]
-            tmpDF[tmpDF$Year == 2008, 2:13] <- DF18[i,j,]
-            tmpDF[tmpDF$Year == 2009, 2:13] <- DF19[i,j,]
-            tmpDF[tmpDF$Year == 2010, 2:13] <- DF20[i,j,]
+            tmpDF[tmpDF$Year == 1980, 2:13] <- DF1[i,j,]
+            tmpDF[tmpDF$Year == 1981, 2:13] <- DF2[i,j,]
+            tmpDF[tmpDF$Year == 1982, 2:13] <- DF3[i,j,]
+            tmpDF[tmpDF$Year == 1983, 2:13] <- DF4[i,j,]
+            tmpDF[tmpDF$Year == 1984, 2:13] <- DF5[i,j,]
+            tmpDF[tmpDF$Year == 1985, 2:13] <- DF6[i,j,]
+            tmpDF[tmpDF$Year == 1986, 2:13] <- DF7[i,j,]
+            tmpDF[tmpDF$Year == 1987, 2:13] <- DF8[i,j,]
+            tmpDF[tmpDF$Year == 1988, 2:13] <- DF9[i,j,]
+            tmpDF[tmpDF$Year == 1989, 2:13] <- DF10[i,j,]
+            
+            tmpDF[tmpDF$Year == 1990, 2:13] <- DF11[i,j,]
+            tmpDF[tmpDF$Year == 1991, 2:13] <- DF12[i,j,]
+            tmpDF[tmpDF$Year == 1992, 2:13] <- DF13[i,j,]
+            tmpDF[tmpDF$Year == 1993, 2:13] <- DF14[i,j,]
+            tmpDF[tmpDF$Year == 1994, 2:13] <- DF15[i,j,]
+            tmpDF[tmpDF$Year == 1995, 2:13] <- DF16[i,j,]
+            tmpDF[tmpDF$Year == 1996, 2:13] <- DF17[i,j,]
+            tmpDF[tmpDF$Year == 1997, 2:13] <- DF18[i,j,]
+            tmpDF[tmpDF$Year == 1998, 2:13] <- DF19[i,j,]
+            tmpDF[tmpDF$Year == 1999, 2:13] <- DF20[i,j,]
+            
+            tmpDF[tmpDF$Year == 2000, 2:13] <- DF21[i,j,]
+            tmpDF[tmpDF$Year == 2001, 2:13] <- DF22[i,j,]
+            tmpDF[tmpDF$Year == 2002, 2:13] <- DF23[i,j,]
+            tmpDF[tmpDF$Year == 2003, 2:13] <- DF24[i,j,]
+            tmpDF[tmpDF$Year == 2004, 2:13] <- DF25[i,j,]
+            tmpDF[tmpDF$Year == 2005, 2:13] <- DF26[i,j,]
+            tmpDF[tmpDF$Year == 2006, 2:13] <- DF27[i,j,]
+            tmpDF[tmpDF$Year == 2007, 2:13] <- DF28[i,j,]
+            tmpDF[tmpDF$Year == 2008, 2:13] <- DF29[i,j,]
+            tmpDF[tmpDF$Year == 2009, 2:13] <- DF30[i,j,]
 
             ### calculate as percentage of annual total
             tmpDF2 <- tmpDF
-            tmpDF[,14] <- colSums(tmpDF[,2:13])
+            tmpDF[,14] <- rowSums(tmpDF[,2:13])
             
             for (k in 2:13) {
                 tmpDF2[,k] <- tmpDF[,k] / tmpDF[,14]
@@ -131,9 +136,9 @@ Calculate_predictability <- function(sourceDir, destDir) {
             bin[,"Nov"] <- nov_freq
             bin[,"Dec"] <- dec_freq
             
-            bin[,"whole"] = (bin[,"jan"]+bin[,"feb"]+bin[,"mar"]+bin[,"apr"]+
-                                 bin[,"may"]+bin[,"jun"]+bin[,"jul"]+bin[,"aug"]+
-                                 bin[,"sep"]+bin[,"oct"]+bin[,"nov"]+bin[,"dec"])
+            bin[,"whole"] = (bin[,"Jan"]+bin[,"Feb"]+bin[,"Mar"]+bin[,"Apr"]+
+                                 bin[,"May"]+bin[,"Jun"]+bin[,"Jul"]+bin[,"Aug"]+
+                                 bin[,"Sep"]+bin[,"Oct"]+bin[,"Nov"]+bin[,"Dec"])
             
             col_sum <- sum(table(tmpDF2[, "Jan"]))
             whole_sum <- col_sum*12
@@ -144,8 +149,7 @@ Calculate_predictability <- function(sourceDir, destDir) {
             #uncertainty with respect to state H(Y)
             V1 <- bin[,"whole"]/whole_sum
             V2 <- log10(bin[,"whole"]/whole_sum)
-            for (i in 1:length(V2))
-            {
+            for (i in 1:length(V2)) {
                 if(is.finite(V2[i])==F) {
                     V2[i] <- 0 
                 } else {
@@ -158,8 +162,7 @@ Calculate_predictability <- function(sourceDir, destDir) {
             #uncertainty with respect to interaction of time and state, H(XY)
             M1 <- bin[1:interval,2:13]/whole_sum
             M2 <- log10(M1)
-            for (i in 1:length(M2))
-            {
+            for (i in 1:length(M2)) {
                 if(is.finite(M2[i])==F) {
                     M2[i] <- 0
                 } else {

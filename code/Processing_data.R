@@ -1,7 +1,7 @@
 Processing_data <- function(sourceDir, destDir) {
     #### To process the raw data into format easily readable
     
-    for (i in 1990:2000) {
+    for (i in 1980:2009) {
         ### complete the path
         sDir <- paste0(sourceDir, "/", i)
 
