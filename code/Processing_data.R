@@ -337,7 +337,7 @@ Processing_data <- function(sourceDir, destDir) {
                                        MoreArgs=list(na.rm=T)))
         }  # end of if statement
         
-        save(out, file=paste0(destDir, "/DF", i, ".rds"))
+        saveRDS(out, file=paste0(destDir, "/DF", i, ".rds"))
         
         
     }  # i loop

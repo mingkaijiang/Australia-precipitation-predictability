@@ -25,7 +25,8 @@ Processing_data(sourceDir = "data",
                 destDir = "processed_data")
     
 #### 2.2 Convert from single file for each year to a single file that contains monthly prec information
-
+Processing_data(sourceDir = "processed_data",
+                destDir = "processed_data_2")
 
 ###### 3. Calculate predictability for each grid
 Calculate_predictability(sourceDir, destDir)
