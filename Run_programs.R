@@ -30,7 +30,8 @@ Calculate_predictability(sourceDir = "processed_data",
 
 
 ###### 4. Convert from 0.05 degree resolution to 0.5 degree resolution
-
+Scaling_up_to_half_degree_resolution(inFile = "output/Australia_rainfall_predictability_0.05_resolution.csv",
+                                     outFile = "output/Australia_rainfall_predictability_0.5_resolution.csv")
 
 
 ###### 5. Make some plots
