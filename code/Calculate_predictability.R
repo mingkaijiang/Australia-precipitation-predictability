@@ -215,6 +215,6 @@ Calculate_predictability <- function(sourceDir, destDir) {
     }        # i
     
     write.csv(out, paste0(destDir, "/Australia_rainfall_predictability_0.05_resolution.csv"),
-              row.names=F, col.names=T)
+              row.names=F)
     
 }

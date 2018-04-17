@@ -4,7 +4,7 @@ Scaling_up_to_half_degree_resolution <- function(inFile, outFile) {
     myDF <- read.csv(inFile)
         
     ### mask
-    m <- read.ascii.grid("~/Documents/Research/Projects/Australia_precipitation_predictability/Git/data/Australia_masks/AusMaskt_180326.asc")
+    m <- read.ascii.grid("data/Australia_masks/AusMaskt_180326.asc")
     
     ### Assign values onto the mask, based on averages
     # plot(m$data)
@@ -43,7 +43,7 @@ Scaling_up_to_half_degree_resolution <- function(inFile, outFile) {
     aus.poly <- rasterToPolygons(base.raster, dissolve=T)
 
     ### prepare the finer resolution data
-    f <- read.ascii.grid("~/Documents/Research/Projects/Australia_precipitation_predictability/Git/data/1980/rain_19800101.grid")
+    f <- read.ascii.grid("data/1980/rain_19800101.grid")
     
     ### Create grid info
     x.list <- seq(f$header$xllcorner, f$header$xllcorner + (0.05 * (f$header$ncols-1)), by=0.05)
@@ -74,6 +74,7 @@ Scaling_up_to_half_degree_resolution <- function(inFile, outFile) {
     
     ### out of predictability
     out <- rasterToPoints(a.raster)
+    out <- as.data.frame(out)
     
     ### extract data
     subDF2 <- myDF[,c("x", "y", "C")]
@@ -94,6 +95,7 @@ Scaling_up_to_half_degree_resolution <- function(inFile, outFile) {
     
     ### out of c
     out2 <- rasterToPoints(a.raster)
+    out2 <- as.data.frame(out2)
     out$C <- out2$C
     
     ### extract data
@@ -115,10 +117,11 @@ Scaling_up_to_half_degree_resolution <- function(inFile, outFile) {
     
     ### out of c
     out3 <- rasterToPoints(a.raster)
+    out3 <- as.data.frame(out3)
     out$M <- out3$M
     
     ### write output
-    wirte.csv(out, paste0(destDir, "/Australia_rainfall_predictability_0.5_resolution.csv"),
-              row.names=F, col.names=T)
+    write.csv(out, outFile,
+              row.names=F)
     
 }
