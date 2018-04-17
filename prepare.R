@@ -13,7 +13,10 @@ if(!dir.exists("processed_data")) {
 if(!require(pacman))install.packages("pacman")
 pacman::p_load(RCurl,
                RSAGA,
-               lubridate) # add other packages needed to this list
+               lubridate,
+               raster,
+               sp,
+               rgdal) # add other packages needed to this list
 
 
 # Sourcing all code functions
