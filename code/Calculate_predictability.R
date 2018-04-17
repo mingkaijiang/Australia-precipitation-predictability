@@ -9,7 +9,7 @@ Calculate_predictability <- function(sourceDir, destDir) {
     }
     
     ### Read in all files in the input directory
-    filenames <- list.files("processed_data", pattern="*.rds", full.names=TRUE)
+    filenames <- list.files(sourceDir, pattern="*.rds", full.names=TRUE)
     
     for (i in seq_along(filenames)) {
         assign(paste0("DF", i), readRDS(filenames[i]))
@@ -211,7 +211,7 @@ Calculate_predictability <- function(sourceDir, destDir) {
             out[l,"P_freedom"] <- P_free
             
             l <- l + 1
-        }    # j
+        }   # j
     }        # i
     
     write.csv(out, paste0(destDir, "/Australia_rainfall_predictability_0.05_resolution.csv"),
