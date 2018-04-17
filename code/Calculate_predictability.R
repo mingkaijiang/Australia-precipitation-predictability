@@ -28,7 +28,7 @@ Calculate_predictability <- function(sourceDir, destDir) {
     out <- as.data.frame(out, row.names = NULL, stringsAsFactors = FALSE)
     colnames(out) <- c("Site_ID", "P","C","M",
                        "Mutual","GC","C_freedom","GM","M_freedom","GP","P_freedom")
-    out$Site_ID <- c(1:length(691*886))
+    out$Site_ID <- c(1:691*886)
     #out$i <- rep(1:691, each=886) 
     #out$j <- rep(1:886, by = 691)
     

@@ -24,7 +24,7 @@ source("prepare.R")
 Processing_data(sourceDir = "data", 
                 destDir = "processed_data")
     
-#### 3 Calculate predictability
+###### 3. Calculate predictability
 Calculate_predictability(sourceDir = "processed_data",
                          destDir = "output")
 

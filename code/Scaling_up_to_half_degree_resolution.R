@@ -2,7 +2,7 @@ Scaling_up_to_half_degree_resolution <- function(inFile, outFile) {
     
     ### Scale up from 0.05 degree to 0.5 degree
     myDF <- read.csv(inFile)
-    
+        
     ### mask
     m <- read.ascii.grid("~/Documents/Research/Projects/Australia_precipitation_predictability/Git/data/Australia_masks/AusMaskt_180326.asc")
     
@@ -29,6 +29,8 @@ Scaling_up_to_half_degree_resolution <- function(inFile, outFile) {
         }
     }
     
+    lDF$v1 <- ifelse(is.na(lDF$v1), NA, 1)
+    
     ### to inverse latitude 
     lDF$y <- abs(lDF$y)
     
@@ -46,10 +48,35 @@ Scaling_up_to_half_degree_resolution <- function(inFile, outFile) {
     
     nrows = f$header$nrows
     ncols = f$header$ncols
-    df1 <- read.table("AA092800_1.asc", skip = 11, header = FALSE, sep = "\t", dec = ",")
-    r.mat <- matrix(data = "df1", nrow = nrows, ncol = ncols)
-    r <- raster(r.mat)
-    extent(r) <- extent(c(30,45.95,30,45.95))
-    res(r)
+    
+    myDF$y <- rep(y.list, each=ncols)
+    myDF$x <- rep(x.list, by=nrows)
+    
+    ### extract data
+    subDF <- myDF[,c("x", "y", "Site_ID")]
+    
+    ### to inverse latitude 
+    subDF$y <- abs(subDF$y)
+    
+    ### spatial conversion
+    coordinates(subDF)=~x+y
+    gridded(subDF) <- T
+    data.raster <- raster(subDF)
+    
+    ### convert Australia raster into polygon
+    aus.poly <- rasterToPolygons(base.raster, dissolve=T)
+    
+    ### Cut raster data using Australia mask
+    d.raster2 <- mask(data.raster, aus.poly)
+    
+    ### Spatial aggregate
+    a.raster <- aggregate(d.raster2, fact=10, fun=mean, na.rm=T)
+    
+    ### out
+    out <- rasterToPoints(a.raster)
+    
+    ### write output
+    wirte.csv(out, paste0(destDir, "/Australia_rainfall_predictability_0.5_resolution.csv"),
+              row.names=F, col.names=T)
     
 }
