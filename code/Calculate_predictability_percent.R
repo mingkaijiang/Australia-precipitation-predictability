@@ -1,4 +1,4 @@
-Calculate_predictability <- function(sourceDir, destDir) {
+Calculate_predictability_percent <- function(sourceDir, destDir) {
     #### Input data in 3-d format of grid, grid, month 
     #### Output data in format of: site ID, year, jan, feb, ...., dec, ann, for each grid
     ####

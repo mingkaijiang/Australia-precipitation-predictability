@@ -25,8 +25,11 @@ Processing_data(sourceDir = "data",
                 destDir = "processed_data")
     
 ###### 3. Calculate predictability
-Calculate_predictability(sourceDir = "processed_data",
-                         destDir = "output")
+#Calculate_predictability_absolute(sourceDir = "processed_data",
+#                                 destDir = "output")
+
+Calculate_predictability_percent(sourceDir = "processed_data",
+                                 destDir = "output")
 
 
 ###### 4. Convert from 0.05 degree resolution to 0.5 degree resolution
