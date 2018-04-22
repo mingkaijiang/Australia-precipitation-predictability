@@ -24,13 +24,12 @@ Calculate_predictability_percent <- function(sourceDir, destDir) {
     ts <- tmpDF$Year
     
     ### Create a out df to store all data in one file
-    out <- matrix(ncol=11, nrow=691 * 886)
+    out <- matrix(ncol=6, nrow=691 * 886)
     out <- as.data.frame(out, row.names = NULL, stringsAsFactors = FALSE)
-    colnames(out) <- c("Site_ID", "P","C","M",
-                       "Mutual","GC","C_freedom","GM","M_freedom","GP","P_freedom")
-    out$Site_ID <- c(1:691*886)
-    #out$i <- rep(1:691, each=886) 
-    #out$j <- rep(1:886, by = 691)
+    colnames(out) <- c("Site_ID","i","j", "P","C","M")
+    out$Site_ID <- c(1:(691*886))
+    out$i <- rep(1:691, each=886) 
+    out$j <- rep(1:886, by = 691)
     
     ### Get some general information
     years <- min(ts)
@@ -46,10 +45,8 @@ Calculate_predictability_percent <- function(sourceDir, destDir) {
     bin[,"bin_size"] <- seq(0.1,1,0.1)
     breaks = seq(0,1,0.1)
     
-    l <- 1
-
     ### output in each grid
-    for (i in 1:2) {
+    system.time(for (i in 1:2) {
         for (j in 1:886) {
             
             ### Fill the temp DF, read for calculating predictability
@@ -199,20 +196,12 @@ Calculate_predictability_percent <- function(sourceDir, destDir) {
             GP <- GM + GC
             P_free <- (s-1)*t
             
-            out[l,"P"] <- P
-            out[l,"C"] <- C
-            out[l,"M"] <- M
-            out[l,"Mutual"] <- IofXY
-            out[l,"GC"] <- GC
-            out[l,"C_freedom"] <- C_free
-            out[l,"GM"] <- GM
-            out[l,"M_freedom"] <- M_free
-            out[l,"GP"] <- GP
-            out[l,"P_freedom"] <- P_free
-            
-            l <- l + 1
+            out[out$i == i & out$j == j,"P"] <- P
+            out[out$i == i & out$j == j,"C"] <- C
+            out[out$i == i & out$j == j,"M"] <- M
+
         }   # j
-    }        # i
+    })        # i
     
     write.csv(out, paste0(destDir, "/Australia_rainfall_predictability_0.05_resolution.csv"),
               row.names=F)

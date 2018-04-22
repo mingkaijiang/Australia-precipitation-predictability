@@ -30,9 +30,8 @@ Calculate_annual_precipitation <- function(sourceDir, destDir) {
     out$i <- rep(1:691, each=886) 
     out$j <- rep(1:886, by = 691)
     
-    l <- 1
-
     ### output in each grid
+
     for (i in 1:691) {
         for (j in 1:886) {
             
@@ -70,9 +69,8 @@ Calculate_annual_precipitation <- function(sourceDir, destDir) {
             tmpDF[tmpDF$Year == 2008, "Sum"] <- sum(DF29[i,j,],na.rm=T)
             tmpDF[tmpDF$Year == 2009, "Sum"] <- sum(DF30[i,j,],na.rm=T)
 
-            out[l,"annual_prec"] <- mean(tmpDF$Sum)
-            
-            l <- l + 1
+            out[out$i == i & out$j == j,"annual_prec"] <- mean(tmpDF$Sum, na.rm=T)
+
         }   # j
     }       # i
     

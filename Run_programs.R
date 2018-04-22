@@ -23,6 +23,10 @@ source("prepare.R")
 #### 2.1 Convert from single file for each day to single file for each year
 Processing_data(sourceDir = "data", 
                 destDir = "processed_data")
+
+#### 2.2. Calculate 30-year average annual precipitation
+Calculate_annual_precipitation(sourceDir = "/Users/mingkaijiang/Documents/Research/Projects/Australia_precipitation_predictability/Git/processed_data",
+                               destDir = "/Users/mingkaijiang/Documents/Research/Projects/Australia_precipitation_predictability/Git/output")
     
 ###### 3. Calculate predictability
 #Calculate_predictability_absolute(sourceDir = "processed_data",
