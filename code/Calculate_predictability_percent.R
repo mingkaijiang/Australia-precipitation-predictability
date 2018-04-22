@@ -49,7 +49,7 @@ Calculate_predictability_percent <- function(sourceDir, destDir) {
     l <- 1
 
     ### output in each grid
-    for (i in 1:691) {
+    for (i in 1:2) {
         for (j in 1:886) {
             
             ### Fill the temp DF, read for calculating predictability
