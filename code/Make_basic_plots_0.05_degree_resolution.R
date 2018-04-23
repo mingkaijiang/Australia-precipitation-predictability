@@ -46,10 +46,7 @@ Make_basic_plots_0.05_degree_resolution <- function() {
     data.raster <- raster(subDF1)
     
     ### Cut raster data using Australia mask
-    d.raster2 <- mask(data.raster, aus.poly)
-    
-    ### Spatial aggregate
-    p.raster <- aggregate(d.raster2, fact=10, fun=mean, na.rm=T)
+    d.raster1 <- mask(data.raster, aus.poly)
     
     ### extract data
     subDF2 <- myDF[,c("x", "y", "C")]
@@ -65,10 +62,6 @@ Make_basic_plots_0.05_degree_resolution <- function() {
     ### Cut raster data using Australia mask
     d.raster2 <- mask(data.raster, aus.poly)
     
-    ### Spatial aggregate
-    c.raster <- aggregate(d.raster2, fact=10, fun=mean, na.rm=T)
-    
-    
     ### extract data
     subDF3 <- myDF[,c("x", "y", "M")]
     
@@ -83,10 +76,6 @@ Make_basic_plots_0.05_degree_resolution <- function() {
     ### Cut raster data using Australia mask
     d.raster3 <- mask(data.raster, aus.poly)
     
-    ### Spatial aggregate
-    m.raster <- aggregate(d.raster3, fact=10, fun=mean, na.rm=T)
-    
-
     ### extract data
     subDF4 <- precDF[,c("x", "y", "annual_prec")]
     
@@ -101,26 +90,25 @@ Make_basic_plots_0.05_degree_resolution <- function() {
     ### Cut raster data using Australia mask
     d.raster4 <- mask(data.raster, aus.poly)
     
-    ### Spatial aggregate
-    prec.raster <- aggregate(d.raster4, fact=10, fun=mean, na.rm=T)
-    
-    
-    
     #### Prepare P data
     pdf("output/basic_plots_0.05_degree_resolution.pdf")
     
-    ### 0.5 degree P
-    plot(p.raster)
+    ### 0.05 degree P
+    plot(d.raster1, main="Predictability", col=colorRamps::matlab.like(100))
     
-    ### 0.5 degree C
-    with(myDF, quilt.plot(x, y, C, nx=82, ny=66,  nlevel=100,
-                          xlim=c(110,160), ylim=c(5,45),
-                          main="Constancy", add.legend=T))
+    ### 0.05 degree C
+    plot(d.raster2, main="Constancy", col=colorRamps::matlab.like(100))
     
-    ### 0.5 degree M
-    with(myDF, quilt.plot(x, y, M, nx=82, ny=66,  nlevel=100,
-                          xlim=c(110,160), ylim=c(5,45),
-                          main="Contingency", add.legend=T))
+    ### 0.05 degree M
+    plot(d.raster3, main="Contingency", col=colorRamps::matlab.like(100))
+    
+    ### 0.05 degree annual rainfall
+    plot(d.raster4, main="Annual rainfall (mm)", col=colorRamps::matlab.like(100))
+    
+    ### 0.05 rainfall all grids
+    with(precDF, quilt.plot(x, abs(y), annual_prec,nx=820, ny=660,  nlevel=100,
+                            xlim=c(110,160), ylim=c(5,45),
+                            main="Annual rainfall (mm)", add.legend=T))
     
     dev.off()
     

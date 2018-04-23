@@ -44,3 +44,4 @@ vignettes/*.pdf
 *.Z
 *.grid
 *.rds
+*.pdf
