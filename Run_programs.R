@@ -25,13 +25,10 @@ Processing_data(sourceDir = "data",
                 destDir = "processed_data")
 
 #### 2.2. Calculate 30-year average annual precipitation
-Calculate_annual_precipitation(sourceDir = "/Users/mingkaijiang/Documents/Research/Projects/Australia_precipitation_predictability/Git/processed_data",
-                               destDir = "/Users/mingkaijiang/Documents/Research/Projects/Australia_precipitation_predictability/Git/output")
+Calculate_annual_precipitation(sourceDir = "processed_data",
+                               destDir = "output")
     
 ###### 3. Calculate predictability
-#Calculate_predictability_absolute(sourceDir = "processed_data",
-#                                 destDir = "output")
-
 Calculate_predictability_percent(sourceDir = "processed_data",
                                  destDir = "output")
 
@@ -41,8 +38,9 @@ Scaling_up_to_half_degree_resolution(inFile = "output/Australia_rainfall_predict
                                      outFile = "output/Australia_rainfall_predictability_0.5_resolution.csv")
 
 
-###### 5. Make some plots
-
+###### 5. Make some basic plots
+Make_basic_plots_0.5_degree_resolution()
+Make_basic_plots_0.05_degree_resolution()
 
 
 ###### End.
