@@ -52,6 +52,8 @@ scale_up_first <- function(sourceDir, destDir) {
             ### Assign to output
             out[,2+j] <- o[,3]
         }
+    
+        out$ann <- rowSums(out[,3:14])
         
         ### Save output
         write.csv(out, outname,

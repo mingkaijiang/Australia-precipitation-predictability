@@ -58,6 +58,12 @@ Make_basic_plots_0.05_degree_resolution()
 scale_up_first(sourceDir = "processed_data", 
                destDir = "scaled_data")
 
+#### 2.3 Calculate 30-year average annual precipitation
+Calculate_annual_precipitation_2(sourceDir = "scaled_data",
+                                 destDir = "output")
 
+###### 3. Calculate predictability
+Calculate_predictability_percent_2(sourceDir = "scaled_data",
+                                  destDir = "output")
 
 ###### End.
