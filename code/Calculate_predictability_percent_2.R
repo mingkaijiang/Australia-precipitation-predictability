@@ -9,10 +9,10 @@ Calculate_predictability_percent_2<- function(sourceDir, destDir) {
     }
     
     ### Read in all files in the input directory
-    filenames <- list.files(sourceDir, pattern="*.rds", full.names=TRUE)
+    filenames <- list.files(sourceDir, pattern="*.csv", full.names=TRUE)
     
     for (i in seq_along(filenames)) {
-        assign(paste0("DF", i), readRDS(filenames[i]))
+        assign(paste0("DF", i), read.csv(filenames[i]))
     }
     
     ### Create temporary DF
@@ -24,12 +24,12 @@ Calculate_predictability_percent_2<- function(sourceDir, destDir) {
     ts <- tmpDF$Year
     
     ### Create a out df to store all data in one file
-    out <- matrix(ncol=6, nrow=691 * 886)
+    out <- matrix(ncol=6, nrow=70*89)
     out <- as.data.frame(out, row.names = NULL, stringsAsFactors = FALSE)
-    colnames(out) <- c("Site_ID","i","j", "P","C","M")
-    out$Site_ID <- c(1:(691*886))
-    out$i <- rep(1:691, each=886) 
-    out$j <- rep(1:886, by = 691)
+    colnames(out) <- c("Site_ID","lon","lat", "P","C","M")
+    out$Site_ID <- c(1:(70*89))
+    out$lon <- DF1$lon
+    out$lat <- DF1$lat
     
     ### Get some general information
     years <- min(ts)
@@ -46,43 +46,42 @@ Calculate_predictability_percent_2<- function(sourceDir, destDir) {
     breaks = seq(0,1,0.1)
     
     ### output in each grid
-    for (i in 1:691) {
-        for (j in 1:886) {
-            
+    for (i in 1:nrow(out)) {
+
             ### Fill the temp DF, read for calculating predictability
             ### the " + 0.0000001" adds values to all 0's to avoid NA
-            tmpDF[tmpDF$Year == 1980, 2:13] <- DF1[i,j,] + 0.0000001
-            tmpDF[tmpDF$Year == 1981, 2:13] <- DF2[i,j,] + 0.0000001
-            tmpDF[tmpDF$Year == 1982, 2:13] <- DF3[i,j,] + 0.0000001
-            tmpDF[tmpDF$Year == 1983, 2:13] <- DF4[i,j,] + 0.0000001
-            tmpDF[tmpDF$Year == 1984, 2:13] <- DF5[i,j,] + 0.0000001
-            tmpDF[tmpDF$Year == 1985, 2:13] <- DF6[i,j,] + 0.0000001
-            tmpDF[tmpDF$Year == 1986, 2:13] <- DF7[i,j,] + 0.0000001
-            tmpDF[tmpDF$Year == 1987, 2:13] <- DF8[i,j,] + 0.0000001
-            tmpDF[tmpDF$Year == 1988, 2:13] <- DF9[i,j,] + 0.0000001
-            tmpDF[tmpDF$Year == 1989, 2:13] <- DF10[i,j,] + 0.0000001
+            tmpDF[tmpDF$Year == 1980, 2:13] <- DF1[i,3:14] + 0.0000001
+            tmpDF[tmpDF$Year == 1981, 2:13] <- DF2[i,3:14] + 0.0000001
+            tmpDF[tmpDF$Year == 1982, 2:13] <- DF3[i,3:14] + 0.0000001
+            tmpDF[tmpDF$Year == 1983, 2:13] <- DF4[i,3:14] + 0.0000001
+            tmpDF[tmpDF$Year == 1984, 2:13] <- DF5[i,3:14] + 0.0000001
+            tmpDF[tmpDF$Year == 1985, 2:13] <- DF6[i,3:14] + 0.0000001
+            tmpDF[tmpDF$Year == 1986, 2:13] <- DF7[i,3:14] + 0.0000001
+            tmpDF[tmpDF$Year == 1987, 2:13] <- DF8[i,3:14] + 0.0000001
+            tmpDF[tmpDF$Year == 1988, 2:13] <- DF9[i,3:14] + 0.0000001
+            tmpDF[tmpDF$Year == 1989, 2:13] <- DF10[i,3:14] + 0.0000001
             
-            tmpDF[tmpDF$Year == 1990, 2:13] <- DF11[i,j,] + 0.0000001
-            tmpDF[tmpDF$Year == 1991, 2:13] <- DF12[i,j,] + 0.0000001
-            tmpDF[tmpDF$Year == 1992, 2:13] <- DF13[i,j,] + 0.0000001
-            tmpDF[tmpDF$Year == 1993, 2:13] <- DF14[i,j,] + 0.0000001
-            tmpDF[tmpDF$Year == 1994, 2:13] <- DF15[i,j,] + 0.0000001
-            tmpDF[tmpDF$Year == 1995, 2:13] <- DF16[i,j,] + 0.0000001
-            tmpDF[tmpDF$Year == 1996, 2:13] <- DF17[i,j,] + 0.0000001
-            tmpDF[tmpDF$Year == 1997, 2:13] <- DF18[i,j,] + 0.0000001
-            tmpDF[tmpDF$Year == 1998, 2:13] <- DF19[i,j,] + 0.0000001
-            tmpDF[tmpDF$Year == 1999, 2:13] <- DF20[i,j,] + 0.0000001
+            tmpDF[tmpDF$Year == 1990, 2:13] <- DF11[i,3:14] + 0.0000001
+            tmpDF[tmpDF$Year == 1991, 2:13] <- DF12[i,3:14] + 0.0000001
+            tmpDF[tmpDF$Year == 1992, 2:13] <- DF13[i,3:14] + 0.0000001
+            tmpDF[tmpDF$Year == 1993, 2:13] <- DF14[i,3:14] + 0.0000001
+            tmpDF[tmpDF$Year == 1994, 2:13] <- DF15[i,3:14] + 0.0000001
+            tmpDF[tmpDF$Year == 1995, 2:13] <- DF16[i,3:14] + 0.0000001
+            tmpDF[tmpDF$Year == 1996, 2:13] <- DF17[i,3:14] + 0.0000001
+            tmpDF[tmpDF$Year == 1997, 2:13] <- DF18[i,3:14] + 0.0000001
+            tmpDF[tmpDF$Year == 1998, 2:13] <- DF19[i,3:14] + 0.0000001
+            tmpDF[tmpDF$Year == 1999, 2:13] <- DF20[i,3:14] + 0.0000001
             
-            tmpDF[tmpDF$Year == 2000, 2:13] <- DF21[i,j,] + 0.0000001
-            tmpDF[tmpDF$Year == 2001, 2:13] <- DF22[i,j,] + 0.0000001
-            tmpDF[tmpDF$Year == 2002, 2:13] <- DF23[i,j,] + 0.0000001
-            tmpDF[tmpDF$Year == 2003, 2:13] <- DF24[i,j,] + 0.0000001
-            tmpDF[tmpDF$Year == 2004, 2:13] <- DF25[i,j,] + 0.0000001
-            tmpDF[tmpDF$Year == 2005, 2:13] <- DF26[i,j,] + 0.0000001
-            tmpDF[tmpDF$Year == 2006, 2:13] <- DF27[i,j,] + 0.0000001
-            tmpDF[tmpDF$Year == 2007, 2:13] <- DF28[i,j,] + 0.0000001
-            tmpDF[tmpDF$Year == 2008, 2:13] <- DF29[i,j,] + 0.0000001
-            tmpDF[tmpDF$Year == 2009, 2:13] <- DF30[i,j,] + 0.0000001
+            tmpDF[tmpDF$Year == 2000, 2:13] <- DF21[i,3:14] + 0.0000001
+            tmpDF[tmpDF$Year == 2001, 2:13] <- DF22[i,3:14] + 0.0000001
+            tmpDF[tmpDF$Year == 2002, 2:13] <- DF23[i,3:14] + 0.0000001
+            tmpDF[tmpDF$Year == 2003, 2:13] <- DF24[i,3:14] + 0.0000001
+            tmpDF[tmpDF$Year == 2004, 2:13] <- DF25[i,3:14] + 0.0000001
+            tmpDF[tmpDF$Year == 2005, 2:13] <- DF26[i,3:14] + 0.0000001
+            tmpDF[tmpDF$Year == 2006, 2:13] <- DF27[i,3:14] + 0.0000001
+            tmpDF[tmpDF$Year == 2007, 2:13] <- DF28[i,3:14] + 0.0000001
+            tmpDF[tmpDF$Year == 2008, 2:13] <- DF29[i,3:14] + 0.0000001
+            tmpDF[tmpDF$Year == 2009, 2:13] <- DF30[i,3:14] + 0.0000001
 
             ### calculate as percentage of annual total
             tmpDF2 <- tmpDF[,1:13]
@@ -193,12 +192,11 @@ Calculate_predictability_percent_2<- function(sourceDir, destDir) {
             GP <- GM + GC
             P_free <- (s-1)*t
             
-            out[out$i == i & out$j == j,"P"] <- P
-            out[out$i == i & out$j == j,"C"] <- C
-            out[out$i == i & out$j == j,"M"] <- M
+            out[i,"P"] <- P
+            out[i,"C"] <- C
+            out[i,"M"] <- M
 
-        }   # j
-    }        # i
+    }   
     
     write.csv(out, paste0(destDir, "/Australia_rainfall_predictability_0.5_resolution_2.csv"),
               row.names=F)

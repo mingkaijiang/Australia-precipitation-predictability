@@ -47,7 +47,6 @@ Scaling_up_to_half_degree_resolution(inFile = "output/Australia_rainfall_predict
 
 
 ###### 5. Make some basic plots
-Make_basic_plots_0.5_degree_resolution()
 Make_basic_plots_0.05_degree_resolution()
 
 
@@ -65,5 +64,9 @@ Calculate_annual_precipitation_2(sourceDir = "scaled_data",
 ###### 3. Calculate predictability
 Calculate_predictability_percent_2(sourceDir = "scaled_data",
                                   destDir = "output")
+
+#### Make basic plot
+Make_basic_plots_0.5_degree_resolution()
+
 
 ###### End.
