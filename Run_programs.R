@@ -24,6 +24,14 @@ source("prepare.R")
 Processing_data(sourceDir = "data", 
                 destDir = "processed_data")
 
+
+###### There 2 ways of proceeding from this point
+###### The first way is to process data at 0.05 degree resolution first, 
+###### meaning we need to calculate predictability at 0.05 degree, 
+###### and then scale up to 0.5 degree resolution.
+###### The second way is to do scale up first, and then calculate predictability.
+###### I am doing two ways. Below is the first way of calculating predictability.
+
 #### 2.2. Calculate 30-year average annual precipitation
 Calculate_annual_precipitation(sourceDir = "processed_data",
                                destDir = "output")
@@ -41,6 +49,15 @@ Scaling_up_to_half_degree_resolution(inFile = "output/Australia_rainfall_predict
 ###### 5. Make some basic plots
 Make_basic_plots_0.5_degree_resolution()
 Make_basic_plots_0.05_degree_resolution()
+
+
+###### Below is the 2nd way of calculating predictability
+###### i.e. scale up first, then make calculations. 
+
+#### 2.2. Process the data into the right format
+scale_up_first(sourceDir = "processed_data", 
+               destDir = "scaled_data")
+
 
 
 ###### End.

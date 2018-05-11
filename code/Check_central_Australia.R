@@ -16,11 +16,11 @@ Check_central_Australia <- function() {
     myDF$x <- rep(x.list, by=nrows)
     
     ### Extract grids with prec = 0
-    test <- subset(myDF, annual_prec <= 100)
+    test <- subset(myDF, annual_prec <= 50)
     
     ### plot
     require(fields)
-    pdf("output/prec_less_than_100mm.pdf")
+    pdf("output/prec_less_than_50mm.pdf")
     quilt.plot(test$x, abs(test$y), test$annual_prec, 
                nx=820, ny=660,  nlevel=10)
     dev.off()
