@@ -16,7 +16,8 @@ pacman::p_load(RCurl,
                lubridate,
                raster,
                sp,
-               rgdal) # add other packages needed to this list
+               rgdal,
+               fields) # add other packages needed to this list
 
 
 # Sourcing all code functions

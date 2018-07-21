@@ -37,7 +37,7 @@ Calculate_predictability_decile<- function(sourceDir, destDir) {
     yearr <- yeare-years
     
     ### Create matrix to store the frequency table, without defining bin sizes
-    interval <- 10
+    interval <- 4
     bin <- matrix(0, ncol=14, nrow=interval)
     dimnames(bin) <- list(NULL,c("bin_size","Jan", "Feb", "Mar", "Apr", "May",
                                  "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "whole"))
@@ -81,13 +81,13 @@ Calculate_predictability_decile<- function(sourceDir, destDir) {
 
             ### Now can define the deciles
             decile.list <- quantile(data.matrix(tmpDF[,2:13]), 
-                                    prob=seq(0,1, length=11))
+                                    prob=seq(0,1, length=5))
             
-            max_top <- decile.list[11]
+            max_top <- decile.list[5]
             min_bot <- decile.list[0]
             diff <- max_top - min_bot
             
-            bin[,"bin_size"] <- decile.list[2:11]
+            bin[,"bin_size"] <- decile.list[2:5]
             breaks = decile.list
             
             ### check: if repeated decile, ignore this site
@@ -203,7 +203,7 @@ Calculate_predictability_decile<- function(sourceDir, destDir) {
             }
     }   
     
-    write.csv(out, paste0(destDir, "/Australia_rainfall_predictability_0.5_resolution_2.csv"),
+    write.csv(out, paste0(destDir, "/Australia_rainfall_predictability_0.5_resolution_quantile.csv"),
               row.names=F)
     
 }

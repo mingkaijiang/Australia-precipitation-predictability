@@ -1,11 +1,10 @@
-Make_basic_plots_0.5_degree_resolution <- function() {
-    
+Make_basic_plots_0.5_degree_resolution <- function(infile, outfile) {
     #### Read in 0.5 resolution gridded predictability data
-    myDF <- read.csv("output/Australia_rainfall_predictability_0.5_resolution_2.csv")
+    myDF <- read.csv(infile)
     
     #### Prepare P data
-    pdf("output/basic_plots_0.5_degree_resolution.pdf")
-    
+    pdf(paste0("output/", outfile, ".pdf"))
+
     ### 0.5 degree P
     with(myDF, quilt.plot(lon, lat, P, nx=82, ny=66,  nlevel=100,
                           xlim=c(110,160), ylim=c(5,45),

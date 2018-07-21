@@ -17,7 +17,7 @@ rm(list=ls(all=TRUE))
 source("prepare.R")
 
 #### Read in data
-Read_from_HIE_storage(s.yr = 1979, e.yr=1979)
+#Read_from_HIE_storage(s.yr = 1979, e.yr=1979)
 
 ###### 2. Process the data into the right format
 #### 2.1 Convert from single file for each day to single file for each year
@@ -66,7 +66,8 @@ Calculate_predictability_percent_2(sourceDir = "scaled_data",
                                   destDir = "output")
 
 #### Make basic plot
-Make_basic_plots_0.5_degree_resolution()
+Make_basic_plots_0.5_degree_resolution(infile="output/Australia_rainfall_predictability_0.5_resolution_2.csv",
+                                       outfile="basic_plots_0.5_degree_resolution")
 
 ###### Below is the 3rd way of calculating predictability
 ###### Use the scaled up data,
@@ -76,7 +77,9 @@ Make_basic_plots_0.5_degree_resolution()
 Calculate_predictability_exponential_binning(sourceDir = "scaled_data",
                                              destDir = "output_exp")
 
-
+###### 4. Make basic plot
+Make_basic_plots_0.5_degree_resolution(infile="output_exp/Australia_rainfall_predictability_0.5_resolution_exp.csv",
+                                       outfile="basic_plots_0.5_degree_resolution_exp")
 
 ###### Below is the 4th way of calculating predictability
 ###### Use the scaled up data,
@@ -85,5 +88,9 @@ Calculate_predictability_exponential_binning(sourceDir = "scaled_data",
 ###### 3. Calculate predictability
 Calculate_predictability_decile(sourceDir = "scaled_data",
                                 destDir = "output_decile")
+
+###### 4. Make basic plot
+Make_basic_plots_0.5_degree_resolution(infile="output_decile/Australia_rainfall_predictability_0.5_resolution_quantile.csv",
+                                       outfile="basic_plots_0.5_degree_resolution_quantile")
 
 ###### End.
