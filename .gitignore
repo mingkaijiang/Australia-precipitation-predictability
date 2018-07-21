@@ -45,3 +45,11 @@ vignettes/*.pdf
 *.grid
 *.rds
 *.pdf
+*.zip
+
+# bash stuff
+*.bash_history
+*.bash_logout
+*.bash_profile
+*.bashrc
+*.ssh
