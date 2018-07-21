@@ -17,7 +17,7 @@ rm(list=ls(all=TRUE))
 source("prepare.R")
 
 #### Read in data
-#Read_from_HIE_storage(s.yr = 1993, e.yr=1993)
+Read_from_HIE_storage(s.yr = 1979, e.yr=1979)
 
 ###### 2. Process the data into the right format
 #### 2.1 Convert from single file for each day to single file for each year
@@ -51,7 +51,7 @@ Make_basic_plots_0.05_degree_resolution()
 
 
 ###### Below is the 2nd way of calculating predictability
-###### i.e. scale up first, then make calculations. 
+###### i.e. scale up first, then make calculations of predictability. 
 
 #### 2.2. Process the data into the right format
 scale_up_first(sourceDir = "processed_data", 
@@ -68,5 +68,22 @@ Calculate_predictability_percent_2(sourceDir = "scaled_data",
 #### Make basic plot
 Make_basic_plots_0.5_degree_resolution()
 
+###### Below is the 3rd way of calculating predictability
+###### Use the scaled up data,
+###### Bin monthly rainfall data using power of 3
+
+###### 3. Calculate predictability
+Calculate_predictability_exponential_binning(sourceDir = "scaled_data",
+                                             destDir = "output_exp")
+
+
+
+###### Below is the 4th way of calculating predictability
+###### Use the scaled up data,
+###### Bin monthly rainfall data using decile at each site
+
+###### 3. Calculate predictability
+Calculate_predictability_decile(sourceDir = "scaled_data",
+                                destDir = "output_decile")
 
 ###### End.
