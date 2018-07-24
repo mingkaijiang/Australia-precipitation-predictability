@@ -42,6 +42,10 @@ Calculate_predictability_biome_decile<- function(sourceDir, destDir) {
     dimnames(bin) <- list(NULL,c("bin_size","Jan", "Feb", "Mar", "Apr", "May",
                                  "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "whole"))
     
+    ### Get biome information
+    bDF <- Read_biome_grids()
+    
+    
     ### output in each grid
     for (i in 1:nrow(out)) {
 
