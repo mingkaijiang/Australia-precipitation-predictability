@@ -24,10 +24,10 @@ Calculate_predictability_decile<- function(sourceDir, destDir) {
     ts <- tmpDF$Year
     
     ### Create a out df to store all data in one file
-    out <- matrix(ncol=6, nrow=70*89)
+    out <- matrix(ncol=6, nrow=346*443)
     out <- as.data.frame(out, row.names = NULL, stringsAsFactors = FALSE)
     colnames(out) <- c("Site_ID","lon","lat", "P","C","M")
-    out$Site_ID <- c(1:(70*89))
+    out$Site_ID <- c(1:(346*443))
     out$lon <- DF1$lon
     out$lat <- DF1$lat
     

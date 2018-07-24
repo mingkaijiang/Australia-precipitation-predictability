@@ -24,10 +24,10 @@ Calculate_predictability_exponential_binning<- function(sourceDir, destDir) {
     ts <- tmpDF$Year
     
     ### Create a out df to store all data in one file
-    out <- matrix(ncol=6, nrow=70*89)
+    out <- matrix(ncol=6, nrow=346*443)
     out <- as.data.frame(out, row.names = NULL, stringsAsFactors = FALSE)
     colnames(out) <- c("Site_ID","lon","lat", "P","C","M")
-    out$Site_ID <- c(1:(70*89))
+    out$Site_ID <- c(1:(346*443))
     out$lon <- DF1$lon
     out$lat <- DF1$lat
     
@@ -52,7 +52,7 @@ Calculate_predictability_exponential_binning<- function(sourceDir, destDir) {
     ### output in each grid
     for (i in 1:nrow(out)) {
 
-            ### Fill the temp DF, read for calculating predictability
+        ### Fill the temp DF, read for calculating predictability
         tmpDF[tmpDF$Year == 1930, 2:13] <- DF1[i,3:14]
         tmpDF[tmpDF$Year == 1931, 2:13] <- DF2[i,3:14]
         tmpDF[tmpDF$Year == 1932, 2:13] <- DF3[i,3:14]

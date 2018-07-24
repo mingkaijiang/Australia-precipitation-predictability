@@ -4,7 +4,8 @@ scale_up_first <- function(sourceDir, destDir) {
     ####
     
     ### Prepare output storage
-    out <- matrix(nrow=70*89, ncol=14) 
+    #out <- matrix(nrow=70*89, ncol=14) 
+    out <- matrix(nrow=346*443, ncol=14) 
     out <- as.data.frame(out)
     colnames(out) <- c("lon", "lat", "jan", "feb", "mar", "apr", "may", "jun",
                        "jul", "aug", "sep", "oct", "nov", "dec")
@@ -13,11 +14,11 @@ scale_up_first <- function(sourceDir, destDir) {
     f <- read.ascii.grid("/Volumes/Seagate Backup Plus Drive/Australia_predictability_data/1980/rain_19800101.grid")
     
     ### Create grid info
-    x.list <- seq(f$header$xllcorner, f$header$xllcorner + (0.5 * (89-1)), by=0.5)
-    y.list <- seq(f$header$yllcorner, f$header$yllcorner + (0.5 * (70-1)), by=0.5)
+    x.list <- seq(f$header$xllcorner, f$header$xllcorner + (0.1 * 442), by=0.1)
+    y.list <- seq(f$header$yllcorner, f$header$yllcorner + (0.1 * 345), by=0.1)
     
-    out$lat <- rep(abs(y.list), each=89)
-    out$lon <- rep(x.list, by=70)
+    out$lat <- rep(abs(y.list), each=443)
+    out$lon <- rep(x.list, by=346)
     
     ### create destDir if not exists
     if(!dir.exists(destDir)) {
@@ -28,7 +29,7 @@ scale_up_first <- function(sourceDir, destDir) {
     filenames <- list.files(sourceDir, pattern="*.rds", full.names=TRUE)
     
     ### create year list
-    yr.list <- c(1980:2009)
+    yr.list <- c(1930:2009)
     
     for (i in seq_along(filenames)) {
         
@@ -44,7 +45,7 @@ scale_up_first <- function(sourceDir, destDir) {
             r <- raster(myDF[,,j])
             
             ### Spatial aggregate
-            a <- aggregate(r, fact=10, fun=mean, na.rm=T)
+            a <- aggregate(r, fact=2, fun=mean, na.rm=T)
             
             #### Raster to points
             o <- rasterToPoints(a)

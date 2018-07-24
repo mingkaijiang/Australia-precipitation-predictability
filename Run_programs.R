@@ -29,8 +29,8 @@ Processing_data(sourceDir = "/Volumes/Seagate Backup Plus Drive/Australia_predic
 scale_up_first(sourceDir = "processed_data", 
                destDir = "scaled_data")
 
-#### 2.3 Calculate 30-year average annual precipitation, 
-####     return a single csv file in 10 km resolution
+#### 2.3 Calculate 80-year average annual precipitation, 
+####     return a single csv file in 10 km resolution (0.1 degree resolution)
 Calculate_annual_precipitation_2(sourceDir = "scaled_data",
                                  destDir = "output")
 
@@ -52,10 +52,10 @@ Calculate_predictability_biome_decile(sourceDir = "scaled_data",
                                       destDir = "output_biome_decile")
 
 ###### 4. Make basic plot
-Make_basic_plots_0.5_degree_resolution(infile="output/Australia_rainfall_predictability_10_km_resolution_2.csv",
+Make_basic_plots_0.1_degree_resolution(infile="output/Australia_rainfall_predictability_10_km_resolution_2.csv",
                                        outfile="basic_plots_10km_degree_resolution_percent")
 
-Make_basic_plots_0.5_degree_resolution(infile="output_exp/Australia_rainfall_predictability_10km_resolution_exp.csv",
+Make_basic_plots_0.1_degree_resolution(infile="output_exp/Australia_rainfall_predictability_10km_resolution_exp.csv",
                                        outfile="basic_plots_10km_degree_resolution_exp")
 
 Make_basic_plots_0.5_degree_resolution(infile="output_decile/Australia_rainfall_predictability_10km_resolution_quantile.csv",
