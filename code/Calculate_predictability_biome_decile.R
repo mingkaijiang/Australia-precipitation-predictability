@@ -1,4 +1,4 @@
-Calculate_predictability_decile<- function(sourceDir, destDir) {
+Calculate_predictability_biome_decile<- function(sourceDir, destDir) {
     #### Input data in 3-d format of grid, grid, month 
     #### Output data in format of: site ID, year, jan, feb, ...., dec, ann, for each grid
     ####
@@ -258,7 +258,7 @@ Calculate_predictability_decile<- function(sourceDir, destDir) {
         }
     }   
     
-    write.csv(out, paste0(destDir, "/Australia_rainfall_predictability_10km_resolution_quantile.csv"),
+    write.csv(out, paste0(destDir, "/Australia_rainfall_predictability_10km_resolution_biome_quantile.csv"),
               row.names=F)
     
 }

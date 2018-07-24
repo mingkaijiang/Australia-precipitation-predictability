@@ -28,7 +28,7 @@ Calculate_annual_precipitation_2 <- function(sourceDir, destDir) {
                                  DF25[i,"ann"],DF26[i,"ann"],DF27[i,"ann"],DF28[i,"ann"],DF29[i,"ann"],DF30[i,"ann"], na.rm=T)
     }
     
-    write.csv(outDF, paste0(destDir, "/Australia_rainfall_annual_0.5_resolution.csv"),
+    write.csv(outDF, paste0(destDir, "/Australia_rainfall_annual_10_km_resolution.csv"),
               row.names=F)
     
 }

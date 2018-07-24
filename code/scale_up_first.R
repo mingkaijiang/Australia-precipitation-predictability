@@ -10,7 +10,7 @@ scale_up_first <- function(sourceDir, destDir) {
                        "jul", "aug", "sep", "oct", "nov", "dec")
     
     ### prepare the finer resolution data
-    f <- read.ascii.grid("data/1980/rain_19800101.grid")
+    f <- read.ascii.grid("/Volumes/Seagate Backup Plus Drive/Australia_predictability_data/1980/rain_19800101.grid")
     
     ### Create grid info
     x.list <- seq(f$header$xllcorner, f$header$xllcorner + (0.5 * (89-1)), by=0.5)
