@@ -39,7 +39,7 @@ vignettes/*.pdf
 
 # data
 *.prj
-*.txt
+#*.txt
 *.csv
 *.Z
 *.grid

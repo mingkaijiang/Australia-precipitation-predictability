@@ -17,10 +17,11 @@ rm(list=ls(all=TRUE))
 source("prepare.R")
 
 #### Read in data
-#Read_from_HIE_storage(s.yr = 1979, e.yr=1979)
+#Read_from_HIE_storage(s.yr = 1979, e.yr=1979) don't use this!!!
 
 ###### 2. Process the data into the right format
 #### 2.1 Convert from single file for each day to single file for each year
+#### the data is stored in external hard drive, because it's bloody big
 Processing_data(sourceDir = "data", 
                 destDir = "processed_data")
 
