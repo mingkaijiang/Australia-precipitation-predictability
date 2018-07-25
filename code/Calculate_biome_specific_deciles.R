@@ -134,6 +134,8 @@ Calculate_biome_specific_deciles <- function(sourceDir, return.decision) {
                  m61, m62, m63, m64, m65, m66, m67, m68, m69, m70,
                  m71, m72, m73, m74, m75, m76, m77, m78, m79, m80)
     
+    eq.data <- eq.data[eq.data>0]
+    
     ### Combine monthly rainfall data for tropical sites
     m1 <- as.vector(as.matrix(DF1[DF1$ID %in% tr.sites, 3:14]))
     m2 <- as.vector(as.matrix(DF2[DF2$ID %in% tr.sites, 3:14]))
@@ -232,6 +234,8 @@ Calculate_biome_specific_deciles <- function(sourceDir, return.decision) {
                  m61, m62, m63, m64, m65, m66, m67, m68, m69, m70,
                  m71, m72, m73, m74, m75, m76, m77, m78, m79, m80)
  
+    tr.data <- tr.data[tr.data>0]
+    
     ### Combine monthly rainfall data for subtropical sites
     m1 <- as.vector(as.matrix(DF1[DF1$ID %in% sb.sites, 3:14]))
     m2 <- as.vector(as.matrix(DF2[DF2$ID %in% sb.sites, 3:14]))
@@ -329,6 +333,8 @@ Calculate_biome_specific_deciles <- function(sourceDir, return.decision) {
                  m51, m52, m53, m54, m55, m56, m57, m58, m59, m60,
                  m61, m62, m63, m64, m65, m66, m67, m68, m69, m70,
                  m71, m72, m73, m74, m75, m76, m77, m78, m79, m80)
+    
+    sb.data <- sb.data[sb.data>0]
     
     ### Combine monthly rainfall data for desert sites
     m1 <- as.vector(as.matrix(DF1[DF1$ID %in% ds.sites, 3:14]))
@@ -428,6 +434,8 @@ Calculate_biome_specific_deciles <- function(sourceDir, return.decision) {
                  m61, m62, m63, m64, m65, m66, m67, m68, m69, m70,
                  m71, m72, m73, m74, m75, m76, m77, m78, m79, m80)
     
+    ds.data <- ds.data[ds.data>0]
+    
     ### Combine monthly rainfall data for grassland sites
     m1 <- as.vector(as.matrix(DF1[DF1$ID %in% gs.sites, 3:14]))
     m2 <- as.vector(as.matrix(DF2[DF2$ID %in% gs.sites, 3:14]))
@@ -525,6 +533,8 @@ Calculate_biome_specific_deciles <- function(sourceDir, return.decision) {
                  m51, m52, m53, m54, m55, m56, m57, m58, m59, m60,
                  m61, m62, m63, m64, m65, m66, m67, m68, m69, m70,
                  m71, m72, m73, m74, m75, m76, m77, m78, m79, m80)
+    
+    gs.data <- gs.data[gs.data>0]
     
     ### Combine monthly rainfall data for temperate sites
     m1 <- as.vector(as.matrix(DF1[DF1$ID %in% tm.sites, 3:14]))
@@ -624,6 +634,8 @@ Calculate_biome_specific_deciles <- function(sourceDir, return.decision) {
                  m61, m62, m63, m64, m65, m66, m67, m68, m69, m70,
                  m71, m72, m73, m74, m75, m76, m77, m78, m79, m80)
     
+    tm.data <- tm.data[tm.data>0]
+    
     ### Combine monthly rainfall data for NA sites
     m1 <- as.vector(as.matrix(DF1[DF1$ID %in% na.sites, 3:14]))
     m2 <- as.vector(as.matrix(DF2[DF2$ID %in% na.sites, 3:14]))
@@ -721,6 +733,8 @@ Calculate_biome_specific_deciles <- function(sourceDir, return.decision) {
                  m51, m52, m53, m54, m55, m56, m57, m58, m59, m60,
                  m61, m62, m63, m64, m65, m66, m67, m68, m69, m70,
                  m71, m72, m73, m74, m75, m76, m77, m78, m79, m80)
+    
+    na.data <- na.data[na.data>0]
     
     b.list <- c("Equatorial", "Tropical", "Subtropical", "Desert", "Grassland", "Temperate", "Other")
     

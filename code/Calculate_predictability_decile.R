@@ -45,7 +45,7 @@ Calculate_predictability_decile<- function(sourceDir, destDir) {
     ### output in each grid
     for (i in 1:nrow(out)) {
 
-            ### Fill the temp DF, read for calculating predictability
+        ### Fill the temp DF, read for calculating predictability
         tmpDF[tmpDF$Year == 1930, 2:13] <- DF1[i,3:14]
         tmpDF[tmpDF$Year == 1931, 2:13] <- DF2[i,3:14]
         tmpDF[tmpDF$Year == 1932, 2:13] <- DF3[i,3:14]
