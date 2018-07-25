@@ -61,7 +61,7 @@ Make_basic_plots_0.1_degree_resolution(infile="output_exp/Australia_rainfall_pre
 Make_basic_plots_0.5_degree_resolution(infile="output_decile/Australia_rainfall_predictability_10km_resolution_quantile.csv",
                                        outfile="basic_plots_10km_degree_resolution_quantile")
 
-Make_basic_plots_0.5_degree_resolution(infile="output_decile/Australia_rainfall_predictability_10km_resolution_biome_quantile.csv",
+Make_basic_plots_0.5_degree_resolution(infile="output_biome_decile/Australia_rainfall_predictability_10km_resolution_biome_quantile.csv",
                                        outfile="basic_plots_10km_degree_resolution_biome_quantile")
 
 ###### End.
