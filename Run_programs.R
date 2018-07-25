@@ -52,7 +52,7 @@ Calculate_predictability_biome_decile(sourceDir = "scaled_data",
                                       destDir = "output_biome_decile")
 
 ###### 4. Make basic plot
-Make_basic_plots_0.1_degree_resolution(infile="output/Australia_rainfall_predictability_10_km_resolution_2.csv",
+Make_basic_plots_0.1_degree_resolution(infile="output/Australia_rainfall_predictability_10km_resolution_2.csv",
                                        outfile="basic_plots_10km_degree_resolution_percent")
 
 Make_basic_plots_0.1_degree_resolution(infile="output_exp/Australia_rainfall_predictability_10km_resolution_exp.csv",
