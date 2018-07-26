@@ -18,7 +18,7 @@ Calculate_biome_specific_deciles <- function(sourceDir, return.decision) {
     ###             Desert: 24, 23, 22, 21
     ###             Grassland: 15, 14, 13, 12, 11
     ###             Temperate: 9, 8, 7, 6, 5, 4, 3, 2, 1
-    na.sites <- bDF$Site_ID[bDF$Biome%in%c(41, 42)]
+    eq.sites <- bDF$Site_ID[bDF$Biome%in%c(40, 41, 42)]
     tr.sites <- bDF$Site_ID[bDF$Biome%in%c(37, 36, 35)]
     sb.sites <- bDF$Site_ID[bDF$Biome%in%c(34, 33, 32, 31)]
     ds.sites <- bDF$Site_ID[bDF$Biome%in%c(24, 23, 22, 21)]

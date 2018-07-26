@@ -28,8 +28,8 @@ Read_biome_grids <- function() {
     r <- raster(kpnDF)
     ext <- extent(xmn, xmx, ymn, ymx)
     extent(r) <- ext
-    #plot(r)
-    #world(add=T)
+    plot(r)
+    world(add=T)
     
     ### extract data according to gridDF lon and lat info
     biom.value <- extract(r, cbind(gridDF$lon, gridDF$lat))
@@ -41,6 +41,7 @@ Read_biome_grids <- function() {
     #gridded(plotDF) <- T
     #p <- raster(plotDF)
     #plot(p)
+    #world(add=T)
     
     return(subDF[,c("lon", "lat", "Biome")])
 }
