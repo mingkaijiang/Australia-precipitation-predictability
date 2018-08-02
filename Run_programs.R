@@ -58,14 +58,18 @@ Make_basic_plots_0.1_degree_resolution(infile="output/Australia_rainfall_predict
 Make_basic_plots_0.1_degree_resolution(infile="output_exp/Australia_rainfall_predictability_10km_resolution_exp.csv",
                                        outfile="basic_plots_10km_degree_resolution_exp")
 
-Make_basic_plots_0.5_degree_resolution(infile="output_decile/Australia_rainfall_predictability_10km_resolution_quantile.csv",
+Make_basic_plots_0.1_degree_resolution(infile="output_decile/Australia_rainfall_predictability_10km_resolution_quantile.csv",
                                        outfile="basic_plots_10km_degree_resolution_quantile")
 
-Make_basic_plots_0.5_degree_resolution(infile="output_biome_decile/Australia_rainfall_predictability_10km_resolution_biome_quantile.csv",
+Make_basic_plots_0.1_degree_resolution(infile="output_biome_decile/Australia_rainfall_predictability_10km_resolution_biome_quantile.csv",
                                        outfile="basic_plots_10km_degree_resolution_biome_quantile")
 
 #### 5. Conver to raster
 Convert_to_raster(infile="output_biome_decile/Australia_rainfall_predictability_10km_resolution_biome_quantile.csv")
 
+### conver into raster of the exponential binning result
+### and up-scale to 0.5 resolution (from 0.1), 
+### because this is what we decided to use for the paper
+Convert_to_raster_and_scaling_up(infile="output_biome_decile/Australia_rainfall_predictability_10km_resolution_biome_quantile.csv")
 
 ###### End.
