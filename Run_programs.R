@@ -21,9 +21,11 @@ source("prepare.R")
 
 ###### 2. Process the data into the right format
 
+unzip_file(sourceDir = paste0(getwd(), "/data/AWAP/rain"))
+
 #### 2.1 Convert from single file for each day to single file for each year
 ####     the data is stored in external hard drive, because it's bloody big
-Processing_data(sourceDir = paste0(getwd(), "/data/AWAP/rain"), 
+Processing_data(sourceDir = paste0("/Volumes/TOSHIBAEXT/AWAP/rain"), 
                 destDir = paste0(getwd(), "/processed_data"))
 
 #### 2.2. Process the data into the right format - scale up to 10 km resolution
