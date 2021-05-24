@@ -20,36 +20,38 @@ source("prepare.R")
 #Read_from_HIE_storage(s.yr = 1979, e.yr=1979) don't use this!!!
 
 ###### 2. Process the data into the right format
+
 #### 2.1 Convert from single file for each day to single file for each year
 ####     the data is stored in external hard drive, because it's bloody big
-Processing_data(sourceDir = "/Volumes/Seagate Backup Plus Drive/Australia_predictability_data", 
-                destDir = "processed_data")
+Processing_data(sourceDir = paste0(getwd(), "/data/AWAP/rain"), 
+                destDir = paste0(getwd(), "/processed_data"))
 
 #### 2.2. Process the data into the right format - scale up to 10 km resolution
-scale_up_first(sourceDir = "processed_data", 
-               destDir = "scaled_data")
+scale_up_first(sourceDir = paste0(getwd(), "/processed_data"), 
+               destDir = paste0(getwd(), "/scaled_data"))
+
 
 #### 2.3 Calculate 80-year average annual precipitation, 
 ####     return a single csv file in 10 km resolution (0.1 degree resolution)
-Calculate_annual_precipitation_2(sourceDir = "scaled_data",
-                                 destDir = "output")
+Calculate_annual_precipitation_2(sourceDir = paste0(getwd(), "/scaled_data"),
+                                 destDir = paste0(getwd(), "/output"))
 
 ###### 3. Calculate predictability
 #### 3.1 This is the first way, based on monthly % of annual total
-Calculate_predictability_percent_2(sourceDir = "scaled_data",
-                                  destDir = "output")
+Calculate_predictability_percent_2(sourceDir = paste0(getwd(), "/scaled_data"),
+                                  destDir = paste0(getwd(), "/output"))
 
 #### 3.2 Second way, bin monthly data using power of 3
-Calculate_predictability_exponential_binning(sourceDir = "scaled_data",
-                                             destDir = "output_exp")
+Calculate_predictability_exponential_binning(sourceDir = paste0(getwd(), "scaled_data"),
+                                             destDir = paste0(getwd(), "output_exp"))
 
 #### 3.3 Third way, bin monthly data using quantile of the entire data
-Calculate_predictability_decile(sourceDir = "scaled_data",
-                                destDir = "output_decile")
+Calculate_predictability_decile(sourceDir = paste0(getwd(), "/scaled_data"),
+                                destDir = paste0(getwd(), "/output_decile"))
 
 #### 3.4 Fourth way, bin monthly data using biome-specific quantile
-Calculate_predictability_biome_decile(sourceDir = "scaled_data",
-                                      destDir = "output_biome_decile")
+Calculate_predictability_biome_decile(sourceDir = paste0(getwd(), "/scaled_data"),
+                                      destDir = paste0(getwd(), "output_biome_decile"))
 
 ###### 4. Make basic plot
 Make_basic_plots_0.1_degree_resolution(infile="output/Australia_rainfall_predictability_10km_resolution_2.csv",
@@ -71,5 +73,10 @@ Convert_to_raster(infile="output_biome_decile/Australia_rainfall_predictability_
 ### and up-scale to 0.5 resolution (from 0.1), 
 ### because this is what we decided to use for the paper
 Convert_to_raster_and_scaling_up(infile="output_biome_decile/Australia_rainfall_predictability_10km_resolution_biome_quantile.csv")
+
+
+#### 6. select locations based on site coordinates
+select_sites(sourceDir = paste0(getwd(), "/processed_data"), 
+             destDir = paste0(getwd(), "/selected_data"))
 
 ###### End.

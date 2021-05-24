@@ -1,10 +1,26 @@
 Processing_data <- function(sourceDir, destDir) {
     #### To process the raw data into format easily readable
     
-    for (i in 1930:2009) {
+    ### unzip
+    for (i in 1946:1950) {
         ### complete the path
         sDir <- paste0(sourceDir, "/", i)
-
+        
+        DatFiles <- list.files(path = sDir, pattern = "\\.Z")
+        
+        for (j in 1:length(DatFiles)) {
+            system(paste0("uncompress ", sDir, "/", DatFiles[j]))
+            
+        }
+    }
+    
+    
+    ### convert into annual
+    for (i in 1946:1950) {
+        
+        ### complete the path
+        sDir <- paste0(sourceDir, "/", i)
+        
         ### create destDir if not exists
         if(!dir.exists(destDir)) {
             dir.create(destDir, showWarnings = FALSE)
