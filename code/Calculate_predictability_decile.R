@@ -9,7 +9,7 @@ Calculate_predictability_decile<- function(sourceDir, destDir) {
     }
     
     ### Read in all files in the input directory
-    filenames <- list.files(sourceDir, pattern="*.csv", full.names=TRUE)
+    filenames <- list.files(sourceDir, pattern="*.rds", full.names=TRUE)
     
     for (i in seq_along(filenames)) {
         assign(paste0("DF", i), read.csv(filenames[i]))
@@ -24,10 +24,10 @@ Calculate_predictability_decile<- function(sourceDir, destDir) {
     ts <- tmpDF$Year
     
     ### Create a out df to store all data in one file
-    out <- matrix(ncol=6, nrow=346*443)
+    out <- matrix(ncol=6, nrow=691*886)
     out <- as.data.frame(out, row.names = NULL, stringsAsFactors = FALSE)
     colnames(out) <- c("Site_ID","lon","lat", "P","C","M")
-    out$Site_ID <- c(1:(346*443))
+    out$Site_ID <- c(1:(691*886))
     out$lon <- DF1$lon
     out$lat <- DF1$lat
     
@@ -258,7 +258,6 @@ Calculate_predictability_decile<- function(sourceDir, destDir) {
         }
     }   
     
-    write.csv(out, paste0(destDir, "/Australia_rainfall_predictability_10km_resolution_quantile.csv"),
-              row.names=F)
+    write.csv(out, paste0(destDir, "/Australia_rainfall_predictability_quantile.rds"))
     
 }
