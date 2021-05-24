@@ -4,14 +4,13 @@ scale_up_first <- function(sourceDir, destDir) {
     ####
     
     ### Prepare output storage
-    #out <- matrix(nrow=70*89, ncol=14) 
     out <- matrix(nrow=691*886, ncol=14) 
     out <- as.data.frame(out)
     colnames(out) <- c("lon", "lat", "jan", "feb", "mar", "apr", "may", "jun",
                        "jul", "aug", "sep", "oct", "nov", "dec")
     
     ### prepare the finer resolution data
-    f <- read.ascii.grid(paste0(getwd(), "/data/AWAP/rain_19500101.grid"))
+    f <- read.ascii.grid(paste0(getwd(), "/data/rain_19500101.grid"))
     
     ### Create grid info
     #x.list <- seq(f$header$xllcorner, f$header$xllcorner + (0.1 * 442), by=0.1)
@@ -36,7 +35,7 @@ scale_up_first <- function(sourceDir, destDir) {
     filenames <- list.files(sourceDir, pattern="*.rds", full.names=TRUE)
     
     ### create year list
-    yr.list <- c(1930:1950)
+    yr.list <- c(1930:2019)
     
     for (i in seq_along(filenames)) {
         

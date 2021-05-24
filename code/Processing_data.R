@@ -1,7 +1,7 @@
 Processing_data <- function(sourceDir, destDir) {
     
     ### convert into annual
-    for (i in 1930:2019) {
+    for (i in 1978:2019) {
         
         ### complete the path
         sDir <- paste0(sourceDir, "/", i)
