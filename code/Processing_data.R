@@ -2,7 +2,7 @@ Processing_data <- function(sourceDir, destDir) {
     #### To process the raw data into format easily readable
     
     ### unzip
-    for (i in 1956:1960) {
+    for (i in 1966:1970) {
         ### complete the path
         sDir <- paste0(sourceDir, "/", i)
         
@@ -16,7 +16,7 @@ Processing_data <- function(sourceDir, destDir) {
     
     
     ### convert into annual
-    for (i in 1956:1960) {
+    for (i in 1966:1970) {
         
         ### complete the path
         sDir <- paste0(sourceDir, "/", i)

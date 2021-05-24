@@ -87,9 +87,8 @@ select_sites(sourceDir = paste0(getwd(), "/processed_data"),
 ###### 2. Process the data into the right format
 
 #### 2.1 Convert from single file for each day to single file for each year
-####     the data is stored in external hard drive, because it's bloody big
-Processing_data(sourceDir = paste0(getwd(), "/data/AWAP/tmp"), 
-                destDir = paste0(getwd(), "/processed_data_tmp"))
+Processing_data(sourceDir = paste0(getwd(), "/data/AWAP/temp_max"), 
+                destDir = paste0(getwd(), "/processed_data_temp_max"))
 
 #### 2.2. Process the data into the right format - scale up to 10 km resolution
 scale_up_first(sourceDir = paste0(getwd(), "/processed_data_tmp"), 
