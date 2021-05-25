@@ -1,12 +1,11 @@
 Read_biome_grids <- function() {
     ### gridDF - this is the precipitation grid df
-    gridDF <- read.csv("scaled_data/scaled_rainfall_DF1930.csv")
+    gridDF <- readRDS("scaled_rainfall_data/rainfall_monthly_DF1930.rds")
     gridDF$lat <- -gridDF$lat
     gridDF$id <- 1:length(gridDF$lat)
     subDF <- gridDF[,c("lon", "lat", "id")]
     
     ### Read in biome df
-    require(tseries)
     kpnDF <- read.matrix("data/kpngrp/kpngrp.txt", skip=6)
     kpnDF[kpnDF<0] <- NA
     
@@ -28,8 +27,8 @@ Read_biome_grids <- function() {
     r <- raster(kpnDF)
     ext <- extent(xmn, xmx, ymn, ymx)
     extent(r) <- ext
-    plot(r)
-    world(add=T)
+    #plot(r)
+    #world(add=T)
     
     ### extract data according to gridDF lon and lat info
     biom.value <- extract(r, cbind(gridDF$lon, gridDF$lat))

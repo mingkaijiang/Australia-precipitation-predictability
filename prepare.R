@@ -17,7 +17,8 @@ pacman::p_load(RCurl,
                raster,
                sp,
                rgdal,
-               fields) # add other packages needed to this list
+               fields,
+               tseries) # add other packages needed to this list
 
 
 # Sourcing all code functions

@@ -1,16 +1,12 @@
 Convert_to_raster_and_scaling_up <- function(infile) {
     #### Read in 0.1 resolution gridded predictability data
-    myDF <- read.csv(infile)
+    myDF <- readRDS(infile)
     
     #### Prepare P data
     pDF <- myDF[,c("lon", "lat", "P")]
     cDF <- myDF[,c("lon", "lat", "C")]
     mDF <- myDF[,c("lon", "lat", "M")]
-    
-    ### library
-    library(raster)
-    library(sp)
-    library(rgdal)
+
     
     ### coordinates
     coordinates(pDF)=~lon+lat

@@ -1,6 +1,6 @@
 Make_basic_plots_0.1_degree_resolution <- function(infile, outfile) {
     #### Read in 0.1 resolution gridded predictability data
-    myDF <- read.csv(infile)
+    myDF <- readRDS(infile)
     
     #### Prepare P data
     pdf(paste0("output/", outfile, ".pdf"))

@@ -5,11 +5,11 @@ Calculate_biome_specific_deciles <- function(sourceDir, return.decision) {
     bDF$Site_ID <- 1:length(bDF$lon)
     
     ### read precipitation data
-    filenames <- list.files(sourceDir, pattern="*.csv", full.names=TRUE)
+    filenames <- list.files(sourceDir, pattern="*.rds", full.names=TRUE)
 
     ### Read in all files in the input directory
     for (i in seq_along(filenames)) {
-        assign(paste0("DF", i), read.csv(filenames[i]))
+        assign(paste0("DF", i), readRDS(filenames[i]))
     }
     
     ### biomes are: Equatorial: 41, 42
@@ -35,7 +35,8 @@ Calculate_biome_specific_deciles <- function(sourceDir, return.decision) {
     DF51$ID <- DF52$ID <- DF53$ID <- DF54$ID <- DF55$ID <- DF56$ID <- DF57$ID <- DF58$ID <- DF59$ID <- DF60$ID <- 1:length(DF1$lon)
     DF61$ID <- DF62$ID <- DF63$ID <- DF64$ID <- DF65$ID <- DF66$ID <- DF67$ID <- DF68$ID <- DF69$ID <- DF70$ID <- 1:length(DF1$lon)
     DF71$ID <- DF72$ID <- DF73$ID <- DF74$ID <- DF75$ID <- DF76$ID <- DF77$ID <- DF78$ID <- DF79$ID <- DF80$ID <- 1:length(DF1$lon)
-
+    DF81$ID <- DF82$ID <- DF83$ID <- DF84$ID <- DF85$ID <- DF86$ID <- DF87$ID <- DF88$ID <- DF89$ID <- DF90$ID <- 1:length(DF1$lon)
+    
     ### Combine monthly rainfall data for equatorial sites
     m1 <- as.vector(as.matrix(DF1[DF1$ID %in% eq.sites, 3:14]))
     m2 <- as.vector(as.matrix(DF2[DF2$ID %in% eq.sites, 3:14]))
@@ -125,6 +126,17 @@ Calculate_biome_specific_deciles <- function(sourceDir, return.decision) {
     m79 <- as.vector(as.matrix(DF79[DF79$ID %in% eq.sites, 3:14]))
     m80 <- as.vector(as.matrix(DF80[DF80$ID %in% eq.sites, 3:14]))
     
+    m81 <- as.vector(as.matrix(DF81[DF81$ID %in% eq.sites, 3:14]))
+    m82 <- as.vector(as.matrix(DF82[DF82$ID %in% eq.sites, 3:14]))
+    m83 <- as.vector(as.matrix(DF83[DF83$ID %in% eq.sites, 3:14]))
+    m84 <- as.vector(as.matrix(DF84[DF84$ID %in% eq.sites, 3:14]))
+    m85 <- as.vector(as.matrix(DF85[DF85$ID %in% eq.sites, 3:14]))
+    m86 <- as.vector(as.matrix(DF86[DF86$ID %in% eq.sites, 3:14]))
+    m87 <- as.vector(as.matrix(DF87[DF87$ID %in% eq.sites, 3:14]))
+    m88 <- as.vector(as.matrix(DF88[DF88$ID %in% eq.sites, 3:14]))
+    m89 <- as.vector(as.matrix(DF89[DF89$ID %in% eq.sites, 3:14]))
+    m90 <- as.vector(as.matrix(DF90[DF90$ID %in% eq.sites, 3:14]))
+    
     eq.data <- c(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10,
                  m11, m12, m13, m14, m15, m16, m17, m18, m19, m20,
                  m21, m22, m23, m24, m25, m26, m27, m28, m29, m30,
@@ -132,7 +144,8 @@ Calculate_biome_specific_deciles <- function(sourceDir, return.decision) {
                  m41, m42, m43, m44, m45, m46, m47, m48, m49, m50,
                  m51, m52, m53, m54, m55, m56, m57, m58, m59, m60,
                  m61, m62, m63, m64, m65, m66, m67, m68, m69, m70,
-                 m71, m72, m73, m74, m75, m76, m77, m78, m79, m80)
+                 m71, m72, m73, m74, m75, m76, m77, m78, m79, m80,
+                 m81, m82, m83, m84, m85, m86, m87, m88, m89, m90)
     
     eq.data <- eq.data[eq.data>0]
     
@@ -225,6 +238,17 @@ Calculate_biome_specific_deciles <- function(sourceDir, return.decision) {
     m79 <- as.vector(as.matrix(DF79[DF79$ID %in% tr.sites, 3:14]))
     m80 <- as.vector(as.matrix(DF80[DF80$ID %in% tr.sites, 3:14]))
     
+    m81 <- as.vector(as.matrix(DF81[DF81$ID %in% tr.sites, 3:14]))
+    m82 <- as.vector(as.matrix(DF82[DF82$ID %in% tr.sites, 3:14]))
+    m83 <- as.vector(as.matrix(DF83[DF83$ID %in% tr.sites, 3:14]))
+    m84 <- as.vector(as.matrix(DF84[DF84$ID %in% tr.sites, 3:14]))
+    m85 <- as.vector(as.matrix(DF85[DF85$ID %in% tr.sites, 3:14]))
+    m86 <- as.vector(as.matrix(DF86[DF86$ID %in% tr.sites, 3:14]))
+    m87 <- as.vector(as.matrix(DF87[DF87$ID %in% tr.sites, 3:14]))
+    m88 <- as.vector(as.matrix(DF88[DF88$ID %in% tr.sites, 3:14]))
+    m89 <- as.vector(as.matrix(DF89[DF89$ID %in% tr.sites, 3:14]))
+    m90 <- as.vector(as.matrix(DF90[DF90$ID %in% tr.sites, 3:14]))
+    
     tr.data <- c(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10,
                  m11, m12, m13, m14, m15, m16, m17, m18, m19, m20,
                  m21, m22, m23, m24, m25, m26, m27, m28, m29, m30,
@@ -232,7 +256,8 @@ Calculate_biome_specific_deciles <- function(sourceDir, return.decision) {
                  m41, m42, m43, m44, m45, m46, m47, m48, m49, m50,
                  m51, m52, m53, m54, m55, m56, m57, m58, m59, m60,
                  m61, m62, m63, m64, m65, m66, m67, m68, m69, m70,
-                 m71, m72, m73, m74, m75, m76, m77, m78, m79, m80)
+                 m71, m72, m73, m74, m75, m76, m77, m78, m79, m80,
+                 m81, m82, m83, m84, m85, m86, m87, m88, m89, m90)
  
     tr.data <- tr.data[tr.data>0]
     
@@ -325,6 +350,17 @@ Calculate_biome_specific_deciles <- function(sourceDir, return.decision) {
     m79 <- as.vector(as.matrix(DF79[DF79$ID %in% sb.sites, 3:14]))
     m80 <- as.vector(as.matrix(DF80[DF80$ID %in% sb.sites, 3:14]))
     
+    m81 <- as.vector(as.matrix(DF81[DF81$ID %in% sb.sites, 3:14]))
+    m82 <- as.vector(as.matrix(DF82[DF82$ID %in% sb.sites, 3:14]))
+    m83 <- as.vector(as.matrix(DF83[DF83$ID %in% sb.sites, 3:14]))
+    m84 <- as.vector(as.matrix(DF84[DF84$ID %in% sb.sites, 3:14]))
+    m85 <- as.vector(as.matrix(DF85[DF85$ID %in% sb.sites, 3:14]))
+    m86 <- as.vector(as.matrix(DF86[DF86$ID %in% sb.sites, 3:14]))
+    m87 <- as.vector(as.matrix(DF87[DF87$ID %in% sb.sites, 3:14]))
+    m88 <- as.vector(as.matrix(DF88[DF88$ID %in% sb.sites, 3:14]))
+    m89 <- as.vector(as.matrix(DF89[DF89$ID %in% sb.sites, 3:14]))
+    m90 <- as.vector(as.matrix(DF90[DF90$ID %in% sb.sites, 3:14]))
+    
     sb.data <- c(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10,
                  m11, m12, m13, m14, m15, m16, m17, m18, m19, m20,
                  m21, m22, m23, m24, m25, m26, m27, m28, m29, m30,
@@ -332,7 +368,8 @@ Calculate_biome_specific_deciles <- function(sourceDir, return.decision) {
                  m41, m42, m43, m44, m45, m46, m47, m48, m49, m50,
                  m51, m52, m53, m54, m55, m56, m57, m58, m59, m60,
                  m61, m62, m63, m64, m65, m66, m67, m68, m69, m70,
-                 m71, m72, m73, m74, m75, m76, m77, m78, m79, m80)
+                 m71, m72, m73, m74, m75, m76, m77, m78, m79, m80,
+                 m81, m82, m83, m84, m85, m86, m87, m88, m89, m90)
     
     sb.data <- sb.data[sb.data>0]
     
@@ -425,6 +462,18 @@ Calculate_biome_specific_deciles <- function(sourceDir, return.decision) {
     m79 <- as.vector(as.matrix(DF79[DF79$ID %in% ds.sites, 3:14]))
     m80 <- as.vector(as.matrix(DF80[DF80$ID %in% ds.sites, 3:14]))
     
+    
+    m81 <- as.vector(as.matrix(DF81[DF81$ID %in% ds.sites, 3:14]))
+    m82 <- as.vector(as.matrix(DF82[DF82$ID %in% ds.sites, 3:14]))
+    m83 <- as.vector(as.matrix(DF83[DF83$ID %in% ds.sites, 3:14]))
+    m84 <- as.vector(as.matrix(DF84[DF84$ID %in% ds.sites, 3:14]))
+    m85 <- as.vector(as.matrix(DF85[DF85$ID %in% ds.sites, 3:14]))
+    m86 <- as.vector(as.matrix(DF86[DF86$ID %in% ds.sites, 3:14]))
+    m87 <- as.vector(as.matrix(DF87[DF87$ID %in% ds.sites, 3:14]))
+    m88 <- as.vector(as.matrix(DF88[DF88$ID %in% ds.sites, 3:14]))
+    m89 <- as.vector(as.matrix(DF89[DF89$ID %in% ds.sites, 3:14]))
+    m90 <- as.vector(as.matrix(DF90[DF90$ID %in% ds.sites, 3:14]))
+    
     ds.data <- c(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10,
                  m11, m12, m13, m14, m15, m16, m17, m18, m19, m20,
                  m21, m22, m23, m24, m25, m26, m27, m28, m29, m30,
@@ -432,7 +481,8 @@ Calculate_biome_specific_deciles <- function(sourceDir, return.decision) {
                  m41, m42, m43, m44, m45, m46, m47, m48, m49, m50,
                  m51, m52, m53, m54, m55, m56, m57, m58, m59, m60,
                  m61, m62, m63, m64, m65, m66, m67, m68, m69, m70,
-                 m71, m72, m73, m74, m75, m76, m77, m78, m79, m80)
+                 m71, m72, m73, m74, m75, m76, m77, m78, m79, m80,
+                 m81, m82, m83, m84, m85, m86, m87, m88, m89, m90)
     
     ds.data <- ds.data[ds.data>0]
     
@@ -525,6 +575,17 @@ Calculate_biome_specific_deciles <- function(sourceDir, return.decision) {
     m79 <- as.vector(as.matrix(DF79[DF79$ID %in% gs.sites, 3:14]))
     m80 <- as.vector(as.matrix(DF80[DF80$ID %in% gs.sites, 3:14]))
     
+    m81 <- as.vector(as.matrix(DF81[DF81$ID %in% gs.sites, 3:14]))
+    m82 <- as.vector(as.matrix(DF82[DF82$ID %in% gs.sites, 3:14]))
+    m83 <- as.vector(as.matrix(DF83[DF83$ID %in% gs.sites, 3:14]))
+    m84 <- as.vector(as.matrix(DF84[DF84$ID %in% gs.sites, 3:14]))
+    m85 <- as.vector(as.matrix(DF85[DF85$ID %in% gs.sites, 3:14]))
+    m86 <- as.vector(as.matrix(DF86[DF86$ID %in% gs.sites, 3:14]))
+    m87 <- as.vector(as.matrix(DF87[DF87$ID %in% gs.sites, 3:14]))
+    m88 <- as.vector(as.matrix(DF88[DF88$ID %in% gs.sites, 3:14]))
+    m89 <- as.vector(as.matrix(DF89[DF89$ID %in% gs.sites, 3:14]))
+    m90 <- as.vector(as.matrix(DF90[DF90$ID %in% gs.sites, 3:14]))
+    
     gs.data <- c(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10,
                  m11, m12, m13, m14, m15, m16, m17, m18, m19, m20,
                  m21, m22, m23, m24, m25, m26, m27, m28, m29, m30,
@@ -532,7 +593,8 @@ Calculate_biome_specific_deciles <- function(sourceDir, return.decision) {
                  m41, m42, m43, m44, m45, m46, m47, m48, m49, m50,
                  m51, m52, m53, m54, m55, m56, m57, m58, m59, m60,
                  m61, m62, m63, m64, m65, m66, m67, m68, m69, m70,
-                 m71, m72, m73, m74, m75, m76, m77, m78, m79, m80)
+                 m71, m72, m73, m74, m75, m76, m77, m78, m79, m80,
+                 m81, m82, m83, m84, m85, m86, m87, m88, m89, m90)
     
     gs.data <- gs.data[gs.data>0]
     
@@ -625,6 +687,17 @@ Calculate_biome_specific_deciles <- function(sourceDir, return.decision) {
     m79 <- as.vector(as.matrix(DF79[DF79$ID %in% tm.sites, 3:14]))
     m80 <- as.vector(as.matrix(DF80[DF80$ID %in% tm.sites, 3:14]))
     
+    m81 <- as.vector(as.matrix(DF81[DF81$ID %in% tm.sites, 3:14]))
+    m82 <- as.vector(as.matrix(DF82[DF82$ID %in% tm.sites, 3:14]))
+    m83 <- as.vector(as.matrix(DF83[DF83$ID %in% tm.sites, 3:14]))
+    m84 <- as.vector(as.matrix(DF84[DF84$ID %in% tm.sites, 3:14]))
+    m85 <- as.vector(as.matrix(DF85[DF85$ID %in% tm.sites, 3:14]))
+    m86 <- as.vector(as.matrix(DF86[DF86$ID %in% tm.sites, 3:14]))
+    m87 <- as.vector(as.matrix(DF87[DF87$ID %in% tm.sites, 3:14]))
+    m88 <- as.vector(as.matrix(DF88[DF88$ID %in% tm.sites, 3:14]))
+    m89 <- as.vector(as.matrix(DF89[DF89$ID %in% tm.sites, 3:14]))
+    m90 <- as.vector(as.matrix(DF90[DF90$ID %in% tm.sites, 3:14]))
+    
     tm.data <- c(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10,
                  m11, m12, m13, m14, m15, m16, m17, m18, m19, m20,
                  m21, m22, m23, m24, m25, m26, m27, m28, m29, m30,
@@ -632,7 +705,8 @@ Calculate_biome_specific_deciles <- function(sourceDir, return.decision) {
                  m41, m42, m43, m44, m45, m46, m47, m48, m49, m50,
                  m51, m52, m53, m54, m55, m56, m57, m58, m59, m60,
                  m61, m62, m63, m64, m65, m66, m67, m68, m69, m70,
-                 m71, m72, m73, m74, m75, m76, m77, m78, m79, m80)
+                 m71, m72, m73, m74, m75, m76, m77, m78, m79, m80,
+                 m81, m82, m83, m84, m85, m86, m87, m88, m89, m90)
     
     tm.data <- tm.data[tm.data>0]
     
@@ -725,6 +799,18 @@ Calculate_biome_specific_deciles <- function(sourceDir, return.decision) {
     m79 <- as.vector(as.matrix(DF79[DF79$ID %in% na.sites, 3:14]))
     m80 <- as.vector(as.matrix(DF80[DF80$ID %in% na.sites, 3:14]))
     
+    
+    m81 <- as.vector(as.matrix(DF81[DF81$ID %in% na.sites, 3:14]))
+    m82 <- as.vector(as.matrix(DF82[DF82$ID %in% na.sites, 3:14]))
+    m83 <- as.vector(as.matrix(DF83[DF83$ID %in% na.sites, 3:14]))
+    m84 <- as.vector(as.matrix(DF84[DF84$ID %in% na.sites, 3:14]))
+    m85 <- as.vector(as.matrix(DF85[DF85$ID %in% na.sites, 3:14]))
+    m86 <- as.vector(as.matrix(DF86[DF86$ID %in% na.sites, 3:14]))
+    m87 <- as.vector(as.matrix(DF87[DF87$ID %in% na.sites, 3:14]))
+    m88 <- as.vector(as.matrix(DF88[DF88$ID %in% na.sites, 3:14]))
+    m89 <- as.vector(as.matrix(DF89[DF89$ID %in% na.sites, 3:14]))
+    m90 <- as.vector(as.matrix(DF90[DF90$ID %in% na.sites, 3:14]))
+    
     na.data <- c(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10,
                  m11, m12, m13, m14, m15, m16, m17, m18, m19, m20,
                  m21, m22, m23, m24, m25, m26, m27, m28, m29, m30,
@@ -732,7 +818,8 @@ Calculate_biome_specific_deciles <- function(sourceDir, return.decision) {
                  m41, m42, m43, m44, m45, m46, m47, m48, m49, m50,
                  m51, m52, m53, m54, m55, m56, m57, m58, m59, m60,
                  m61, m62, m63, m64, m65, m66, m67, m68, m69, m70,
-                 m71, m72, m73, m74, m75, m76, m77, m78, m79, m80)
+                 m71, m72, m73, m74, m75, m76, m77, m78, m79, m80,
+                 m81, m82, m83, m84, m85, m86, m87, m88, m89, m90)
     
     na.data <- na.data[na.data>0]
     

@@ -12,15 +12,15 @@ Calculate_predictability_decile<- function(sourceDir, destDir) {
     filenames <- list.files(sourceDir, pattern="*.rds", full.names=TRUE)
     
     for (i in seq_along(filenames)) {
-        assign(paste0("DF", i), read.csv(filenames[i]))
+        assign(paste0("DF", i), readRDS(filenames[i]))
     }
     
     ### Create temporary DF
-    tmpDF <- matrix(ncol = 13, nrow = 80)
+    tmpDF <- matrix(ncol = 13, nrow = 90)
     tmpDF <- as.data.frame(tmpDF)
     colnames(tmpDF) <- c("Year", "Jan", "Feb", "Mar", "Apr", "May",
                        "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
-    tmpDF$Year <- c(1930:2009)
+    tmpDF$Year <- c(1930:2019)
     ts <- tmpDF$Year
     
     ### Create a out df to store all data in one file
@@ -133,6 +133,17 @@ Calculate_predictability_decile<- function(sourceDir, destDir) {
         tmpDF[tmpDF$Year == 2007, 2:13] <- DF78[i,3:14]
         tmpDF[tmpDF$Year == 2008, 2:13] <- DF79[i,3:14]
         tmpDF[tmpDF$Year == 2009, 2:13] <- DF80[i,3:14]
+        
+        tmpDF[tmpDF$Year == 2010, 2:13] <- DF81[i,3:14]
+        tmpDF[tmpDF$Year == 2011, 2:13] <- DF82[i,3:14]
+        tmpDF[tmpDF$Year == 2012, 2:13] <- DF83[i,3:14]
+        tmpDF[tmpDF$Year == 2013, 2:13] <- DF84[i,3:14]
+        tmpDF[tmpDF$Year == 2014, 2:13] <- DF85[i,3:14]
+        tmpDF[tmpDF$Year == 2015, 2:13] <- DF86[i,3:14]
+        tmpDF[tmpDF$Year == 2016, 2:13] <- DF87[i,3:14]
+        tmpDF[tmpDF$Year == 2017, 2:13] <- DF88[i,3:14]
+        tmpDF[tmpDF$Year == 2018, 2:13] <- DF89[i,3:14]
+        tmpDF[tmpDF$Year == 2019, 2:13] <- DF90[i,3:14]
 
         ### Now can define the deciles
         decile.list <- quantile(data.matrix(tmpDF[,2:13]), 
@@ -258,6 +269,6 @@ Calculate_predictability_decile<- function(sourceDir, destDir) {
         }
     }   
     
-    write.csv(out, paste0(destDir, "/Australia_rainfall_predictability_quantile.rds"))
+    saveRDS(out, paste0(destDir, "/Australia_rainfall_predictability_quantile.rds"))
     
 }

@@ -9,25 +9,25 @@ Calculate_predictability_biome_decile<- function(sourceDir, destDir) {
     }
     
     ### Read in all files in the input directory
-    filenames <- list.files(sourceDir, pattern="*.csv", full.names=TRUE)
+    filenames <- list.files(sourceDir, pattern="*.rds", full.names=TRUE)
     
     for (i in seq_along(filenames)) {
-        assign(paste0("DF", i), read.csv(filenames[i]))
+        assign(paste0("DF", i), readRDS(filenames[i]))
     }
     
     ### Create temporary DF
-    tmpDF <- matrix(ncol = 13, nrow = 80)
+    tmpDF <- matrix(ncol = 13, nrow = 90)
     tmpDF <- as.data.frame(tmpDF)
     colnames(tmpDF) <- c("Year", "Jan", "Feb", "Mar", "Apr", "May",
                        "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
-    tmpDF$Year <- c(1930:2009)
+    tmpDF$Year <- c(1930:2019)
     ts <- tmpDF$Year
     
     ### Create a out df to store all data in one file
-    out <- matrix(ncol=6, nrow=346*443)
+    out <- matrix(ncol=6, nrow=691*886)
     out <- as.data.frame(out, row.names = NULL, stringsAsFactors = FALSE)
     colnames(out) <- c("Site_ID","lon","lat", "P","C","M")
-    out$Site_ID <- c(1:(346*443))
+    out$Site_ID <- c(1:(691*886))
     out$lon <- DF1$lon
     out$lat <- DF1$lat
     
@@ -68,6 +68,7 @@ Calculate_predictability_biome_decile<- function(sourceDir, destDir) {
     DF51$ID <- DF52$ID <- DF53$ID <- DF54$ID <- DF55$ID <- DF56$ID <- DF57$ID <- DF58$ID <- DF59$ID <- DF60$ID <- 1:length(DF1$lon)
     DF61$ID <- DF62$ID <- DF63$ID <- DF64$ID <- DF65$ID <- DF66$ID <- DF67$ID <- DF68$ID <- DF69$ID <- DF70$ID <- 1:length(DF1$lon)
     DF71$ID <- DF72$ID <- DF73$ID <- DF74$ID <- DF75$ID <- DF76$ID <- DF77$ID <- DF78$ID <- DF79$ID <- DF80$ID <- 1:length(DF1$lon)
+    DF81$ID <- DF82$ID <- DF83$ID <- DF84$ID <- DF85$ID <- DF86$ID <- DF87$ID <- DF88$ID <- DF89$ID <- DF90$ID <- 1:length(DF1$lon)
     
     
     ### output in each grid
@@ -161,6 +162,18 @@ Calculate_predictability_biome_decile<- function(sourceDir, destDir) {
         tmpDF[tmpDF$Year == 2007, 2:13] <- DF78[i,3:14]
         tmpDF[tmpDF$Year == 2008, 2:13] <- DF79[i,3:14]
         tmpDF[tmpDF$Year == 2009, 2:13] <- DF80[i,3:14]
+        
+        
+        tmpDF[tmpDF$Year == 2010, 2:13] <- DF81[i,3:14]
+        tmpDF[tmpDF$Year == 2011, 2:13] <- DF82[i,3:14]
+        tmpDF[tmpDF$Year == 2012, 2:13] <- DF83[i,3:14]
+        tmpDF[tmpDF$Year == 2013, 2:13] <- DF84[i,3:14]
+        tmpDF[tmpDF$Year == 2014, 2:13] <- DF85[i,3:14]
+        tmpDF[tmpDF$Year == 2015, 2:13] <- DF86[i,3:14]
+        tmpDF[tmpDF$Year == 2016, 2:13] <- DF87[i,3:14]
+        tmpDF[tmpDF$Year == 2017, 2:13] <- DF88[i,3:14]
+        tmpDF[tmpDF$Year == 2018, 2:13] <- DF89[i,3:14]
+        tmpDF[tmpDF$Year == 2019, 2:13] <- DF90[i,3:14]
 
         ### Now can look for the decile/quantile range
         if (i %in% eq.sites) {
@@ -293,7 +306,6 @@ Calculate_predictability_biome_decile<- function(sourceDir, destDir) {
         
     }   
     
-    write.csv(out, paste0(destDir, "/Australia_rainfall_predictability_10km_resolution_biome_quantile.csv"),
-              row.names=F)
+    saveRDS(out, paste0(destDir, "/Australia_rainfall_predictability_biome_quantile.rds"))
     
 }

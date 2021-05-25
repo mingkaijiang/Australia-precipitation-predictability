@@ -1,7 +1,7 @@
-Processing_data <- function(sourceDir, destDir) {
+Processing_data_temperature <- function(sourceDir, destDir) {
     
     ### convert into annual
-    for (i in 1930:2019) {
+    for (i in 1932:2019) {
         
         ### complete the path
         sDir <- paste0(sourceDir, "/", i)
@@ -32,7 +32,7 @@ Processing_data <- function(sourceDir, destDir) {
             daily.tmp[, , j] <- myDF$data
         }   
         
-        ### calculate monthly sum precipitation for each grid
+        ### calculate monthly mean temperature for each grid
         ## Jan
         out[,,1] <- matrix(mapply(sum, daily.tmp[,,1],daily.tmp[,,2],daily.tmp[,,3],
                                   daily.tmp[,,4],daily.tmp[,,5],daily.tmp[,,6],
@@ -338,8 +338,29 @@ Processing_data <- function(sourceDir, destDir) {
                                        MoreArgs=list(na.rm=T)))
         }  # end of if statement
         
+        # obtain average values
+        out[,,1] <- out[,,1] / 31.0
+        out[,,3] <- out[,,3] / 31.0
+        out[,,4] <- out[,,4] / 30.0
+        out[,,5] <- out[,,5] / 31.0
+        out[,,6] <- out[,,6] / 30.0
+        out[,,7] <- out[,,7] / 31.0
+        out[,,8] <- out[,,8] / 31.0
+        out[,,9] <- out[,,9] / 30.0
+        out[,,10] <- out[,,10] / 31.0
+        out[,,11] <- out[,,11] / 30.0
+        out[,,12] <- out[,,12] / 31.0
+        
+        if (leap_year(i)) {
+          out[,,2] / out[,,2] / 29.0
+        } else {
+          out[,,2] / out[,,2] / 28.0
+        }
+        
         saveRDS(out, file=paste0(destDir, "/DF", i, ".rds"))
         
         
     }  # i loop
 }   # function loop
+
+
