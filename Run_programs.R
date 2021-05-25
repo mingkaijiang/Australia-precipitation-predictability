@@ -90,8 +90,12 @@ select_sites(sourceDir = paste0(getwd(), "/output_rainfall_decile"),
 ###### 2. Process the data into the right format
 
 #### 2.1 Convert from single file for each day to single file for each year
-Processing_data_temperature(paste0("/Volumes/TOSHIBAEXT/AWAP/tmax"), 
+Processing_data_temperature(sourceDir = paste0("/Volumes/TOSHIBAEXT/AWAP/tmax"), 
                             destDir = paste0(getwd(), "/processed_data_tmax"))
+
+
+Processing_data_temperature(sourceDir = paste0("/Volumes/TOSHIBAEXT/AWAP/tmin"), 
+                            destDir = paste0(getwd(), "/processed_data_tmin"))
 
 #### 2.2. Process the data into the right format - scale up to 10 km resolution
 scale_up_first(sourceDir = paste0(getwd(), "/processed_data_tmax"), 
