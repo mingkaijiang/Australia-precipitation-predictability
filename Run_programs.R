@@ -27,13 +27,12 @@ Processing_data(sourceDir = paste0("/Volumes/TOSHIBAEXT/AWAP/rain"),
                 destDir = paste0(getwd(), "/processed_data"))
 
 #### 2.2. Process the data into the right format 
-#### - scale up to 10 km resolution
-#### - convert to monthly
+#### formatting the data - convert into long format
 scale_up_first(sourceDir = paste0(getwd(), "/processed_data"), 
                destDir = paste0(getwd(), "/scaled_rainfall_data"))
 
 
-#### 2.3 Calculate 80-year average annual precipitation, 
+#### 2.3 Calculate 90-year average annual precipitation, 
 ####     return a single csv file in 5 km resolution (0.05 degree resolution)
 Calculate_annual_precipitation_2(sourceDir = paste0(getwd(), "/scaled_rainfall_data"),
                                  destDir = paste0(getwd(), "/output"))
@@ -97,15 +96,17 @@ Processing_data_temperature(sourceDir = paste0("/Volumes/TOSHIBAEXT/AWAP/tmax"),
 Processing_data_temperature(sourceDir = paste0("/Volumes/TOSHIBAEXT/AWAP/tmin"), 
                             destDir = paste0(getwd(), "/processed_data_tmin"))
 
-#### 2.2. Process the data into the right format - scale up to 10 km resolution
-scale_up_first(sourceDir = paste0(getwd(), "/processed_data_tmax"), 
-               destDir = paste0(getwd(), "/scaled_data_tmax"))
+
+### calculate mean based on min and max, then convert into long format
+calculate_monthly_mean_temperature(sourceDir1 = paste0(getwd(), "/processed_data_tmax"),
+                                   sourceDir2 = paste0(getwd(), "/processed_data_tmin"),
+                                   destDir = paste0(getwd(), "/processed_data_tmean"))
 
 
 #### 2.3 Calculate 80-year average annual precipitation, 
 ####     return a single csv file in 5 km resolution (0.05 degree resolution)
-Calculate_annual_precipitation_2(sourceDir = paste0(getwd(), "/scaled_data_tmax"),
-                                 destDir = paste0(getwd(), "/output"))
+Calculate_annual_mean_temperature(sourceDir = paste0(getwd(), "/processed_data_tmean"),
+                                  destDir = paste0(getwd(), "/output"))
 
 
 #### 3.3 Third way, bin monthly data using quantile of the entire data

@@ -23,7 +23,26 @@ Calculate_annual_precipitation_2 <- function(sourceDir, destDir) {
     outDF$sum <- Reduce("+", lapply(mget(paste0('DF', 1:90)), "[[", c("ann")))
     outDF$mean <- outDF$sum/90
     
-    
     saveRDS(outDF, paste0(destDir, "/Australia_rainfall_annual_average.rds"))
+    
+    outDF2 <- outDF[outDF$mean < 10, ]
+    
+    
+    ### make a plot
+    #### Prepare P data
+    pdf(paste0(destDir, "/Australia_rainfall_90yr_mean.pdf"))
+    
+    ### 0.05 resolution
+    with(outDF, quilt.plot(lon, -lat, mean, nx=400, ny=300,  nlevel=100,
+                          xlim=c(110,160), ylim=c(5,45),
+                          main="MAP (mm)", add.legend=T))
+    
+    
+    with(outDF2, quilt.plot(lon, lat, mean, nx=400, ny=300, nlevel=100,
+                           xlim=c(110,160), ylim=c(5,45),
+                           main="MAP (mm)", add.legend=T))
+    world(add=T)
+    
+    dev.off()
     
 }

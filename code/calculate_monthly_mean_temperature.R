@@ -1,4 +1,4 @@
-scale_up_first <- function(sourceDir, destDir) {
+calculate_monthly_mean_temperature <- function(sourceDir1, sourceDir2, destDir) {
     #### Input data in 3-d format of grid, grid, month 
     #### Output data in format of: site ID, year, jan, feb, ...., dec, ann, for each grid
     ####
@@ -25,32 +25,32 @@ scale_up_first <- function(sourceDir, destDir) {
         dir.create(destDir, showWarnings = FALSE)
     }
     
-    ### australia boundary - resolution too coarse
-    #ausDF <- raster(paste0(getwd(), "/data/Australia_masks/AusMaskt_180326.asc"))
-    #ausDF2 <- raster(paste0(getwd(), "/data/Australia_masks/Mask_Equal_50km.asc"))
-    
-    
     ### Read in all files in the input directory
-    filenames <- list.files(sourceDir, pattern="*.rds", full.names=TRUE)
+    filenames <- list.files(sourceDir1, pattern="*.rds", full.names=TRUE)
     
     ### create year list
     yr.list <- c(1930:2019)
     
-    for (i in seq_along(filenames)) {
+    for (i in yr.list) {
         
         ### Read R database
-        myDF <- readRDS(filenames[i])
+        tmax.files <- paste0(sourceDir1, "/DF", i, ".rds")
+        tmin.files <- paste0(sourceDir2, "/DF", i, ".rds")
+        
+        myDF1 <- readRDS(tmax.files)
+        myDF2 <- readRDS(tmin.files)
+        
+        mylist <- list(myDF1, myDF2)
+        
+        myDF <- Reduce("+", mylist) / length(mylist)
         
         ### outfile name
-        outname <- paste0(destDir, "/rainfall_monthly_DF", yr.list[i], ".rds")
+        outname <- paste0(destDir, "/DF", i, ".rds")
         
         ### Loop through month
         for (j in 1:12) {
             ### Convert into raster
             r <- raster(myDF[,,j])
-            
-            ### Spatial aggregate
-            a <- r # aggregate(r, fact=2, fun=mean, na.rm=T)
             
             #### Raster to points
             o <- rasterToPoints(r)
@@ -60,12 +60,6 @@ scale_up_first <- function(sourceDir, destDir) {
         }
     
         out$ann <- rowSums(out[,3:14])
-        
-        ## check results
-        #with(out, quilt.plot(lon, lat, ann, nx=400, ny=300, nlevel=100,
-        #                        xlim=c(110,160), ylim=c(-45,-5),
-        #                        main="MAP (mm)", add.legend=T))
-        #world(add=T)
         
         ### Save output
         saveRDS(out, outname)
