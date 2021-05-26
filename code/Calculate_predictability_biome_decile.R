@@ -277,7 +277,9 @@ Calculate_predictability_biome_decile<- function(sourceDir, destDir) {
       }
     }
     
+    ### remove NAs
     
+    ### save output
     saveRDS(out, paste0(destDir, "/Australia_rainfall_predictability_biome_quantile.rds"))
     
 }

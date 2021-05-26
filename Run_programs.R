@@ -84,7 +84,11 @@ select_sites(sourceDir = paste0(getwd(), "/output_rainfall_decile"),
 
 
 ###################################################################################
-####### Temperature - Tmax
+####### Temperature - Tmax and Tmins
+
+####### 1. download data
+#download_AWAP_temperature_data(destDir=paste0("/Volumes/TOSHIBAEXT/AWAP/tmin"))
+#unzip_file(sourceDir = paste0("/Volumes/TOSHIBAEXT/AWAP/tmin"))
 
 ###### 2. Process the data into the right format
 

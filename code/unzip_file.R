@@ -2,7 +2,7 @@ unzip_file <- function(sourceDir) {
   #### To process the raw data into format easily readable
   
   ### unzip
-  for (i in 1930:2019) {
+  for (i in 2019:2019) {
     ### complete the path
     sDir <- paste0(sourceDir, "/", i)
     
