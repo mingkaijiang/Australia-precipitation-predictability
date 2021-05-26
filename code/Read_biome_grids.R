@@ -1,7 +1,7 @@
 Read_biome_grids <- function() {
     ### gridDF - this is the precipitation grid df
     gridDF <- readRDS("scaled_rainfall_data/rainfall_monthly_DF1930.rds")
-    gridDF$lat <- -gridDF$lat
+    gridDF$lat <- gridDF$lat
     gridDF$id <- 1:length(gridDF$lat)
     subDF <- gridDF[,c("lon", "lat", "id")]
     

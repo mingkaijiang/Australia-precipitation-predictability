@@ -51,8 +51,8 @@ Calculate_predictability_decile(sourceDir = paste0(getwd(), "/scaled_rainfall_da
                                 destDir = paste0(getwd(), "/output_rainfall_decile"))
 
 #### 3.4 Fourth way, bin monthly data using biome-specific quantile
-#Calculate_predictability_biome_decile(sourceDir = paste0(getwd(), "/scaled_rainfall_data"),
-#                                      destDir = paste0(getwd(), "output_rainfall_biome_decile"))
+Calculate_predictability_biome_decile(sourceDir = paste0(getwd(), "/scaled_rainfall_data"),
+                                      destDir = paste0(getwd(), "output_rainfall_biome_decile"))
 
 ###### 4. Make basic plot
 #Make_basic_plots_0.1_degree_resolution(infile="output/Australia_rainfall_predictability_10km_resolution_2.csv",
