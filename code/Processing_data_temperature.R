@@ -352,9 +352,9 @@ Processing_data_temperature <- function(sourceDir, destDir) {
         out[,,12] <- out[,,12] / 31.0
         
         if (leap_year(i)) {
-          out[,,2] / out[,,2] / 29.0
+          out[,,2] <- out[,,2] / 29.0
         } else {
-          out[,,2] / out[,,2] / 28.0
+          out[,,2] <- out[,,2] / 28.0
         }
         
         saveRDS(out, file=paste0(destDir, "/DF", i, ".rds"))

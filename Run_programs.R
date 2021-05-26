@@ -61,24 +61,24 @@ Calculate_predictability_biome_decile(sourceDir = paste0(getwd(), "/scaled_rainf
 #Make_basic_plots_0.1_degree_resolution(infile="output_exp/Australia_rainfall_predictability_10km_resolution_exp.csv",
 #                                       outfile="basic_plots_10km_degree_resolution_exp")
 
-Make_basic_plots_0.1_degree_resolution(infile="output_rainfall_decile/Australia_rainfall_predictability_quantile.rds",
-                                       outfile="basic_rainfall_plots_quantile")
+Make_basic_plots_0.1_degree_resolution(infile="output_rainfall_biome_decile/Australia_rainfall_predictability_decile.rds",
+                                       outfile="basic_rainfall_plots_decile")
 
 #Make_basic_plots_0.1_degree_resolution(infile="output_biome_decile/Australia_rainfall_predictability_10km_resolution_biome_quantile.csv",
 #                                       outfile="basic_plots_10km_degree_resolution_biome_quantile")
 
 #### 5. Conver to raster
-Convert_to_raster(infile="output_rainfall_decile/Australia_rainfall_predictability_quantile.rds")
+Convert_to_raster(infile="output_rainfall_biome_decile/Australia_rainfall_predictability_decile.rds")
 
 ### conver into raster of the exponential binning result
 ### and up-scale to 0.5 resolution (from 0.1), 
 ### because this is what we decided to use for the paper
-Convert_to_raster_and_scaling_up(infile="output_rainfall_decile/Australia_rainfall_predictability_quantile.rds")
+Convert_to_raster_and_scaling_up(infile="output_rainfall_biome_decile/Australia_rainfall_predictability_decile.rds")
 
 
 #### 6. select locations based on site coordinates
-select_sites(sourceDir = paste0(getwd(), "/output_rainfall_decile"), 
-             destDir = paste0(getwd(), "/output_rainfall_decile"),
+select_sites(sourceDir = paste0(getwd(), "/output_rainfall_biome_decile"), 
+             destDir = paste0(getwd(), "/output_rainfall_biome_decile"),
              resp.variable = "rainfall")
 
 
@@ -107,39 +107,35 @@ calculate_monthly_mean_temperature(sourceDir1 = paste0(getwd(), "/processed_data
                                    destDir = paste0(getwd(), "/processed_data_tmean"))
 
 
-#### 2.3 Calculate 80-year average annual precipitation, 
+#### 2.3 Calculate 80-year average annual temperature
 ####     return a single csv file in 5 km resolution (0.05 degree resolution)
 Calculate_annual_mean_temperature(sourceDir = paste0(getwd(), "/processed_data_tmean"),
                                   destDir = paste0(getwd(), "/output"))
 
 
-#### 3.3 Third way, bin monthly data using quantile of the entire data
-Calculate_predictability_decile(sourceDir = paste0(getwd(), "/scaled_data_tmax"),
-                                destDir = paste0(getwd(), "/output_decile"))
-
 #### 3.4 Fourth way, bin monthly data using biome-specific quantile
-#Calculate_predictability_biome_decile(sourceDir = paste0(getwd(), "/scaled_data"),
-#                                      destDir = paste0(getwd(), "output_biome_decile"))
+Calculate_temperature_predictability_biome_decile(sourceDir = paste0(getwd(), "/processed_data_tmean"),
+                                                  destDir = paste0(getwd(), "/output_biome_temperature_decile"))
 
 ###### 4. Make basic plot
-Make_basic_plots_0.1_degree_resolution(infile="output_decile/Australia_tmax_predictability_quantile.rds",
-                                       outfile="basic_plots_quantile")
+Make_basic_plots_0.1_degree_resolution(infile="output_biome_temperature_decile/Australia_temperature_predictability_decile.rds",
+                                       outfile="basic_temperature_plots_decile")
 
 #Make_basic_plots_0.1_degree_resolution(infile="output_biome_decile/Australia_rainfall_predictability_10km_resolution_biome_quantile.csv",
 #                                       outfile="basic_plots_10km_degree_resolution_biome_quantile")
 
 #### 5. Conver to raster
-Convert_to_raster(infile="output_biome_decile/Australia_tmax_predictability_biome_quantile.csv")
+Convert_to_raster(infile="output_biome_temperature_decile/Australia_temperature_predictability_biome_decile.csv")
 
 ### conver into raster of the exponential binning result
 ### and up-scale to 0.5 resolution (from 0.1), 
 ### because this is what we decided to use for the paper
-Convert_to_raster_and_scaling_up(infile="output_biome_decile/Australia_tmax_predictability_biome_quantile.csv")
+Convert_to_raster_and_scaling_up(infile="output_biome_temperature_decile/Australia_temperature_predictability_biome_decile.csv")
 
 
 #### 6. select locations based on site coordinates
-select_sites(sourceDir = paste0(getwd(), "/processed_data"), 
-             destDir = paste0(getwd(), "/selected_data"))
+select_sites(sourceDir = paste0(getwd(), "/output_temperature_biome_decile"), 
+             destDir = paste0(getwd(), "/output_temperature_biome_decile"))
 
 
 ###### End.
