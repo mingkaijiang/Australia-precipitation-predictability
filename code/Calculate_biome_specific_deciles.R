@@ -1,4 +1,5 @@
-Calculate_biome_specific_deciles <- function(sourceDir, return.decision) {
+Calculate_biome_specific_deciles <- function(sourceDir, destDir, return.decision) {
+    
     ### Get biome and grid information
     bDF <- Read_biome_grids()
     bDF$Biome[is.na(bDF$Biome)] <- 90
@@ -18,13 +19,18 @@ Calculate_biome_specific_deciles <- function(sourceDir, return.decision) {
     ###             Desert: 24, 23, 22, 21
     ###             Grassland: 15, 14, 13, 12, 11
     ###             Temperate: 9, 8, 7, 6, 5, 4, 3, 2, 1
-    eq.sites <- bDF$Site_ID[bDF$Biome%in%c(40, 41, 42)]
-    tr.sites <- bDF$Site_ID[bDF$Biome%in%c(37, 36, 35)]
-    sb.sites <- bDF$Site_ID[bDF$Biome%in%c(34, 33, 32, 31)]
-    ds.sites <- bDF$Site_ID[bDF$Biome%in%c(24, 23, 22, 21)]
-    gs.sites <- bDF$Site_ID[bDF$Biome%in%c(15, 14, 13, 12, 11)]
-    tm.sites <- bDF$Site_ID[bDF$Biome%in%c(9, 8, 7, 6, 5, 4, 3, 2, 1)]
-    na.sites <- bDF$Site_ID[bDF$Biome%in%c(90, 0)]
+    #eq.sites <- bDF$Site_ID[bDF$Biome%in%c(40, 41, 42)]
+    #tr.sites <- bDF$Site_ID[bDF$Biome%in%c(37, 36, 35)]
+    #sb.sites <- bDF$Site_ID[bDF$Biome%in%c(34, 33, 32, 31)]
+    #ds.sites <- bDF$Site_ID[bDF$Biome%in%c(24, 23, 22, 21)]
+    #gs.sites <- bDF$Site_ID[bDF$Biome%in%c(15, 14, 13, 12, 11)]
+    #tm.sites <- bDF$Site_ID[bDF$Biome%in%c(9, 8, 7, 6, 5, 4, 3, 2, 1)]
+    #na.sites <- bDF$Site_ID[bDF$Biome%in%c(90, 0)]
+    
+    for (i in c(1:9, 11:15, 21:24, 31:34, 35:37, 40:42, 0, 90)) {
+      assign(paste0("bio", i, ".sites"), bDF$Site_ID[bDF$Biome%in%c(i)])
+    }
+    
     
     ### Assin ID to all rainfall data
     DF1$ID <- DF2$ID <- DF3$ID <- DF4$ID <- DF5$ID <- DF6$ID <- DF7$ID <- DF8$ID <- DF9$ID <- DF10$ID <- 1:length(DF1$lon)
@@ -38,63 +44,160 @@ Calculate_biome_specific_deciles <- function(sourceDir, return.decision) {
     DF81$ID <- DF82$ID <- DF83$ID <- DF84$ID <- DF85$ID <- DF86$ID <- DF87$ID <- DF88$ID <- DF89$ID <- DF90$ID <- 1:length(DF1$lon)
     
     ### Combine monthly rainfall data for equatorial sites
-    eq.matrix <- array(NA, c(length(eq.sites), 12, 90))
-    tr.matrix <- array(NA, c(length(tr.sites), 12, 90))
-    sb.matrix <- array(NA, c(length(sb.sites), 12, 90))
-    ds.matrix <- array(NA, c(length(ds.sites), 12, 90))
-    gs.matrix <- array(NA, c(length(gs.sites), 12, 90))
-    tm.matrix <- array(NA, c(length(tm.sites), 12, 90))
-    na.matrix <- array(NA, c(length(na.sites), 12, 90))
+    bio1.matrix <- array(NA, c(length(bio1.sites), 12, 90))
+    bio2.matrix <- array(NA, c(length(bio2.sites), 12, 90))
+    bio3.matrix <- array(NA, c(length(bio3.sites), 12, 90))
+    bio4.matrix <- array(NA, c(length(bio4.sites), 12, 90))
+    bio5.matrix <- array(NA, c(length(bio5.sites), 12, 90))
+    bio6.matrix <- array(NA, c(length(bio6.sites), 12, 90))
+    bio7.matrix <- array(NA, c(length(bio7.sites), 12, 90))
+    bio8.matrix <- array(NA, c(length(bio8.sites), 12, 90))
+    bio9.matrix <- array(NA, c(length(bio9.sites), 12, 90))
+    bio11.matrix <- array(NA, c(length(bio11.sites), 12, 90))
+    bio12.matrix <- array(NA, c(length(bio12.sites), 12, 90))
+    bio13.matrix <- array(NA, c(length(bio13.sites), 12, 90))
+    bio14.matrix <- array(NA, c(length(bio14.sites), 12, 90))
+    bio15.matrix <- array(NA, c(length(bio15.sites), 12, 90))
+    bio21.matrix <- array(NA, c(length(bio21.sites), 12, 90))
+    bio22.matrix <- array(NA, c(length(bio22.sites), 12, 90))
+    bio23.matrix <- array(NA, c(length(bio23.sites), 12, 90))
+    bio24.matrix <- array(NA, c(length(bio24.sites), 12, 90))
+    bio31.matrix <- array(NA, c(length(bio31.sites), 12, 90))
+    bio32.matrix <- array(NA, c(length(bio32.sites), 12, 90))
+    bio33.matrix <- array(NA, c(length(bio33.sites), 12, 90))
+    bio34.matrix <- array(NA, c(length(bio34.sites), 12, 90))
+    bio35.matrix <- array(NA, c(length(bio35.sites), 12, 90))
+    bio36.matrix <- array(NA, c(length(bio36.sites), 12, 90))
+    bio37.matrix <- array(NA, c(length(bio37.sites), 12, 90))
+    bio40.matrix <- array(NA, c(length(bio40.sites), 12, 90))
+    bio41.matrix <- array(NA, c(length(bio41.sites), 12, 90))
+    bio42.matrix <- array(NA, c(length(bio42.sites), 12, 90))
+    bio0.matrix <- array(NA, c(length(bio0.sites), 12, 90))
+    bio90.matrix <- array(NA, c(length(bio90.sites), 12, 90))
+    
     
     for (i in 1:90) {
       tmpDF <- get(paste0("DF", i))
-      eq.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% eq.sites, 3:14])
-      tr.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% tr.sites, 3:14])
-      sb.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% sb.sites, 3:14])
-      ds.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% ds.sites, 3:14])
-      gs.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% gs.sites, 3:14])
-      tm.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% tm.sites, 3:14])
-      na.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% na.sites, 3:14])
+      bio1.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% bio1.sites, 3:14])
+      bio2.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% bio2.sites, 3:14])
+      bio3.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% bio3.sites, 3:14])
+      bio4.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% bio4.sites, 3:14])
+      bio5.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% bio5.sites, 3:14])
+      bio6.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% bio6.sites, 3:14])
+      bio7.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% bio7.sites, 3:14])
+      bio8.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% bio8.sites, 3:14])
+      bio9.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% bio9.sites, 3:14])
+      bio11.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% bio11.sites, 3:14])
+      bio12.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% bio12.sites, 3:14])
+      bio13.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% bio13.sites, 3:14])
+      bio14.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% bio14.sites, 3:14])
+      bio15.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% bio15.sites, 3:14])
+      bio21.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% bio21.sites, 3:14])
+      bio22.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% bio22.sites, 3:14])
+      bio23.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% bio23.sites, 3:14])
+      bio24.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% bio24.sites, 3:14])
+      bio31.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% bio31.sites, 3:14])
+      bio32.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% bio32.sites, 3:14])
+      bio33.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% bio33.sites, 3:14])
+      bio34.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% bio34.sites, 3:14])
+      bio35.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% bio35.sites, 3:14])
+      bio36.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% bio36.sites, 3:14])
+      bio37.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% bio37.sites, 3:14])
+      bio40.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% bio40.sites, 3:14])
+      bio41.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% bio41.sites, 3:14])
+      bio42.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% bio42.sites, 3:14])
+      bio0.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% bio0.sites, 3:14])
+      bio90.matrix[,,i] <- as.matrix(tmpDF[tmpDF$ID %in% bio90.sites, 3:14])
+      
       
     }
     
-   ## decide on whether to exclude zero or not.
+    ### exlude zero and re-add zero back in again
+    bio1.data <- replace(bio1.matrix, bio1.matrix == 0, NA)
+    bio2.data <- replace(bio2.matrix, bio2.matrix == 0, NA)
+    bio3.data <- replace(bio3.matrix, bio3.matrix == 0, NA)
+    bio4.data <- replace(bio4.matrix, bio4.matrix == 0, NA)
+    bio5.data <- replace(bio5.matrix, bio5.matrix == 0, NA)
+    bio6.data <- replace(bio6.matrix, bio6.matrix == 0, NA)
+    bio7.data <- replace(bio7.matrix, bio7.matrix == 0, NA)
+    bio8.data <- replace(bio8.matrix, bio8.matrix == 0, NA)
+    bio9.data <- replace(bio9.matrix, bio9.matrix == 0, NA)
+    bio11.data <- replace(bio11.matrix, bio11.matrix == 0, NA)
+    bio12.data <- replace(bio12.matrix, bio12.matrix == 0, NA)
+    bio13.data <- replace(bio13.matrix, bio13.matrix == 0, NA)
+    bio14.data <- replace(bio14.matrix, bio14.matrix == 0, NA)
+    bio15.data <- replace(bio15.matrix, bio15.matrix == 0, NA)
+    bio21.data <- replace(bio21.matrix, bio21.matrix == 0, NA)
+    bio22.data <- replace(bio22.matrix, bio22.matrix == 0, NA)
+    bio23.data <- replace(bio23.matrix, bio23.matrix == 0, NA)
+    bio24.data <- replace(bio24.matrix, bio24.matrix == 0, NA)
+    bio31.data <- replace(bio31.matrix, bio31.matrix == 0, NA)
+    bio32.data <- replace(bio32.matrix, bio32.matrix == 0, NA)
+    bio33.data <- replace(bio33.matrix, bio33.matrix == 0, NA)
+    bio34.data <- replace(bio34.matrix, bio34.matrix == 0, NA)
+    bio35.data <- replace(bio35.matrix, bio35.matrix == 0, NA)
+    bio36.data <- replace(bio36.matrix, bio36.matrix == 0, NA)
+    bio37.data <- replace(bio37.matrix, bio37.matrix == 0, NA)
+    bio40.data <- replace(bio40.matrix, bio40.matrix == 0, NA)
+    bio41.data <- replace(bio41.matrix, bio41.matrix == 0, NA)
+    bio42.data <- replace(bio42.matrix, bio42.matrix == 0, NA)
+    bio0.data <- replace(bio0.matrix, bio0.matrix == 0, NA)
+    bio90.data <- replace(bio90.matrix, bio90.matrix == 0, NA)
     
     
-    b.list <- c("Equatorial", "Tropical", "Subtropical", "Desert", "Grassland", "Temperate", "Other")
+    #b.list <- c("Equatorial", "Tropical", "Subtropical", "Desert", "Grassland", "Temperate", "Other")
     
     ### Compute decile and quantile information for each biome
     if (return.decision=="decile") {
 
         ### Create out df
-        outDF <- data.frame(b.list, NA, NA, NA, NA, NA, 
+        outDF <- data.frame(c(1:9, 11:15, 21:24, 31:34, 35:37, 40:42, 0, 90), NA, NA, NA, NA, NA, 
                             NA, NA, NA, NA, NA, NA)
         colnames(outDF) <- c("Biome", "D0", "D1", "D2", "D3", "D4", "D5",
                              "D6", "D7", "D8", "D9", "D10") 
         
-        outDF[outDF$Biome=="Equatorial", 2:12] <- quantile(eq.data, prob=seq(0,1, length=11))
-        outDF[outDF$Biome=="Tropical", 2:12] <- quantile(tr.data, prob=seq(0,1, length=11))
-        outDF[outDF$Biome=="Subtropical", 2:12] <- quantile(sb.data, prob=seq(0,1, length=11))
-        outDF[outDF$Biome=="Desert", 2:12] <- quantile(ds.data, prob=seq(0,1, length=11))
-        outDF[outDF$Biome=="Grassland", 2:12] <- quantile(gs.data, prob=seq(0,1, length=11))
-        outDF[outDF$Biome=="Temperate", 2:12] <- quantile(tm.data, prob=seq(0,1, length=11))
-        outDF[outDF$Biome=="Other", 2:12] <- quantile(na.data, prob=seq(0,1, length=11))
+        outDF[,2] <- 0.0
+        
+        outDF[outDF$Biome==1, 3:12] <- quantile(bio1.data, prob=seq(0,1, length=10), na.rm=T)
+        outDF[outDF$Biome==2, 3:12] <- quantile(bio2.data, prob=seq(0,1, length=10), na.rm=T)
+        outDF[outDF$Biome==3, 3:12] <- quantile(bio3.data, prob=seq(0,1, length=10), na.rm=T)
+        outDF[outDF$Biome==4, 3:12] <- quantile(bio4.data, prob=seq(0,1, length=10), na.rm=T)
+        outDF[outDF$Biome==5, 3:12] <- quantile(bio5.data, prob=seq(0,1, length=10), na.rm=T)
+        outDF[outDF$Biome==6, 3:12] <- quantile(bio6.data, prob=seq(0,1, length=10), na.rm=T)
+        outDF[outDF$Biome==7, 3:12] <- quantile(bio7.data, prob=seq(0,1, length=10), na.rm=T)
+        outDF[outDF$Biome==8, 3:12] <- quantile(bio8.data, prob=seq(0,1, length=10), na.rm=T)
+        outDF[outDF$Biome==9, 3:12] <- quantile(bio9.data, prob=seq(0,1, length=10), na.rm=T)
+        outDF[outDF$Biome==11, 3:12] <- quantile(bio11.data, prob=seq(0,1, length=10), na.rm=T)
+        outDF[outDF$Biome==12, 3:12] <- quantile(bio12.data, prob=seq(0,1, length=10), na.rm=T)
+        outDF[outDF$Biome==13, 3:12] <- quantile(bio13.data, prob=seq(0,1, length=10), na.rm=T)
+        outDF[outDF$Biome==14, 3:12] <- quantile(bio14.data, prob=seq(0,1, length=10), na.rm=T)
+        outDF[outDF$Biome==15, 3:12] <- quantile(bio15.data, prob=seq(0,1, length=10), na.rm=T)
+        outDF[outDF$Biome==21, 3:12] <- quantile(bio21.data, prob=seq(0,1, length=10), na.rm=T)
+        outDF[outDF$Biome==22, 3:12] <- quantile(bio22.data, prob=seq(0,1, length=10), na.rm=T)
+        outDF[outDF$Biome==23, 3:12] <- quantile(bio23.data, prob=seq(0,1, length=10), na.rm=T)
+        outDF[outDF$Biome==24, 3:12] <- quantile(bio24.data, prob=seq(0,1, length=10), na.rm=T)
+        outDF[outDF$Biome==31, 3:12] <- quantile(bio31.data, prob=seq(0,1, length=10), na.rm=T)
+        outDF[outDF$Biome==32, 3:12] <- quantile(bio32.data, prob=seq(0,1, length=10), na.rm=T)
+        outDF[outDF$Biome==33, 3:12] <- quantile(bio33.data, prob=seq(0,1, length=10), na.rm=T)
+        outDF[outDF$Biome==34, 3:12] <- quantile(bio34.data, prob=seq(0,1, length=10), na.rm=T)
+        outDF[outDF$Biome==35, 3:12] <- quantile(bio35.data, prob=seq(0,1, length=10), na.rm=T)
+        outDF[outDF$Biome==36, 3:12] <- quantile(bio36.data, prob=seq(0,1, length=10), na.rm=T)
+        outDF[outDF$Biome==37, 3:12] <- quantile(bio37.data, prob=seq(0,1, length=10), na.rm=T)
+        outDF[outDF$Biome==40, 3:12] <- quantile(bio40.data, prob=seq(0,1, length=10), na.rm=T)
+        outDF[outDF$Biome==41, 3:12] <- quantile(bio41.data, prob=seq(0,1, length=10), na.rm=T)
+        outDF[outDF$Biome==42, 3:12] <- quantile(bio42.data, prob=seq(0,1, length=10), na.rm=T)
+        outDF[outDF$Biome==0, 3:12] <- quantile(bio0.data, prob=seq(0,1, length=10), na.rm=T)
+        outDF[outDF$Biome==90, 3:12] <- quantile(bio90.data, prob=seq(0,1, length=10), na.rm=T)
+        
+        
         
     } else if (return.decision=="quantile") {
         
-        ### Create out df
-        outDF <- data.frame(b.list, NA, NA, NA, NA, NA)
-        colnames(outDF) <- c("Biome", "Q0", "Q1", "Q2", "Q3", "Q4") 
-        
-        outDF[outDF$Biome=="Equatorial", 2:6] <- quantile(eq.data, prob=seq(0,1, length=5))
-        outDF[outDF$Biome=="Tropical", 2:6] <- quantile(tr.data, prob=seq(0,1, length=5))
-        outDF[outDF$Biome=="Subtropical", 2:6] <- quantile(sb.data, prob=seq(0,1, length=5))
-        outDF[outDF$Biome=="Desert", 2:6] <- quantile(ds.data, prob=seq(0,1, length=5))
-        outDF[outDF$Biome=="Grassland", 2:6] <- quantile(gs.data, prob=seq(0,1, length=5))
-        outDF[outDF$Biome=="Temperate", 2:6] <- quantile(tm.data, prob=seq(0,1, length=5))
-        outDF[outDF$Biome=="Other", 2:6] <- quantile(na.data, prob=seq(0,1, length=5))
-        
+        print("removed")
     }
+    
+    
+    saveRDS(outDF, paste0(destDir, "/biome_rainfall_deciles.rds"))
     
     return(outDF)
 }

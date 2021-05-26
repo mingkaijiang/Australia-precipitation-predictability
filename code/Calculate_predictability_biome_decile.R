@@ -36,8 +36,18 @@ Calculate_predictability_biome_decile<- function(sourceDir, destDir) {
     yeare <- max(ts)
     yearr <- yeare-years
     
+    col_sum <- length(ts)   # total number count of years, i.e. 30
+    whole_sum <- col_sum*12
+    
+    #uncertainty with respect to time H(X)
+    HofX <- -((col_sum/whole_sum)*log10(col_sum/whole_sum))*12
+    
+    s <- interval
+    t <- 12
+    
+    
     ### Create matrix to store the frequency table, without defining bin sizes
-    interval <- 5
+    interval <- 10
     bin <- matrix(0, ncol=14, nrow=interval)
     dimnames(bin) <- list(NULL,c("bin_size","Jan", "Feb", "Mar", "Apr", "May",
                                  "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "whole"))
@@ -49,15 +59,8 @@ Calculate_predictability_biome_decile<- function(sourceDir, destDir) {
     
     ### Get biome information
     biomeDF <- Calculate_biome_specific_deciles(sourceDir=sourceDir, 
-                                                return.decision="quantile")
-    
-    eq.sites <- bDF$Site_ID[bDF$Biome%in%c(40, 41, 42)]
-    tr.sites <- bDF$Site_ID[bDF$Biome%in%c(37, 36, 35)]
-    sb.sites <- bDF$Site_ID[bDF$Biome%in%c(34, 33, 32, 31)]
-    ds.sites <- bDF$Site_ID[bDF$Biome%in%c(24, 23, 22, 21)]
-    gs.sites <- bDF$Site_ID[bDF$Biome%in%c(15, 14, 13, 12, 11)]
-    tm.sites <- bDF$Site_ID[bDF$Biome%in%c(9, 8, 7, 6, 5, 4, 3, 2, 1)]
-    na.sites <- bDF$Site_ID[bDF$Biome%in%c(90, 0)]
+                                                destDir=destDir,
+                                                return.decision="decile")
     
     ### Assin ID to all rainfall data
     DF1$ID <- DF2$ID <- DF3$ID <- DF4$ID <- DF5$ID <- DF6$ID <- DF7$ID <- DF8$ID <- DF9$ID <- DF10$ID <- 1:length(DF1$lon)
@@ -70,11 +73,24 @@ Calculate_predictability_biome_decile<- function(sourceDir, destDir) {
     DF71$ID <- DF72$ID <- DF73$ID <- DF74$ID <- DF75$ID <- DF76$ID <- DF77$ID <- DF78$ID <- DF79$ID <- DF80$ID <- 1:length(DF1$lon)
     DF81$ID <- DF82$ID <- DF83$ID <- DF84$ID <- DF85$ID <- DF86$ID <- DF87$ID <- DF88$ID <- DF89$ID <- DF90$ID <- 1:length(DF1$lon)
     
-    
-    ### output in each grid
-    for (i in 1:nrow(out)) {
-
-        ### Fill the temp DF, read for calculating predictability
+    ### biome numbers
+    for (j in c(1:9, 11:15, 21:24, 31:34, 35:37, 40:42, 0, 90)) {
+      
+      biome.sites <- bDF$Site_ID[bDF$Biome==j]
+      
+      decile.list <- biomeDF[biomeDF$Biome==j,2:12]
+      
+      max_top <- decile.list[11]
+      min_bot <- decile.list[1]
+      diff <- max_top - min_bot
+      
+      bin[,"bin_size"] <- as.vector(as.matrix(decile.list[2:11]))
+      breaks = c(as.numeric(decile.list))
+      
+      ### biome sites, aka coordinate ID
+      for (i in biome.sites) {
+        
+        ### Fill the temp DF, ready for calculating predictability
         tmpDF[tmpDF$Year == 1930, 2:13] <- DF1[i,3:14]
         tmpDF[tmpDF$Year == 1931, 2:13] <- DF2[i,3:14]
         tmpDF[tmpDF$Year == 1932, 2:13] <- DF3[i,3:14]
@@ -174,30 +190,7 @@ Calculate_predictability_biome_decile<- function(sourceDir, destDir) {
         tmpDF[tmpDF$Year == 2017, 2:13] <- DF88[i,3:14]
         tmpDF[tmpDF$Year == 2018, 2:13] <- DF89[i,3:14]
         tmpDF[tmpDF$Year == 2019, 2:13] <- DF90[i,3:14]
-
-        ### Now can look for the decile/quantile range
-        if (i %in% eq.sites) {
-            decile.list <- biomeDF[biomeDF$Biome=="Equatorial", 2:6]
-        } else if (i %in% tr.sites) {
-            decile.list <- biomeDF[biomeDF$Biome=="Tropical", 2:6]
-        } else if (i %in% sb.sites) {
-            decile.list <- biomeDF[biomeDF$Biome=="Subtropical", 2:6]
-        } else if (i %in% gs.sites) {
-            decile.list <- biomeDF[biomeDF$Biome=="Grassland", 2:6]
-        } else if (i %in% ds.sites) {
-            decile.list <- biomeDF[biomeDF$Biome=="Desert", 2:6]
-        } else if (i %in% tm.sites) {
-            decile.list <- biomeDF[biomeDF$Biome=="Temperate", 2:6]
-        } else {
-            decile.list <- biomeDF[biomeDF$Biome=="Other", 2:6]
-        }
-
-        max_top <- decile.list[5]
-        min_bot <- 0
-        diff <- max_top - min_bot
         
-        bin[,"bin_size"] <- as.vector(as.matrix(decile.list))
-        breaks = c(0, as.vector(as.matrix(decile.list)))
         
         ### Cut the tables
         jan_cut = cut(tmpDF[, "Jan"], breaks, include.lowest=TRUE,right=TRUE)
@@ -214,50 +207,30 @@ Calculate_predictability_biome_decile<- function(sourceDir, destDir) {
         dec_cut = cut(tmpDF[, "Dec"], breaks, include.lowest=TRUE,right=TRUE)
         
         ### Frequency tables
-        jan_freq = table(jan_cut)
-        feb_freq = table(feb_cut)
-        mar_freq = table(mar_cut)
-        apr_freq = table(apr_cut)
-        may_freq = table(may_cut)
-        jun_freq = table(jun_cut)
-        jul_freq = table(jul_cut)
-        aug_freq = table(aug_cut)
-        sep_freq = table(sep_cut)
-        oct_freq = table(oct_cut)
-        nov_freq = table(nov_cut)
-        dec_freq = table(dec_cut)
-        
-        ### Assign onto bins
-        bin[,"Jan"] <- jan_freq
-        bin[,"Feb"] <- feb_freq
-        bin[,"Mar"] <- mar_freq
-        bin[,"Apr"] <- apr_freq
-        bin[,"May"] <- may_freq
-        bin[,"Jun"] <- jun_freq
-        bin[,"Jul"] <- jul_freq
-        bin[,"Aug"] <- aug_freq
-        bin[,"Sep"] <- sep_freq
-        bin[,"Oct"] <- oct_freq
-        bin[,"Nov"] <- nov_freq
-        bin[,"Dec"] <- dec_freq
+        bin[,"Jan"] = table(jan_cut)
+        bin[,"Feb"] = table(feb_cut)
+        bin[,"Mar"] = table(mar_cut)
+        bin[,"Apr"] = table(apr_cut)
+        bin[,"May"] = table(may_cut)
+        bin[,"Jun"] = table(jun_cut)
+        bin[,"Jul"] = table(jul_cut)
+        bin[,"Aug"] = table(aug_cut)
+        bin[,"Sep"] = table(sep_cut)
+        bin[,"Oct"] = table(oct_cut)
+        bin[,"Nov"] = table(nov_cut)
+        bin[,"Dec"] = table(dec_cut)
         
         bin[,"whole"] = rowSums(bin[,2:13])
-        
-        col_sum <- length(ts)   # total number count of years, i.e. 30
-        whole_sum <- col_sum*12
-        
-        #uncertainty with respect to time H(X)
-        HofX <- -((col_sum/whole_sum)*log10(col_sum/whole_sum))*12
         
         #uncertainty with respect to state H(Y)
         V1 <- bin[,"whole"]/whole_sum
         V2 <- log10(bin[,"whole"]/whole_sum)
         for (k in 1:length(V2)) {
-            if(is.finite(V2[k])==F) {
-                V2[k] <- 0 
-            } else {
-                V2[k] <- V2[k]
-            }
+          if(is.finite(V2[k])==F) {
+            V2[k] <- 0 
+          } else {
+            V2[k] <- V2[k]
+          }
         }
         
         HofY <- -sum(V1*V2)
@@ -266,19 +239,17 @@ Calculate_predictability_biome_decile<- function(sourceDir, destDir) {
         M1 <- bin[1:interval,2:13]/whole_sum
         M2 <- log10(M1)
         for (k in 1:length(M2)) {
-            if(is.finite(M2[k])==F) {
-                M2[k] <- 0
-            } else {
-                M2[k] <- M2[k]
-            }
+          if(is.finite(M2[k])==F) {
+            M2[k] <- 0
+          } else {
+            M2[k] <- M2[k]
+          }
         }
         
         HofXY <- -sum(M1*M2)
         
         #Conditional uncertainty with regard to state, with time given, HXofY
         HXofY <- HofXY - HofX
-        s <- interval
-        t <- 12
         
         #predictability (P), constancy(C) and contingency (M)
         P <- 1-(HXofY/log10(s))
@@ -303,8 +274,9 @@ Calculate_predictability_biome_decile<- function(sourceDir, destDir) {
         out[i,"P"] <- P
         out[i,"C"] <- C
         out[i,"M"] <- M
-        
-    }   
+      }
+    }
+    
     
     saveRDS(out, paste0(destDir, "/Australia_rainfall_predictability_biome_quantile.rds"))
     
