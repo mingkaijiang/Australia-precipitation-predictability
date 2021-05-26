@@ -277,9 +277,15 @@ Calculate_predictability_biome_decile<- function(sourceDir, destDir) {
       }
     }
     
-    ### remove NAs
+    ### merge by biome and then remove NAs
+    out <- merge(out, bDF, by=c("Site_ID", "lon", "lat"))
+    
+    outDF <- out[out$Biome > 0 & out$Biome < 43,]
+    
+    outDF <- outDF[,c("Site_ID", "lon.x", "lat.x", "P", "C", "M", "Biome")]
+    colnames(outDF) <- c("Site_ID", "lon", "lat", "P", "C", "M", "Biome")
     
     ### save output
-    saveRDS(out, paste0(destDir, "/Australia_rainfall_predictability_biome_quantile.rds"))
+    saveRDS(outDF, paste0(destDir, "/Australia_rainfall_predictability_biome_decile.rds"))
     
 }

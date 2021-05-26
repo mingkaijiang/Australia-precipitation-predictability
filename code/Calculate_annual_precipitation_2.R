@@ -33,7 +33,7 @@ Calculate_annual_precipitation_2 <- function(sourceDir, destDir) {
     pdf(paste0(destDir, "/Australia_rainfall_90yr_mean.pdf"))
     
     ### 0.05 resolution
-    with(outDF, quilt.plot(lon, lat, mean, nx=400, ny=300,  nlevel=100,
+    with(outDF, quilt.plot(lon, lat, mean, nx=400, ny=300,  nlevel=10,
                           xlim=c(110,160), ylim=c(-45, -5),
                           main="MAP (mm)", add.legend=T))
     

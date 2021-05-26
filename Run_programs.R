@@ -55,17 +55,8 @@ Calculate_predictability_biome_decile(sourceDir = paste0(getwd(), "/scaled_rainf
                                       destDir = paste0(getwd(), "/output_rainfall_biome_decile"))
 
 ###### 4. Make basic plot
-#Make_basic_plots_0.1_degree_resolution(infile="output/Australia_rainfall_predictability_10km_resolution_2.csv",
-#                                       outfile="basic_plots_10km_degree_resolution_percent")
-#
-#Make_basic_plots_0.1_degree_resolution(infile="output_exp/Australia_rainfall_predictability_10km_resolution_exp.csv",
-#                                       outfile="basic_plots_10km_degree_resolution_exp")
-
-Make_basic_plots_0.1_degree_resolution(infile="output_rainfall_biome_decile/Australia_rainfall_predictability_decile.rds",
-                                       outfile="basic_rainfall_plots_decile")
-
-#Make_basic_plots_0.1_degree_resolution(infile="output_biome_decile/Australia_rainfall_predictability_10km_resolution_biome_quantile.csv",
-#                                       outfile="basic_plots_10km_degree_resolution_biome_quantile")
+Make_basic_plots_0.1_degree_resolution(infile=paste0(getwd(), "/output_rainfall_biome_decile/Australia_rainfall_predictability_biome_decile.rds"),
+                                       outfile=paste0(getwd(), "/output_rainfall_biome_decile/basic_rainfall_plots_biome_decile"))
 
 #### 5. Conver to raster
 Convert_to_raster(infile="output_rainfall_biome_decile/Australia_rainfall_predictability_decile.rds")
