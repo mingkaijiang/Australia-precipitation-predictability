@@ -9,8 +9,6 @@ Read_biome_grids <- function() {
     kpnDF <- read.matrix("data/kpngrp/kpngrp.txt", skip=6)
     kpnDF[kpnDF<0] <- NA
     
-    test <- as.vector(kpnDF)
-
     ### biome df information
     #ncols         1681
     #nrows         1361

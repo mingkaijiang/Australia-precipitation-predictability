@@ -47,6 +47,9 @@ vignettes/*.pdf
 *.pdf
 *.zip
 *.tif
+*.shp
+*.dbf
+*.shx
 
 # bash stuff
 *.bash_history

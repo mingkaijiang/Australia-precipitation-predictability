@@ -1,7 +1,14 @@
 Make_basic_plots_0.1_degree_resolution <- function(infile, outfile) {
+  
     #### Read in 0.1 resolution gridded predictability data
     myDF <- readRDS(infile)
+  
     
+    ### read in australia boundary
+    
+    
+    
+      
     #### Prepare P data
     pdf(paste0(outfile, ".pdf"))
 

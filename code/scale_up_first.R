@@ -19,6 +19,7 @@ scale_up_first <- function(sourceDir, destDir) {
     out$lat <- rep(rev(y.list), each=886)
     out$lon <- rep(x.list, by=691)
     
+    ext <- extent(min(x.list), max(x.list), min(y.list), max(y.list))
     
     ### create destDir if not exists
     if(!dir.exists(destDir)) {
@@ -26,10 +27,12 @@ scale_up_first <- function(sourceDir, destDir) {
     }
     
     ### australia boundary - resolution too coarse
-    #ausDF <- raster(paste0(getwd(), "/data/Australia_masks/AusMaskt_180326.asc"))
-    #ausDF2 <- raster(paste0(getwd(), "/data/Australia_masks/Mask_Equal_50km.asc"))
-    
-    
+    ausDF <- readOGR(dsn=paste0(getwd(), 
+                            "/data/australia_administrative_boundaries_national_polygon/"),
+                     layer="australia_administrative_boundaries_national_polygon")
+
+    ausDF2 <- ausDF[ausDF$way_area>=1.065e+13,]
+
     ### Read in all files in the input directory
     filenames <- list.files(sourceDir, pattern="*.rds", full.names=TRUE)
     
@@ -49,11 +52,15 @@ scale_up_first <- function(sourceDir, destDir) {
             ### Convert into raster
             r <- raster(myDF[,,j])
             
+            extent(r) <- ext
+            
             ### Spatial aggregate
-            a <- r # aggregate(r, fact=2, fun=mean, na.rm=T)
+            a <- mask(r, ausDF2)
+            plot(a)
+            plot(ausDF2,add=T)
             
             #### Raster to points
-            o <- rasterToPoints(r)
+            o <- rasterToPoints(a)
             
             ### Assign to output
             out[,2+j] <- o[,3]

@@ -18,7 +18,8 @@ pacman::p_load(RCurl,
                sp,
                rgdal,
                fields,
-               tseries) # add other packages needed to this list
+               tseries,
+               sf) # add other packages needed to this list
 
 
 # Sourcing all code functions
