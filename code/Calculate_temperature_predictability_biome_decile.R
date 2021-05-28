@@ -8,6 +8,11 @@ Calculate_temperature_predictability_biome_decile<- function(sourceDir, destDir)
         dir.create(destDir, showWarnings = FALSE)
     }
     
+  ### Get biome information
+  biomeDF <- Calculate_biome_specific_temperature_deciles(sourceDir=sourceDir, 
+                                                          destDir=destDir,
+                                                          return.decision="decile")
+  
     ### Read in all files in the input directory
     filenames <- list.files(sourceDir, pattern="*.rds", full.names=TRUE)
     
@@ -42,25 +47,22 @@ Calculate_temperature_predictability_biome_decile<- function(sourceDir, destDir)
     #uncertainty with respect to time H(X)
     HofX <- -((col_sum/whole_sum)*log10(col_sum/whole_sum))*12
     
-    s <- interval
-    t <- 12
-    
     
     ### Create matrix to store the frequency table, without defining bin sizes
     interval <- 10
+    
+    s <- interval
+    t <- 12
+    
     bin <- matrix(0, ncol=14, nrow=interval)
     dimnames(bin) <- list(NULL,c("bin_size","Jan", "Feb", "Mar", "Apr", "May",
                                  "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "whole"))
     
     ### Get biome grids
     bDF <- Read_biome_grids()
-    bDF$Biome[is.na(bDF$Biome)] <- 90
-    bDF$Site_ID <- 1:length(bDF$lon)
+
     
-    ### Get biome information
-    biomeDF <- Calculate_biome_specific_temperature_deciles(sourceDir=sourceDir, 
-                                                            destDir=destDir,
-                                                            return.decision="decile")
+    
     
     ### Assin ID to all rainfall data
     DF1$ID <- DF2$ID <- DF3$ID <- DF4$ID <- DF5$ID <- DF6$ID <- DF7$ID <- DF8$ID <- DF9$ID <- DF10$ID <- 1:length(DF1$lon)

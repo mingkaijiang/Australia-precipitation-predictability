@@ -7,6 +7,12 @@ Calculate_predictability_biome_decile<- function(sourceDir, destDir) {
     if(!dir.exists(destDir)) {
         dir.create(destDir, showWarnings = FALSE)
     }
+  
+    ### Get biome information
+    biomeDF <- Calculate_biome_specific_deciles(sourceDir=sourceDir, 
+                                                destDir=destDir,
+                                                return.decision="decile")
+  
     
     ### Read in all files in the input directory
     filenames <- list.files(sourceDir, pattern="*.rds", full.names=TRUE)
@@ -42,25 +48,19 @@ Calculate_predictability_biome_decile<- function(sourceDir, destDir) {
     #uncertainty with respect to time H(X)
     HofX <- -((col_sum/whole_sum)*log10(col_sum/whole_sum))*12
     
-    s <- interval
-    t <- 12
-    
     
     ### Create matrix to store the frequency table, without defining bin sizes
     interval <- 10
+    s.val <- interval
+    t.val <- 12
+    
     bin <- matrix(0, ncol=14, nrow=interval)
     dimnames(bin) <- list(NULL,c("bin_size","Jan", "Feb", "Mar", "Apr", "May",
                                  "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "whole"))
     
     ### Get biome grids
     bDF <- Read_biome_grids()
-    #bDF$Biome[is.na(bDF$Biome)] <- 90
-    #bDF$Site_ID <- 1:length(bDF$lon)
-    
-    ### Get biome information
-    biomeDF <- Calculate_biome_specific_deciles(sourceDir=sourceDir, 
-                                                destDir=destDir,
-                                                return.decision="decile")
+    colnames(bDF)[which(names(bDF) == "id")] <- "Site_ID"
     
     ### Assin ID to all rainfall data
     DF1$ID <- DF2$ID <- DF3$ID <- DF4$ID <- DF5$ID <- DF6$ID <- DF7$ID <- DF8$ID <- DF9$ID <- DF10$ID <- 1:length(DF1$lon)
@@ -74,10 +74,11 @@ Calculate_predictability_biome_decile<- function(sourceDir, destDir) {
     DF81$ID <- DF82$ID <- DF83$ID <- DF84$ID <- DF85$ID <- DF86$ID <- DF87$ID <- DF88$ID <- DF89$ID <- DF90$ID <- 1:length(DF1$lon)
     
     ### biome numbers
-    for (j in c(1:9, 11:15, 21:24, 31:34, 35:37, 40:42, 0, 90)) {
+    for (j in c(1, 2, 4, 7, 8, 10, 12, 13)) {
       
       biome.sites <- bDF$Site_ID[bDF$Biome==j]
-      
+      biome.sites <- biome.sites[!is.na(biome.sites)]
+
       decile.list <- biomeDF[biomeDF$Biome==j,2:12]
       
       max_top <- decile.list[11]
@@ -252,24 +253,24 @@ Calculate_predictability_biome_decile<- function(sourceDir, destDir) {
         HXofY <- HofXY - HofX
         
         #predictability (P), constancy(C) and contingency (M)
-        P <- 1-(HXofY/log10(s))
-        C <- 1-(HofY/log10(s))
-        M <- (HofX+HofY-HofXY)/log10(s)
+        P <- 1-(HXofY/log10(s.val))
+        C <- 1-(HofY/log10(s.val))
+        M <- (HofX+HofY-HofXY)/log10(s.val)
         
         #mutual information, I(XY)
         IofXY <- HofY - HXofY
         
         #deviation from homogeneity of the columns of the matrix for constancy, GC
-        GC <- 2*whole_sum*(log(s)-HofY)
-        C_free <- s-1
+        GC <- 2*whole_sum*(log(s.val)-HofY)
+        C_free <- s.val-1
         
         #deviation from homogeneity of the columns of the matrix for contingency, GM
         GM <- 2*whole_sum*(HofX+HofY-HofXY)
-        M_free <- (s-1)*(t-1)
+        M_free <- (s.val-1)*(t.val-1)
         
         #deviation from homogeneity of the columns of the matrix for predictability, GP
         GP <- GM + GC
-        P_free <- (s-1)*t
+        P_free <- (s.val-1)*t.val
         
         out[i,"P"] <- P
         out[i,"C"] <- C
@@ -280,8 +281,7 @@ Calculate_predictability_biome_decile<- function(sourceDir, destDir) {
     ### merge by biome and then remove NAs
     out <- merge(out, bDF, by=c("Site_ID", "lon", "lat"))
     
-    outDF <- out[out$Biome > 0 & out$Biome < 43,]
-    
+
     outDF <- outDF[,c("Site_ID", "lon.x", "lat.x", "P", "C", "M", "Biome")]
     colnames(outDF) <- c("Site_ID", "lon", "lat", "P", "C", "M", "Biome")
     
