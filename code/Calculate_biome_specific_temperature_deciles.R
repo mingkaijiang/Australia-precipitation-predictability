@@ -43,7 +43,7 @@ Calculate_biome_specific_temperature_deciles <- function(sourceDir, destDir, ret
     DF71$ID <- DF72$ID <- DF73$ID <- DF74$ID <- DF75$ID <- DF76$ID <- DF77$ID <- DF78$ID <- DF79$ID <- DF80$ID <- 1:length(DF1$lon)
     DF81$ID <- DF82$ID <- DF83$ID <- DF84$ID <- DF85$ID <- DF86$ID <- DF87$ID <- DF88$ID <- DF89$ID <- DF90$ID <- 1:length(DF1$lon)
     
-    ### Combine monthly rainfall data for equatorial sites
+    ### Combine monthly temperature data 
     bio1.matrix <- array(NA, c(length(bio1.sites), 12, 90))
     bio2.matrix <- array(NA, c(length(bio2.sites), 12, 90))
     bio4.matrix <- array(NA, c(length(bio4.sites), 12, 90))
@@ -67,17 +67,6 @@ Calculate_biome_specific_temperature_deciles <- function(sourceDir, destDir, ret
       
     }
     
-    ### exlude zero and re-add zero back in again
-    bio1.data <- replace(bio1.matrix, bio1.matrix == 0, NA)
-    bio2.data <- replace(bio2.matrix, bio2.matrix == 0, NA)
-    bio4.data <- replace(bio4.matrix, bio4.matrix == 0, NA)
-    
-    bio7.data <- replace(bio7.matrix, bio7.matrix == 0, NA)
-    bio8.data <- replace(bio8.matrix, bio8.matrix == 0, NA)
-    bio10.data <- replace(bio10.matrix, bio10.matrix == 0, NA)
-    bio12.data <- replace(bio12.matrix, bio12.matrix == 0, NA)
-    bio13.data <- replace(bio13.matrix, bio13.matrix == 0, NA)
-    
     #b.list <- c("Equatorial", "Tropical", "Subtropical", "Desert", "Grassland", "Temperate", "Other")
     
     ### Compute decile and quantile information for each biome
@@ -89,17 +78,15 @@ Calculate_biome_specific_temperature_deciles <- function(sourceDir, destDir, ret
       colnames(outDF) <- c("Biome", "D0", "D1", "D2", "D3", "D4", "D5",
                            "D6", "D7", "D8", "D9", "D10") 
       
-      outDF[,2] <- 0.0
+      outDF[outDF$Biome==1, 2:12] <- quantile(bio1.matrix, prob=seq(0,1, length=11), na.rm=T)
+      outDF[outDF$Biome==2, 2:12] <- quantile(bio2.matrix, prob=seq(0,1, length=11), na.rm=T)
+      outDF[outDF$Biome==4, 2:12] <- quantile(bio4.matrix, prob=seq(0,1, length=11), na.rm=T)
       
-      outDF[outDF$Biome==1, 3:12] <- quantile(bio1.data, prob=seq(0,1, length=10), na.rm=T)
-      outDF[outDF$Biome==2, 3:12] <- quantile(bio2.data, prob=seq(0,1, length=10), na.rm=T)
-      outDF[outDF$Biome==4, 3:12] <- quantile(bio4.data, prob=seq(0,1, length=10), na.rm=T)
-      
-      outDF[outDF$Biome==7, 3:12] <- quantile(bio7.data, prob=seq(0,1, length=10), na.rm=T)
-      outDF[outDF$Biome==8, 3:12] <- quantile(bio8.data, prob=seq(0,1, length=10), na.rm=T)
-      outDF[outDF$Biome==10, 3:12] <- quantile(bio10.data, prob=seq(0,1, length=10), na.rm=T)
-      outDF[outDF$Biome==12, 3:12] <- quantile(bio12.data, prob=seq(0,1, length=10), na.rm=T)
-      outDF[outDF$Biome==13, 3:12] <- quantile(bio13.data, prob=seq(0,1, length=10), na.rm=T)
+      outDF[outDF$Biome==7, 2:12] <- quantile(bio7.matrix, prob=seq(0,1, length=11), na.rm=T)
+      outDF[outDF$Biome==8, 2:12] <- quantile(bio8.matrix, prob=seq(0,1, length=11), na.rm=T)
+      outDF[outDF$Biome==10, 2:12] <- quantile(bio10.matrix, prob=seq(0,1, length=11), na.rm=T)
+      outDF[outDF$Biome==12, 2:12] <- quantile(bio12.matrix, prob=seq(0,1, length=11), na.rm=T)
+      outDF[outDF$Biome==13, 2:12] <- quantile(bio13.matrix, prob=seq(0,1, length=11), na.rm=T)
       
     } else if (return.decision=="quantile") {
       

@@ -58,14 +58,6 @@ Calculate_predictability_biome_decile(sourceDir = paste0(getwd(), "/scaled_rainf
 Make_basic_plots_0.1_degree_resolution(infile=paste0(getwd(), "/output_rainfall_biome_decile/Australia_rainfall_predictability_biome_decile.rds"),
                                        outfile=paste0(getwd(), "/output_rainfall_biome_decile/basic_rainfall_plots_biome_decile"))
 
-#### 5. Conver to raster
-Convert_to_raster(infile="output_rainfall_biome_decile/Australia_rainfall_predictability_decile.rds")
-
-### conver into raster of the exponential binning result
-### and up-scale to 0.5 resolution (from 0.1), 
-### because this is what we decided to use for the paper
-Convert_to_raster_and_scaling_up(infile="output_rainfall_biome_decile/Australia_rainfall_predictability_decile.rds")
-
 
 #### 6. select locations based on site coordinates
 select_sites(sourceDir = paste0(getwd(), "/output_rainfall_biome_decile"), 
@@ -109,24 +101,14 @@ Calculate_temperature_predictability_biome_decile(sourceDir = paste0(getwd(), "/
                                                   destDir = paste0(getwd(), "/output_biome_temperature_decile"))
 
 ###### 4. Make basic plot
-Make_basic_plots_0.1_degree_resolution(infile="output_biome_temperature_decile/Australia_temperature_predictability_decile.rds",
-                                       outfile="basic_temperature_plots_decile")
-
-#Make_basic_plots_0.1_degree_resolution(infile="output_biome_decile/Australia_rainfall_predictability_10km_resolution_biome_quantile.csv",
-#                                       outfile="basic_plots_10km_degree_resolution_biome_quantile")
-
-#### 5. Conver to raster
-Convert_to_raster(infile="output_biome_temperature_decile/Australia_temperature_predictability_biome_decile.csv")
-
-### conver into raster of the exponential binning result
-### and up-scale to 0.5 resolution (from 0.1), 
-### because this is what we decided to use for the paper
-Convert_to_raster_and_scaling_up(infile="output_biome_temperature_decile/Australia_temperature_predictability_biome_decile.csv")
+Make_basic_plots_0.1_degree_resolution(infile=paste0(getwd(), "/output_biome_temperature_decile/Australia_temperature_predictability_biome_decile.rds"),
+                                       outfile=paste0(getwd(), "/output_biome_temperature_decile/basic_temperature_plots_decile"))
 
 
 #### 6. select locations based on site coordinates
-select_sites(sourceDir = paste0(getwd(), "/output_temperature_biome_decile"), 
-             destDir = paste0(getwd(), "/output_temperature_biome_decile"))
+select_sites(sourceDir = paste0(getwd(), "/output_biome_temperature_decile"), 
+             destDir = paste0(getwd(), "/output_biome_temperature_decile"),
+             resp.variable = "temperature")
 
 
 ###### End.

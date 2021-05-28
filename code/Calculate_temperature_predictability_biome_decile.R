@@ -60,7 +60,7 @@ Calculate_temperature_predictability_biome_decile<- function(sourceDir, destDir)
     
     ### Get biome grids
     bDF <- Read_biome_grids()
-
+    colnames(bDF)[which(names(bDF) == "id")] <- "Site_ID"
     
     
     
@@ -76,9 +76,10 @@ Calculate_temperature_predictability_biome_decile<- function(sourceDir, destDir)
     DF81$ID <- DF82$ID <- DF83$ID <- DF84$ID <- DF85$ID <- DF86$ID <- DF87$ID <- DF88$ID <- DF89$ID <- DF90$ID <- 1:length(DF1$lon)
     
     ### biome numbers
-    for (j in c(1:9, 11:15, 21:24, 31:34, 35:37, 40:42, 0, 90)) {
+    for (j in c(1, 2, 4, 7, 8, 10, 12, 13)) {
       
       biome.sites <- bDF$Site_ID[bDF$Biome==j]
+      biome.sites <- biome.sites[!is.na(biome.sites)]
       
       decile.list <- biomeDF[biomeDF$Biome==j,2:12]
       
@@ -279,9 +280,9 @@ Calculate_temperature_predictability_biome_decile<- function(sourceDir, destDir)
       }
     }
     
-    ### remove NAs
-    
+    out <- merge(out, bDF, by=c("Site_ID", "lon", "lat"))
+
     ### save output
-    saveRDS(out, paste0(destDir, "/Australia_temperature_predictability_biome_quantile.rds"))
+    saveRDS(out, paste0(destDir, "/Australia_temperature_predictability_biome_decile.rds"))
     
 }
