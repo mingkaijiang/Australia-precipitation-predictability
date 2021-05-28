@@ -54,8 +54,8 @@ Calculate_predictability_biome_decile<- function(sourceDir, destDir) {
     
     ### Get biome grids
     bDF <- Read_biome_grids()
-    bDF$Biome[is.na(bDF$Biome)] <- 90
-    bDF$Site_ID <- 1:length(bDF$lon)
+    #bDF$Biome[is.na(bDF$Biome)] <- 90
+    #bDF$Site_ID <- 1:length(bDF$lon)
     
     ### Get biome information
     biomeDF <- Calculate_biome_specific_deciles(sourceDir=sourceDir, 

@@ -27,11 +27,11 @@ scale_up_first <- function(sourceDir, destDir) {
     }
     
     ### australia boundary - resolution too coarse
-    ausDF <- readOGR(dsn=paste0(getwd(), 
-                            "/data/australia_administrative_boundaries_national_polygon/"),
-                     layer="australia_administrative_boundaries_national_polygon")
+    #ausDF <- readOGR(dsn=paste0(getwd(), 
+    #                        "/data/australia_administrative_boundaries_national_polygon/"),
+    #                 layer="australia_administrative_boundaries_national_polygon")
 
-    ausDF2 <- ausDF[ausDF$way_area>=1.065e+13,]
+    #ausDF2 <- ausDF[ausDF$way_area>=1.065e+13,]
 
     ### Read in all files in the input directory
     filenames <- list.files(sourceDir, pattern="*.rds", full.names=TRUE)
@@ -55,12 +55,12 @@ scale_up_first <- function(sourceDir, destDir) {
             extent(r) <- ext
             
             ### Spatial aggregate
-            a <- mask(r, ausDF2)
-            plot(a)
-            plot(ausDF2,add=T)
+            #a <- mask(r, ausDF2)
+            #plot(a)
+            #plot(ausDF2,add=T)
             
             #### Raster to points
-            o <- rasterToPoints(a)
+            o <- rasterToPoints(r)
             
             ### Assign to output
             out[,2+j] <- o[,3]
