@@ -92,7 +92,7 @@ calculate_monthly_mean_temperature(sourceDir1 = paste0(getwd(), "/processed_data
 
 #### 2.3 Calculate 80-year average annual temperature
 ####     return a single csv file in 5 km resolution (0.05 degree resolution)
-Calculate_annual_mean_temperature(sourceDir = paste0(getwd(), "/processed_data_tmean"),
+Calculate_annual_temperature(sourceDir = paste0(getwd(), "/processed_data_tmean"),
                                   destDir = paste0(getwd(), "/output"))
 
 
