@@ -93,10 +93,14 @@ calculate_monthly_mean_temperature(sourceDir1 = paste0(getwd(), "/processed_data
 #### 2.3 Calculate 80-year average annual temperature
 ####     return a single csv file in 5 km resolution (0.05 degree resolution)
 Calculate_annual_temperature(sourceDir = paste0(getwd(), "/processed_data_tmean"),
-                                  destDir = paste0(getwd(), "/output"))
+                             destDir = paste0(getwd(), "/output"))
 
 
 #### 3.4 Fourth way, bin monthly data using biome-specific quantile
+Calculate_temperature_predictability_decile(sourceDir = paste0(getwd(), "/processed_data_tmean"),
+                                            destDir = paste0(getwd(), "/output_temperature_decile"))
+
+
 Calculate_temperature_predictability_biome_decile(sourceDir = paste0(getwd(), "/processed_data_tmean"),
                                                   destDir = paste0(getwd(), "/output_biome_temperature_decile"))
 

@@ -59,7 +59,7 @@ calculate_monthly_mean_temperature <- function(sourceDir1, sourceDir2, destDir) 
             out[,2+j] <- o[,3]
         }
     
-        out$ann <- rowSums(out[,3:14])
+        out$ann <- rowSums(out[,3:14]) / 12
         
         ### Save output
         saveRDS(out, outname)
