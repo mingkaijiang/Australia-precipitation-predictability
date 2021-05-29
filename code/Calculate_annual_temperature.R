@@ -31,7 +31,7 @@ Calculate_annual_temperature <- function(sourceDir, destDir) {
     ### 0.05 resolution
     with(outDF, quilt.plot(lon, lat, mat, nx=400, ny=300,  nlevel=10,
                           xlim=c(110,160), ylim=c(-45, -5),
-                          main="MAP (mm)", add.legend=T))
+                          main="MAT (degree C)", add.legend=T))
   
     world(add=T)
     

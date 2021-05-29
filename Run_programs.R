@@ -106,13 +106,20 @@ Calculate_temperature_predictability_biome_decile(sourceDir = paste0(getwd(), "/
 
 ###### 4. Make basic plot
 Make_basic_plots_0.1_degree_resolution(infile=paste0(getwd(), "/output_biome_temperature_decile/Australia_temperature_predictability_biome_decile.rds"),
-                                       outfile=paste0(getwd(), "/output_biome_temperature_decile/basic_temperature_plots_decile"))
+                                       outfile=paste0(getwd(), "/output_biome_temperature_decile/basic_temperature_plots_biome_decile"))
 
+Make_basic_plots_0.1_degree_resolution(infile=paste0(getwd(), "/output_temperature_decile/Australia_temperature_predictability_decile.rds"),
+                                       outfile=paste0(getwd(), "/output_temperature_decile/basic_temperature_plots_decile"))
 
 #### 6. select locations based on site coordinates
 select_sites(sourceDir = paste0(getwd(), "/output_biome_temperature_decile"), 
              destDir = paste0(getwd(), "/output_biome_temperature_decile"),
              resp.variable = "temperature")
+
+
+select_sites_no_biome(sourceDir = paste0(getwd(), "/output_temperature_decile"), 
+                       destDir = paste0(getwd(), "/output_temperature_decile"),
+                       resp.variable = "temperature") 
 
 
 ###### End.

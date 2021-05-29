@@ -8,8 +8,8 @@ Calculate_temperature_predictability_biome_decile<- function(sourceDir, destDir)
         dir.create(destDir, showWarnings = FALSE)
     }
     
-  ### Get biome information
-  biomeDF <- Calculate_biome_specific_temperature_deciles(sourceDir=sourceDir, 
+    ### Get biome information
+    biomeDF <- Calculate_biome_specific_temperature_deciles(sourceDir=sourceDir, 
                                                           destDir=destDir,
                                                           return.decision="decile")
   

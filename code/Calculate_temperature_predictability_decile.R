@@ -262,6 +262,6 @@ Calculate_temperature_predictability_decile<- function(sourceDir, destDir) {
     out <- merge(out, bDF, by=c("Site_ID", "lon", "lat"))
 
     ### save output
-    saveRDS(out, paste0(destDir, "/Australia_temperature_predictability_biome_decile.rds"))
+    saveRDS(out, paste0(destDir, "/Australia_temperature_predictability_decile.rds"))
     
 }
