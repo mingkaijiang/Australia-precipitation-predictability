@@ -97,6 +97,10 @@ Calculate_annual_temperature(sourceDir = paste0(getwd(), "/processed_data_tmean"
 
 
 #### 3.4 Fourth way, bin monthly data using biome-specific quantile
+Calculate_temperature_predictability_fixed_bin(sourceDir = paste0(getwd(), "/processed_data_tmean"),
+                                               destDir = paste0(getwd(), "/output_temperature_fixed_bin"))
+
+
 Calculate_temperature_predictability_decile(sourceDir = paste0(getwd(), "/processed_data_tmean"),
                                             destDir = paste0(getwd(), "/output_temperature_decile"))
 
