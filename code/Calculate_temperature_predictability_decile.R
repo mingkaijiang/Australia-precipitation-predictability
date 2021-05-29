@@ -164,8 +164,11 @@ Calculate_temperature_predictability_decile<- function(sourceDir, destDir) {
                                 prob=seq(0,1, length=11))
         
         max_top <- decile.list[11]
-        min_bot <- decile.list[0]
+        min_bot <- decile.list[1]
         diff <- max_top - min_bot
+        
+        bin[,"bin_size"] <- decile.list[2:11]
+        breaks = decile.list
         
         ### Cut the tables
         jan_cut = cut(tmpDF[, "Jan"], breaks, include.lowest=TRUE,right=TRUE)
@@ -250,6 +253,10 @@ Calculate_temperature_predictability_decile<- function(sourceDir, destDir) {
         out[i,"C"] <- C
         out[i,"M"] <- M
      }
+    
+    ### Get biome grids
+    bDF <- Read_biome_grids()
+    colnames(bDF)[which(names(bDF) == "id")] <- "Site_ID"
     
     
     out <- merge(out, bDF, by=c("Site_ID", "lon", "lat"))
