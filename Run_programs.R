@@ -115,6 +115,9 @@ Make_basic_plots_0.1_degree_resolution(infile=paste0(getwd(), "/output_biome_tem
 Make_basic_plots_0.1_degree_resolution(infile=paste0(getwd(), "/output_temperature_decile/Australia_temperature_predictability_decile.rds"),
                                        outfile=paste0(getwd(), "/output_temperature_decile/basic_temperature_plots_decile"))
 
+Make_basic_plots_0.1_degree_resolution(infile=paste0(getwd(), "/output_temperature_fixed_bin/Australia_temperature_predictability_fixed_bin.rds"),
+                                       outfile=paste0(getwd(), "/output_temperature_fixed_bin/basic_temperature_plots_fixed_bin"))
+
 #### 6. select locations based on site coordinates
 select_sites(sourceDir = paste0(getwd(), "/output_biome_temperature_decile"), 
              destDir = paste0(getwd(), "/output_biome_temperature_decile"),
@@ -125,5 +128,9 @@ select_sites_no_biome(sourceDir = paste0(getwd(), "/output_temperature_decile"),
                        destDir = paste0(getwd(), "/output_temperature_decile"),
                        resp.variable = "temperature") 
 
+
+select_sites_fixed_bin(sourceDir = paste0(getwd(), "/output_temperature_fixed_bin"), 
+                      destDir = paste0(getwd(), "/output_temperature_fixed_bin"),
+                      resp.variable = "temperature") 
 
 ###### End.
