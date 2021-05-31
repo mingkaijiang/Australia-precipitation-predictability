@@ -9,25 +9,25 @@ Calculate_predictability_exponential_binning<- function(sourceDir, destDir) {
     }
     
     ### Read in all files in the input directory
-    filenames <- list.files(sourceDir, pattern="*.csv", full.names=TRUE)
+    filenames <- list.files(sourceDir, pattern="*.rds", full.names=TRUE)
     
     for (i in seq_along(filenames)) {
-        assign(paste0("DF", i), read.csv(filenames[i]))
+        assign(paste0("DF", i), readRDS(filenames[i]))
     }
     
     ### Create temporary DF
-    tmpDF <- matrix(ncol = 13, nrow = 80)
+    tmpDF <- matrix(ncol = 13, nrow = 90)
     tmpDF <- as.data.frame(tmpDF)
     colnames(tmpDF) <- c("Year", "Jan", "Feb", "Mar", "Apr", "May",
                        "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
-    tmpDF$Year <- c(1930:2009)
+    tmpDF$Year <- c(1930:2019)
     ts <- tmpDF$Year
     
     ### Create a out df to store all data in one file
-    out <- matrix(ncol=6, nrow=346*443)
+    out <- matrix(ncol=6, nrow=691*886)
     out <- as.data.frame(out, row.names = NULL, stringsAsFactors = FALSE)
     colnames(out) <- c("Site_ID","lon","lat", "P","C","M")
-    out$Site_ID <- c(1:(346*443))
+    out$Site_ID <- c(1:(691*886))
     out$lon <- DF1$lon
     out$lat <- DF1$lat
     
@@ -35,6 +35,16 @@ Calculate_predictability_exponential_binning<- function(sourceDir, destDir) {
     years <- min(ts)
     yeare <- max(ts)
     yearr <- yeare-years
+    
+    col_sum <- length(ts)   # total number count of years, i.e. 30
+    whole_sum <- col_sum*12
+    
+    #uncertainty with respect to time H(X)
+    HofX <- -((col_sum/whole_sum)*log10(col_sum/whole_sum))*12
+    
+    
+    ### Create matrix to store the frequency table, without defining bin sizes
+    #interval <- 10
     
     ### Create binning scheme
     max_top <- 3^7
@@ -48,6 +58,9 @@ Calculate_predictability_exponential_binning<- function(sourceDir, destDir) {
         bin[i,"bin_size"] <- 3^i
     }
     breaks = c(0, 3^1, 3^2, 3^3, 3^4, 3^5, 3^6, 3^7)
+    
+    s <- interval
+    t <- 12
     
     ### output in each grid
     for (i in 1:nrow(out)) {
@@ -141,6 +154,16 @@ Calculate_predictability_exponential_binning<- function(sourceDir, destDir) {
         tmpDF[tmpDF$Year == 2008, 2:13] <- DF79[i,3:14]
         tmpDF[tmpDF$Year == 2009, 2:13] <- DF80[i,3:14]
         
+        tmpDF[tmpDF$Year == 2010, 2:13] <- DF81[i,3:14]
+        tmpDF[tmpDF$Year == 2011, 2:13] <- DF82[i,3:14]
+        tmpDF[tmpDF$Year == 2012, 2:13] <- DF83[i,3:14]
+        tmpDF[tmpDF$Year == 2013, 2:13] <- DF84[i,3:14]
+        tmpDF[tmpDF$Year == 2014, 2:13] <- DF85[i,3:14]
+        tmpDF[tmpDF$Year == 2015, 2:13] <- DF86[i,3:14]
+        tmpDF[tmpDF$Year == 2016, 2:13] <- DF87[i,3:14]
+        tmpDF[tmpDF$Year == 2017, 2:13] <- DF88[i,3:14]
+        tmpDF[tmpDF$Year == 2018, 2:13] <- DF89[i,3:14]
+        tmpDF[tmpDF$Year == 2019, 2:13] <- DF90[i,3:14]
         
         ### Cut the tables
         jan_cut = cut(tmpDF[, "Jan"], breaks, include.lowest=TRUE,right=TRUE)
@@ -186,11 +209,6 @@ Calculate_predictability_exponential_binning<- function(sourceDir, destDir) {
         
         bin[,"whole"] = rowSums(bin[,2:13])
         
-        col_sum <- length(ts)   # total number count of years, i.e. 30
-        whole_sum <- col_sum*12
-        
-        #uncertainty with respect to time H(X)
-        HofX <- -((col_sum/whole_sum)*log10(col_sum/whole_sum))*12
         
         #uncertainty with respect to state H(Y)
         V1 <- bin[,"whole"]/whole_sum
@@ -220,8 +238,6 @@ Calculate_predictability_exponential_binning<- function(sourceDir, destDir) {
         
         #Conditional uncertainty with regard to state, with time given, HXofY
         HXofY <- HofXY - HofX
-        s <- interval
-        t <- 12
         
         #predictability (P), constancy(C) and contingency (M)
         P <- 1-(HXofY/log10(s))
@@ -249,7 +265,14 @@ Calculate_predictability_exponential_binning<- function(sourceDir, destDir) {
 
     }   
     
-    write.csv(out, paste0(destDir, "/Australia_rainfall_predictability_10km_resolution_exp.csv"),
-              row.names=F)
+    ### Get biome grids
+    bDF <- Read_biome_grids()
+    colnames(bDF)[which(names(bDF) == "id")] <- "Site_ID"
+    
+    
+    out <- merge(out, bDF, by=c("Site_ID", "lon", "lat"))
+    
+    ### save output
+    saveRDS(out, paste0(destDir, "/Australia_rainfall_predictability_exp.rds"))
     
 }

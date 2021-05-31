@@ -43,8 +43,8 @@ Calculate_annual_precipitation_2(sourceDir = paste0(getwd(), "/scaled_rainfall_d
 #                                  destDir = paste0(getwd(), "/output"))
 
 #### 3.2 Second way, bin monthly data using power of 3
-#Calculate_predictability_exponential_binning(sourceDir = paste0(getwd(), "scaled_data"),
-#                                             destDir = paste0(getwd(), "output_exp"))
+Calculate_predictability_exponential_binning(sourceDir = paste0(getwd(), "/scaled_rainfall_data"),
+                                             destDir = paste0(getwd(), "output_rainfall_exp"))
 
 #### 3.3 Third way, bin monthly data using quantile of the entire data
 #Calculate_predictability_decile(sourceDir = paste0(getwd(), "/scaled_rainfall_data"),
@@ -58,6 +58,9 @@ Calculate_predictability_biome_decile(sourceDir = paste0(getwd(), "/scaled_rainf
 Make_basic_plots_0.1_degree_resolution(infile=paste0(getwd(), "/output_rainfall_biome_decile/Australia_rainfall_predictability_biome_decile.rds"),
                                        outfile=paste0(getwd(), "/output_rainfall_biome_decile/basic_rainfall_plots_biome_decile"))
 
+Make_basic_plots_0.1_degree_resolution(infile=paste0(getwd(), "/output_rainfall_exp/Australia_rainfall_predictability_exp.rds"),
+                                       outfile=paste0(getwd(), "/output_rainfall_exp/basic_rainfall_plots_exp"))
+
 
 #### 6. select locations based on site coordinates
 select_sites(sourceDir = paste0(getwd(), "/output_rainfall_biome_decile"), 
@@ -65,6 +68,9 @@ select_sites(sourceDir = paste0(getwd(), "/output_rainfall_biome_decile"),
              resp.variable = "rainfall")
 
 
+select_sites(sourceDir = paste0(getwd(), "/output_rainfall_exp"), 
+             destDir = paste0(getwd(), "/output_rainfall_exp"),
+             resp.variable = "rainfall")
 
 ###################################################################################
 ####### Temperature - Tmax and Tmins
