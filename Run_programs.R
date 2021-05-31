@@ -44,7 +44,7 @@ Calculate_annual_precipitation_2(sourceDir = paste0(getwd(), "/scaled_rainfall_d
 
 #### 3.2 Second way, bin monthly data using power of 3
 Calculate_predictability_exponential_binning(sourceDir = paste0(getwd(), "/scaled_rainfall_data"),
-                                             destDir = paste0(getwd(), "output_rainfall_exp"))
+                                             destDir = paste0(getwd(), "/output_rainfall_exp"))
 
 #### 3.3 Third way, bin monthly data using quantile of the entire data
 #Calculate_predictability_decile(sourceDir = paste0(getwd(), "/scaled_rainfall_data"),
@@ -68,9 +68,9 @@ select_sites(sourceDir = paste0(getwd(), "/output_rainfall_biome_decile"),
              resp.variable = "rainfall")
 
 
-select_sites(sourceDir = paste0(getwd(), "/output_rainfall_exp"), 
-             destDir = paste0(getwd(), "/output_rainfall_exp"),
-             resp.variable = "rainfall")
+select_sites_exp(sourceDir = paste0(getwd(), "/output_rainfall_exp"), 
+                 destDir = paste0(getwd(), "/output_rainfall_exp"),
+                 resp.variable = "rainfall")
 
 ###################################################################################
 ####### Temperature - Tmax and Tmins
