@@ -47,17 +47,24 @@ Calculate_predictability_exponential_binning<- function(sourceDir, destDir) {
     #interval <- 10
     
     ### Create binning scheme
-    max_top <- 3^7
+    #max_top <- 3^7
+    max_top <- 2^12
+    
     min_bot <- 0
-    interval <- 7
+    #interval <- 7
+    interval <- 12
+    
     diff <- max_top - min_bot
     bin <- matrix(0, ncol=14, nrow=interval)
     dimnames(bin) <- list(NULL,c("bin_size","Jan", "Feb", "Mar", "Apr", "May",
                                  "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "whole"))
     for (i in 1:interval) {
-        bin[i,"bin_size"] <- 3^i
+        #bin[i,"bin_size"] <- 3^i
+        bin[i,"bin_size"] <- 2^i
+        
     }
-    breaks = c(0, 3^1, 3^2, 3^3, 3^4, 3^5, 3^6, 3^7)
+    #breaks = c(0, 3^1, 3^2, 3^3, 3^4, 3^5, 3^6, 3^7)
+    breaks = c(0, 2^1, 2^2, 2^3, 2^4, 2^5, 2^6, 2^7, 2^8, 2^9, 2^10, 2^11, 2^12)
     
     s <- interval
     t <- 12
