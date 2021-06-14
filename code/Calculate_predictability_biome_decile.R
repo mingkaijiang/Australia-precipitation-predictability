@@ -8,10 +8,10 @@ Calculate_predictability_biome_decile<- function(sourceDir, destDir) {
         dir.create(destDir, showWarnings = FALSE)
     }
   
-    ### Get biome information
-    biomeDF <- Calculate_biome_specific_deciles(sourceDir=sourceDir, 
-                                                destDir=destDir,
-                                                return.decision="decile")
+  ### Get biome information
+  biomeDF <- Calculate_biome_specific_deciles_koppen(sourceDir=sourceDir, 
+                                                     destDir=destDir,
+                                                     return.decision="decile")
   
     
     ### Read in all files in the input directory

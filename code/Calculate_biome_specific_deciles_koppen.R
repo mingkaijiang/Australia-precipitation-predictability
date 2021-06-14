@@ -1,4 +1,4 @@
-Calculate_biome_specific_deciles <- function(sourceDir, destDir, return.decision) {
+Calculate_biome_specific_deciles_koppen <- function(sourceDir, destDir, return.decision) {
     
     ### Get biome and grid information
     bDF <- Read_biome_grids_koppen()

@@ -19,7 +19,9 @@ pacman::p_load(RCurl,
                rgdal,
                fields,
                tseries,
-               sf) # add other packages needed to this list
+               sf,
+               ggplot2,
+               viridis) # add other packages needed to this list
 
 
 # Sourcing all code functions
