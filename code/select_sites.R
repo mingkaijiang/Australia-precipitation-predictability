@@ -2,7 +2,8 @@ select_sites <- function(sourceDir, destDir, resp.variable) {
     
     siteDF <- read.csv(paste0(getwd(), "/data/sites_14may.csv"))
     
-    myDF <- readRDS(paste0(sourceDir, "/Australia_", resp.variable, "_predictability_biome_decile.rds"))
+    myDF <- readRDS(paste0(sourceDir, "/Australia_", resp.variable, 
+                                      "_predictability_biome_decile.rds"))
     
 
     matDF <- readRDS(paste0(getwd(), "/output/Australia_temperature_annual_average.rds"))

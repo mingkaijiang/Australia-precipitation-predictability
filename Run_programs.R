@@ -88,9 +88,9 @@ select_sites_exp(sourceDir = paste0(getwd(), "/output_rainfall_exp"),
                  resp.variable = "rainfall")
 
 
-select_sites(sourceDir = paste0(getwd(), "/output_rainfall_biome_decile"), 
-             destDir = paste0(getwd(), "/output_rainfall_biome_decile"),
-             resp.variable = "rainfall")
+select_sites_biome(sourceDir = paste0(getwd(), "/output_rainfall_biome_decile"), 
+                   destDir = paste0(getwd(), "/output_rainfall_biome_decile"),
+                   resp.variable = "rainfall")
 
 
 
