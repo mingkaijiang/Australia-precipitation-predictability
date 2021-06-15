@@ -228,10 +228,6 @@ Calculate_biome_specific_deciles_koppen <- function(sourceDir, destDir, biome.de
         assign(paste0("bio", i, ".sites"), bDF$id[bDF$BiomeKoppenBroad%in%c(i)])
       }
       
-      for (i in biome.list) {
-        assign(paste0("bio", i, ".sites"), bDF$id[bDF$BiomeWWF%in%c(i)])
-      }
-      
       ### Combine monthly rainfall data for each biome
       bioEquatorial.matrix <- array(NA, c(length(bioEquatorial.sites), 12, 90))
       bioTropical.matrix <- array(NA, c(length(bioTropical.sites), 12, 90))

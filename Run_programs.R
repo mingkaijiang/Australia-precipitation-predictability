@@ -65,7 +65,7 @@ Calculate_predictability_biome_decile(sourceDir = paste0(getwd(), "/scaled_rainf
 
 Calculate_predictability_biome_decile(sourceDir = paste0(getwd(), "/scaled_rainfall_data"),
                                       destDir = paste0(getwd(), "/output_rainfall_biome_decile"),
-                                      biome.decision = "koppen_wwf")
+                                      biome.decision = "wwf_group")
 
 ###### 4. Make basic plot
 Make_basic_plots_0.1_degree_resolution(infile=paste0(getwd(), "/output_rainfall_exp/Australia_rainfall_predictability_exp.rds"),
