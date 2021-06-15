@@ -6,7 +6,7 @@ select_sites_biome <- function(sourceDir, destDir, resp.variable) {
                                       "_predictability_biome_koppen_subgroup_decile.rds"))
     
     myDF.koppen.brd <- readRDS(paste0(sourceDir, "/Australia_", resp.variable, 
-                                      "_predictability_biome_koppen_broad_group_decile.rds"))
+                                      "_predictability_biome_koppen_broadgroup_decile.rds"))
     
     myDF.wwf.group <- readRDS(paste0(sourceDir, "/Australia_", resp.variable, 
                                       "_predictability_biome_wwf_group_decile.rds"))
