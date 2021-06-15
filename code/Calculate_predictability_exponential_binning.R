@@ -273,7 +273,7 @@ Calculate_predictability_exponential_binning<- function(sourceDir, destDir) {
     }   
     
     ### Get biome grids
-    bDF <- Read_biome_grids()
+    bDF <- Read_biome_grids_koppen(plot.decision=F)
     colnames(bDF)[which(names(bDF) == "id")] <- "Site_ID"
     
     

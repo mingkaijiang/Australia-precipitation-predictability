@@ -1,4 +1,4 @@
-Calculate_predictability_biome_decile<- function(sourceDir, destDir) {
+Calculate_predictability_biome_decile<- function(sourceDir, destDir, biome.decision) {
     #### Input data in 3-d format of grid, grid, month 
     #### Output data in format of: site ID, year, jan, feb, ...., dec, ann, for each grid
     ####
@@ -8,11 +8,18 @@ Calculate_predictability_biome_decile<- function(sourceDir, destDir) {
         dir.create(destDir, showWarnings = FALSE)
     }
   
-  ### Get biome information
-  biomeDF <- Calculate_biome_specific_deciles_koppen(sourceDir=sourceDir, 
-                                                     destDir=destDir,
-                                                     return.decision="decile")
-  
+    ### Get biome information
+    if (biome.decision == "koppen_subgroup") {
+      biomeDF <- readRDS(paste0(destDir, "/biome_koppen_subgroup_rainfall_deciles.rds"))
+    } else if (biome.decision == "koppen_broadgroup") {
+      biomeDF <- readRDS(paste0(destDir, "/biome_koppen_broad_group_rainfall_deciles.rds"))
+    } else if (biome.decision == "wwf_group") {
+      biomeDF <- readRDS(paste0(destDir, "/biome_wwf_rainfall_deciles.rds"))
+      
+    } else {
+      print("no biome specified")
+    }
+
     
     ### Read in all files in the input directory
     filenames <- list.files(sourceDir, pattern="*.rds", full.names=TRUE)
@@ -59,8 +66,20 @@ Calculate_predictability_biome_decile<- function(sourceDir, destDir) {
                                  "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "whole"))
     
     ### Get biome grids
-    bDF <- Read_biome_grids()
+    bDF <- Read_biome_grids_koppen(plot.decision=F)
     colnames(bDF)[which(names(bDF) == "id")] <- "Site_ID"
+    
+    ### select the appropriate biome
+    if(biome.decision == "koppen_subgroup") {
+      bDF$Biome <- bDF$BiomeKoppen
+    } else if (biome.decision == "koppen_broadgroup") {
+      bDF$Biome <- bDF$BiomeKoppenBroad
+    } else if (biome.decision == "wwf_group") {
+      bDF$Biome <- bDF$BiomeWWF
+    } else {
+      print("no biome information given")
+    }
+
     
     ### Assin ID to all rainfall data
     DF1$ID <- DF2$ID <- DF3$ID <- DF4$ID <- DF5$ID <- DF6$ID <- DF7$ID <- DF8$ID <- DF9$ID <- DF10$ID <- 1:length(DF1$lon)
@@ -73,8 +92,11 @@ Calculate_predictability_biome_decile<- function(sourceDir, destDir) {
     DF71$ID <- DF72$ID <- DF73$ID <- DF74$ID <- DF75$ID <- DF76$ID <- DF77$ID <- DF78$ID <- DF79$ID <- DF80$ID <- 1:length(DF1$lon)
     DF81$ID <- DF82$ID <- DF83$ID <- DF84$ID <- DF85$ID <- DF86$ID <- DF87$ID <- DF88$ID <- DF89$ID <- DF90$ID <- 1:length(DF1$lon)
     
+    ### biome.list
+    biome.list <- unique(biomeDF$Biome)
+    
     ### biome numbers
-    for (j in c(1, 2, 4, 7, 8, 10, 12, 13)) {
+    for (j in biome.list) {
       
       biome.sites <- bDF$Site_ID[bDF$Biome==j]
       biome.sites <- biome.sites[!is.na(biome.sites)]
@@ -283,6 +305,7 @@ Calculate_predictability_biome_decile<- function(sourceDir, destDir) {
     
     
     ### save output
-    saveRDS(out, paste0(destDir, "/Australia_rainfall_predictability_biome_decile.rds"))
+    saveRDS(out, paste0(destDir, "/Australia_rainfall_predictability_biome_", biome.decision,
+                        "_decile.rds"))
     
 }

@@ -34,44 +34,65 @@ scale_up_first(sourceDir = paste0(getwd(), "/processed_data"),
 
 #### 2.3 Calculate 90-year average annual precipitation, 
 ####     return a single csv file in 5 km resolution (0.05 degree resolution)
-Calculate_annual_precipitation_2(sourceDir = paste0(getwd(), "/scaled_rainfall_data"),
-                                 destDir = paste0(getwd(), "/output"))
+Calculate_annual_precipitation(sourceDir = paste0(getwd(), "/scaled_rainfall_data"),
+                               destDir = paste0(getwd(), "/output"))
 
 ###### 3. Calculate predictability
-#### 3.1 This is the first way, based on monthly % of annual total
-#Calculate_predictability_percent_2(sourceDir = paste0(getwd(), "/scaled_data"),
-#                                  destDir = paste0(getwd(), "/output"))
-
 #### 3.2 Second way, bin monthly data using power of 3
 Calculate_predictability_exponential_binning(sourceDir = paste0(getwd(), "/scaled_rainfall_data"),
                                              destDir = paste0(getwd(), "/output_rainfall_exp"))
 
-#### 3.3 Third way, bin monthly data using quantile of the entire data
-#Calculate_predictability_decile(sourceDir = paste0(getwd(), "/scaled_rainfall_data"),
-#                                destDir = paste0(getwd(), "/output_rainfall_decile"))
-
 #### 3.4 Fourth way, bin monthly data using biome-specific quantile
+Calculate_biome_specific_deciles_koppen(sourceDir=paste0(getwd(), "/scaled_rainfall_data"), 
+                                        destDir=paste0(getwd(), "/output_rainfall_biome_decile"),
+                                        biome.decision="koppen_subgroup")
+
+Calculate_biome_specific_deciles_koppen(sourceDir=paste0(getwd(), "/scaled_rainfall_data"), 
+                                        destDir=paste0(getwd(), "/output_rainfall_biome_decile"),
+                                        biome.decision="koppen_broadgroup")
+
+Calculate_biome_specific_deciles_koppen(sourceDir=paste0(getwd(), "/scaled_rainfall_data"), 
+                                        destDir=paste0(getwd(), "/output_rainfall_biome_decile"),
+                                        biome.decision="wwf_group")
+
 Calculate_predictability_biome_decile(sourceDir = paste0(getwd(), "/scaled_rainfall_data"),
                                       destDir = paste0(getwd(), "/output_rainfall_biome_decile"),
-                                      return.decision = "decile")
+                                      biome.decision = "koppen_subgroup")
+
+Calculate_predictability_biome_decile(sourceDir = paste0(getwd(), "/scaled_rainfall_data"),
+                                      destDir = paste0(getwd(), "/output_rainfall_biome_decile"),
+                                      biome.decision = "koppen_broadgroup")
+
+Calculate_predictability_biome_decile(sourceDir = paste0(getwd(), "/scaled_rainfall_data"),
+                                      destDir = paste0(getwd(), "/output_rainfall_biome_decile"),
+                                      biome.decision = "koppen_wwf")
 
 ###### 4. Make basic plot
-Make_basic_plots_0.1_degree_resolution(infile=paste0(getwd(), "/output_rainfall_biome_decile/Australia_rainfall_predictability_biome_decile.rds"),
-                                       outfile=paste0(getwd(), "/output_rainfall_biome_decile/basic_rainfall_plots_biome_decile"))
-
 Make_basic_plots_0.1_degree_resolution(infile=paste0(getwd(), "/output_rainfall_exp/Australia_rainfall_predictability_exp.rds"),
                                        outfile=paste0(getwd(), "/output_rainfall_exp/basic_rainfall_plots_exp"))
 
+Make_basic_plots_0.1_degree_resolution(infile=paste0(getwd(), "/output_rainfall_biome_decile/Australia_rainfall_predictability_biome_koppen_subgroup_decile.rds"),
+                                       outfile=paste0(getwd(), "/output_rainfall_biome_decile/basic_rainfall_plots_biome_koppen_subgroup_decile"))
+
+Make_basic_plots_0.1_degree_resolution(infile=paste0(getwd(), "/output_rainfall_biome_decile/Australia_rainfall_predictability_biome_koppen_broadgroup_decile.rds"),
+                                       outfile=paste0(getwd(), "/output_rainfall_biome_decile/basic_rainfall_plots_biome_koppen_broadgroup_decile"))
+
+Make_basic_plots_0.1_degree_resolution(infile=paste0(getwd(), "/output_rainfall_biome_decile/Australia_rainfall_predictability_biome_wwf_group_decile.rds"),
+                                       outfile=paste0(getwd(), "/output_rainfall_biome_decile/basic_rainfall_plots_biome_wwf_group_decile"))
+
+
 
 #### 6. select locations based on site coordinates
+select_sites_exp(sourceDir = paste0(getwd(), "/output_rainfall_exp"), 
+                 destDir = paste0(getwd(), "/output_rainfall_exp"),
+                 resp.variable = "rainfall")
+
+
 select_sites(sourceDir = paste0(getwd(), "/output_rainfall_biome_decile"), 
              destDir = paste0(getwd(), "/output_rainfall_biome_decile"),
              resp.variable = "rainfall")
 
 
-select_sites_exp(sourceDir = paste0(getwd(), "/output_rainfall_exp"), 
-                 destDir = paste0(getwd(), "/output_rainfall_exp"),
-                 resp.variable = "rainfall")
 
 ###################################################################################
 ####### Temperature - Tmax and Tmins
